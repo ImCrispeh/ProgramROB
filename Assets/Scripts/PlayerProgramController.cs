@@ -13,10 +13,12 @@ public class PlayerProgramController : MonoBehaviour {
     public int maxNumOfActions = 5;
     public List<String> actions;
     public Text actionsText;
+    public Rigidbody2D rigid;
 
 	// Use this for initialization
 	void Start () {
         actions = new List<String>();
+        rigid = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -49,23 +51,29 @@ public class PlayerProgramController : MonoBehaviour {
 	}
 
     public void RemoveAction() {
-        if (currNumOfActions > 0) {
-            currNumOfActions--;
-            actions.RemoveAt(currNumOfActions);
-            UpdateActionText();
+        if (TurnController._instance.GetIsPlayerTurn()) {
+            if (currNumOfActions > 0) {
+                currNumOfActions--;
+                actions.RemoveAt(currNumOfActions);
+                UpdateActionText();
+            }
         }
     }
 
     public void LoadActionList() {
-        StartCoroutine(ExecuteActionList());
+        if (TurnController._instance.GetIsPlayerTurn()) {
+            StartCoroutine(ExecuteActionList());
+        }
     }
 
     // For buttons to use
     public void AddAction(String action) {
-        if (currNumOfActions < maxNumOfActions) {
-            actions.Add(action);
-            currNumOfActions++;
-            UpdateActionText();
+        if (TurnController._instance.GetIsPlayerTurn()) {
+            if (currNumOfActions < maxNumOfActions) {
+                actions.Add(action);
+                currNumOfActions++;
+                UpdateActionText();
+            }
         }
     }
 
@@ -114,16 +122,17 @@ public class PlayerProgramController : MonoBehaviour {
         actions.Clear();
         currNumOfActions = 0;
         UpdateActionText();
+        TurnController._instance.EnemyTurn();
     }
 
     IEnumerator Move(Vector2 source, Vector2 target) {
         isMoving = true;
         while (moveTimer < moveDuration) {
             moveTimer += Time.deltaTime;
-            transform.position = Vector2.Lerp(source, target, moveTimer / moveDuration);
+            rigid.MovePosition(Vector2.Lerp(source, target, moveTimer / moveDuration));
             yield return null;
         }
-        transform.position = target;
+        //transform.position = target;
         isMoving = false;
         moveTimer = 0f;
     }
