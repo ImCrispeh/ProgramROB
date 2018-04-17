@@ -11,14 +11,17 @@ public class PlayerProgramController : MonoBehaviour {
     private bool isMoving = false;
     public int currNumOfActions = 0;
     public int maxNumOfActions = 5;
+    public int actionPoints = 30;
     public List<String> actions;
     public Text actionsText;
+    public Text actionPointsText;
     public Rigidbody2D rigid;
 
 	// Use this for initialization
 	void Start () {
         actions = new List<String>();
         rigid = GetComponent<Rigidbody2D>();
+        UpdateActionPointsText(0);
 	}
 	
 	// Update is called once per frame
@@ -56,6 +59,7 @@ public class PlayerProgramController : MonoBehaviour {
                 currNumOfActions--;
                 actions.RemoveAt(currNumOfActions);
                 UpdateActionText();
+                UpdateActionPointsText(1);
             }
         }
     }
@@ -69,10 +73,17 @@ public class PlayerProgramController : MonoBehaviour {
     // For buttons to use
     public void AddAction(String action) {
         if (TurnController._instance.GetIsPlayerTurn()) {
-            if (currNumOfActions < maxNumOfActions) {
-                actions.Add(action);
-                currNumOfActions++;
-                UpdateActionText();
+            if (actionPoints > 0) {
+                if (currNumOfActions < maxNumOfActions) {
+                    actions.Add(action);
+                    currNumOfActions++;
+                    UpdateActionText();
+                    UpdateActionPointsText(-1);
+                } else {
+                    Debug.Log("Maximum amount of actions reached");
+                }
+            } else {
+                Debug.Log("No action points remaining");
             }
         }
     }
@@ -82,6 +93,11 @@ public class PlayerProgramController : MonoBehaviour {
         foreach (String action in actions) {
             actionsText.text += action + "\n";
         }
+    }
+
+    public void UpdateActionPointsText(int pointsChange) {
+        actionPoints += pointsChange;
+        actionPointsText.text = "Remaining action points:" + "\n" + actionPoints;
     }
 
     // Coroutines used so that they can be queued
@@ -137,3 +153,4 @@ public class PlayerProgramController : MonoBehaviour {
         moveTimer = 0f;
     }
 }
+    
