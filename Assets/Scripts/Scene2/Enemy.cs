@@ -3,58 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-
-    public int health;
-    public int amount;
+    public float speed;
     Transform target;
-    public float Speed;
-    bool isDetect;
-    private void Start()
+    public float chaseRange;
+    public float attackRange;
+    private float lastAttackTime;
+    public int amount;
+    public float attackDelay;
+    public int health;
+    void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
+       
     }
     void Update()
     {
-        if (isDetect == true)
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        if(distanceToTarget < chaseRange)
         {
-            Vector3 targetDir = transform.position - target.position;
-            float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg + 90f;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 180);
-
-            transform.Translate(Vector3.up * Time.deltaTime * Speed);
+            if(distanceToTarget > attackRange)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            } 
         }
+        if (distanceToTarget < attackRange)
+        {
+            if (Time.time > lastAttackTime + attackDelay)
+            {
+                target.gameObject.GetComponent<Player>().damaged(amount);
+                lastAttackTime = Time.time;
+            }
+        }
+        checkPosition();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void checkPosition()
     {
-        if(collision.gameObject.tag == "Player")
+        if (target.position.x > transform.position.x)
         {
-            isDetect = true;
+            //face right
+            transform.localScale = new Vector3(-0.5f, 0.5f, 1);
         }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        else if (target.position.x < transform.position.x)
         {
-            isDetect = false;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D target)
-    {
-        if (target.gameObject.tag == "Player")
-        {
-            target.gameObject.GetComponent<Player>().damaged(amount);
+            //face left
+            transform.localScale = new Vector3(0.5f, 0.5f, 1);
         }
     }
 
     public void damaged(int amount)
     {
         health -= amount;
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
-        Debug.Log(health);
     }
 }
