@@ -2,34 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public Transform Player;
-
-    int moveSpeed = 1;
-    int minDist = 1; //prevent the enemy from merging with the player object
+    public Transform player;
+    //public Scene battleScene;
+    public int moveSpeed = 1; //movement speed
+    public int triggerDist = 1; //battle scene trigger distance
 
     void Start(){
 
     }
 
     void Update(){
-        CheckPosition();
+        followPlayer();
+        triggerBattle();
     }
 
-    void CheckPosition(){
-        if (Vector2.Distance(transform.position, Player.position) > minDist){
-            //transform.LookAt(Player.position);
+    void triggerBattle(){
+        if (Vector2.Distance(transform.position, player.position) <= triggerDist){
+            SceneManager.LoadScene("Dinh_TestBattleScene", LoadSceneMode.Single);
+        }
+    }
 
-
-            if (Player.position.y > transform.position.y)
+    void followPlayer(){
+        if (Vector2.Distance(transform.position, player.position) > triggerDist){
+            if (player.position.y > transform.position.y)
                 MoveUp();
-            else if (Player.position.x < transform.position.x)
+            else if (player.position.x < transform.position.x)
                 MoveLeft();
-            else if (Player.position.y < transform.position.y)
+            else if (player.position.y < transform.position.y)
                 MoveDown();
-            else if (Player.position.x > transform.position.x)
+            else if (player.position.x > transform.position.x)
                 MoveRight();
         }
     }

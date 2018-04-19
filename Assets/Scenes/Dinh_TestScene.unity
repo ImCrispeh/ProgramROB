@@ -9432,7 +9432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5145d1b20bf337a43a83f30a910711bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 217411100}
+  player: {fileID: 217411100}
+  moveSpeed: 1
+  triggerDist: 1
 --- !u!1 &1590449712
 GameObject:
   m_ObjectHideFlags: 0
