@@ -111,7 +111,7 @@ MonoBehaviour:
   amount: 4
   attackRange: 15
   attackDelay: 3
-  bulletForce: 700
+  bulletForce: 0
   shootPoint: {fileID: 4448892191506384}
   projectTile: {fileID: 1069990758406160, guid: 207256a4ede8a2c4d9c6c9f2cc22a7dc,
     type: 2}
