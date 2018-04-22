@@ -17,40 +17,73 @@ public class PlayerProgramController : MonoBehaviour {
     public Text actionPointsText;
     public Rigidbody2D rigid;
 
+	public bool isCombat;
+
+	//Free Movement Combat Variables
+	public float speed;
+	private Transform firePoint;
+	private float damage = 1;
+	public float fireRate = 0;
+	public float timeToFire = 0;
+	public LayerMask allowHit;
+
 	// Use this for initialization
 	void Start () {
         actions = new List<String>();
         rigid = GetComponent<Rigidbody2D>();
+		firePoint = transform.GetChild(0).GetChild(0);
+		if (firePoint == null) {
+			Debug.Log ("Fire Point not Found");
+		}
         UpdateActionPointsText(0);
+
 	}
-	
+
+	void FixedUpdate () {
+		if (isCombat) {
+			FreeMovement ();
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
-        
-        // Key inputs here for testing before implementing on buttons
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            AddAction("MoveRight");
-        }
+		if (!isCombat) {
+			// Key inputs here for testing before implementing on buttons
+			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				AddAction ("MoveRight");
+			}
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            AddAction("MoveLeft");
-        }
+			if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				AddAction ("MoveLeft");
+			}
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            AddAction("MoveUp");
-        }
+			if (Input.GetKeyDown (KeyCode.UpArrow)) {
+				AddAction ("MoveUp");
+			}
 
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            AddAction("MoveDown");
-        }
+			if (Input.GetKeyDown (KeyCode.DownArrow)) {
+				AddAction ("MoveDown");
+			}
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            LoadActionList();
-        }
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				LoadActionList ();
+			}
 
-        if (Input.GetKeyDown(KeyCode.Backspace)) {
-            RemoveAction();
-        }
+			if (Input.GetKeyDown (KeyCode.Backspace)) {
+				RemoveAction ();
+			}
+		} else {
+			if (fireRate == 0) {
+				if (Input.GetButtonDown ("Fire1")) {
+					Shooting ();
+				}
+			} else {
+				if (Input.GetButton ("Fire1") && Time.time > timeToFire) {
+					timeToFire = Time.time + 1 / fireRate;
+					Shooting ();
+				}
+			}
+		}
 	}
 
     public void RemoveAction() {
@@ -152,5 +185,24 @@ public class PlayerProgramController : MonoBehaviour {
         isMoving = false;
         moveTimer = 0f;
     }
+
+	//Free Movement Combat Functions
+	private void FreeMovement () {
+		float moveX = Input.GetAxis ("Horizontal");
+		float moveY = Input.GetAxis ("Vertical");
+
+		rigid.velocity = new Vector2 (moveX * speed, moveY * speed);
+	}
+
+	private void Shooting () {
+		Vector2 mousePos = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
+		Vector2 firePointPos = new Vector2 (firePoint.position.x, firePoint.position.y);
+		RaycastHit2D hit = Physics2D.Raycast (firePointPos, mousePos - firePointPos, 100, allowHit);
+		Debug.DrawLine (firePointPos, mousePos);
+		if (hit.collider != null) {
+			Debug.DrawLine (firePointPos, hit.point, Color.red);
+			hit.collider.gameObject.GetComponent<TestEnemyController> ().Damage (damage);
+		}
+	}
 }
     
