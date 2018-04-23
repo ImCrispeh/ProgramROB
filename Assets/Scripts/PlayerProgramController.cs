@@ -131,6 +131,7 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     IEnumerator ExecuteActionList() {
+        DarkRoomController._instance.SetMoving(true);
         foreach (String actionFunc in actions) {
             Debug.Log(actionFunc);
             yield return StartCoroutine(actionFunc);
@@ -138,6 +139,7 @@ public class PlayerProgramController : MonoBehaviour {
         actions.Clear();
         currNumOfActions = 0;
         UpdateActionText();
+        DarkRoomController._instance.SetMoving(false);
         TurnController._instance.EnemyTurn();
     }
 
