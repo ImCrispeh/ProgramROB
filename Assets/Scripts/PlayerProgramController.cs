@@ -16,12 +16,19 @@ public class PlayerProgramController : MonoBehaviour {
     public Text actionsText;
     public Text actionPointsText;
     public Rigidbody2D rigid;
+	public GameObject player;
 
+
+	//for wall collision
+	private Boolean isWall=false;
+	private Vector3 currentPosition;
+	private Boolean hitWall = false;
 	// Use this for initialization
 	void Start () {
         actions = new List<String>();
         rigid = GetComponent<Rigidbody2D>();
         UpdateActionPointsText(0);
+		currentPosition=player.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -29,23 +36,31 @@ public class PlayerProgramController : MonoBehaviour {
         
         // Key inputs here for testing before implementing on buttons
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            AddAction("MoveRight");
+			//currentPosition=player.transform.position;
+			AddAction("MoveRight");
+			//if(isWall=true){
+		    //player.transform.position=currentPosition;
+			//}
+
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            AddAction("MoveLeft");
+			
+			AddAction("MoveLeft");
+
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            AddAction("MoveUp");
+			AddAction("MoveUp");
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            AddAction("MoveDown");
+			AddAction("MoveDown");
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            LoadActionList();
+			LoadActionList();
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace)) {
@@ -65,7 +80,7 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     public void LoadActionList() {
-        if (TurnController._instance.GetIsPlayerTurn()) {
+        if (TurnController._instance.GetIsPlayerTurn()&& hitWall==false) {
             StartCoroutine(ExecuteActionList());
         }
     }
@@ -100,33 +115,82 @@ public class PlayerProgramController : MonoBehaviour {
         actionPointsText.text = "Remaining action points:" + "\n" + actionPoints;
     }
 
+
+
     // Coroutines used so that they can be queued
     // Need to use WaitForSeconds so that actions do not get locked out by the isMoving condition
-    IEnumerator MoveRight() {
-        if (!isMoving) {
+	void OnCollisionEnter2D(Collision2D collision){
+		if (collision.gameObject.tag == "Wall") {
+			Debug.Log ("wall");
+			isWall = true;
+		}
+	}
+
+
+	IEnumerator MoveRight() {
+
+		//currentPosition=player.transform.position;
+
+
+		if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x + moveDist, transform.position.y)));
         }
-        yield return new WaitForSeconds(1.2f);
+        
+
+		//if(isWall==true){
+		//player.transform.position=currentPosition;
+		//}
+
+		yield return new WaitForSeconds(1.2f);
+
     }
 
     IEnumerator MoveLeft() {
+		//currentPosition=player.transform.position;
+
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x - moveDist, transform.position.y)));
         }
-        yield return new WaitForSeconds(1.2f);
+        
+		//if(isWall==true){
+		//	player.transform.position=currentPosition;
+		//}
+
+		yield return new WaitForSeconds(1.2f);
+
     }
 
     IEnumerator MoveUp() {
+		//currentPosition=player.transform.position;
+
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x, transform.position.y + moveDist)));
         }
+
+		//if(isWall==true){
+			
+		//	player.transform.position=currentPosition;
+
+		//}
+
+
         yield return new WaitForSeconds(1.2f);
     }
 
+
+
+
     IEnumerator MoveDown() {
+		//currentPosition=player.transform.position;
+
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x, transform.position.y - moveDist)));
         }
+
+		//if(isWall==true){
+		//	player.transform.position=currentPosition;
+		//}
+
         yield return new WaitForSeconds(1.2f);
     }
 
@@ -142,13 +206,20 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     IEnumerator Move(Vector2 source, Vector2 target) {
+		currentPosition=player.transform.position;
         isMoving = true;
         while (moveTimer < moveDuration) {
             moveTimer += Time.deltaTime;
             rigid.MovePosition(Vector2.Lerp(source, target, moveTimer / moveDuration));
             yield return null;
         }
-        //transform.position = target;
+		while(isWall==true){
+
+			player.transform.position=currentPosition;
+			isWall = false;
+		}
+
+        //transform.position = target
         isMoving = false;
         moveTimer = 0f;
     }
