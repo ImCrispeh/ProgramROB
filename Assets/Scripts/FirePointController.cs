@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class FirePointController : MonoBehaviour {
 
-	private Transform player;
+	private Transform playerPos;
+	private PlayerProgramController player;
 
 	// Use this for initialization
 	void Start () {
-		player = transform.parent.transform;
+		playerPos = transform.parent.transform;
+		player = transform.parent.parent.GetComponent<PlayerProgramController> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		/*Vector2 mousePos = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
-		Vector2 playerPos = player.position;
-		Vector2 dir = mousePos - playerPos;
-		transform.position = dir * 1f + playerPos;*/
-		Vector2 dir = Camera.main.ScreenToWorldPoint (Input.mousePosition) - player.position;
+		Positioning ();
+	}
+
+	private void Positioning () {
+		Vector2 dir = Camera.main.ScreenToWorldPoint (Input.mousePosition) - playerPos.position;
 		float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
 		Quaternion rotation = Quaternion.AngleAxis (angle, Vector3.forward);
-		player.rotation = Quaternion.Slerp (player.rotation, rotation, 1f);
+		playerPos.rotation = Quaternion.Slerp (playerPos.rotation, rotation, 1f);
+	}
+
+	private void OnTriggerStay2D (Collider2D other) {
+		if (Input.GetButtonDown ("Fire1") && other.transform.tag == "Enemy") {
+			other.gameObject.GetComponent<TestEnemyController> ().Damage (player.damage);
+			Debug.Log ("Hit");
+		}
 	}
 }

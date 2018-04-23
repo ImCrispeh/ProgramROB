@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestEnemyController : MonoBehaviour {
 
-	private float health = 10;
+	public float health = 10;
 
 	// Use this for initialization
 	void Start () {

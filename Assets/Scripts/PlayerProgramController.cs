@@ -22,7 +22,7 @@ public class PlayerProgramController : MonoBehaviour {
 	//Free Movement Combat Variables
 	public float speed;
 	private Transform firePoint;
-	private float damage = 1;
+	public float damage = 1;
 	public float fireRate = 0;
 	public float timeToFire = 0;
 	public LayerMask allowHit;
@@ -74,17 +74,25 @@ public class PlayerProgramController : MonoBehaviour {
 			}
 		} else {
 			if (fireRate == 0) {
-				if (Input.GetButtonDown ("Fire1")) {
+				if (Input.GetButtonDown ("Fire2")) {
 					Shooting ();
 				}
 			} else {
-				if (Input.GetButton ("Fire1") && Time.time > timeToFire) {
+				if (Input.GetButton ("Fire2") && Time.time > timeToFire) {
 					timeToFire = Time.time + 1 / fireRate;
 					Shooting ();
 				}
 			}
 		}
 	}
+
+	//Collision & Triggers
+	/*void OnTriggerStay2D (Collider2D other) {
+		Debug.Log ("Working");
+			if (Input.GetButtonDown ("Fire1") && other.transform.tag == "Enemy") {
+				other.gameObject.GetComponent<TestEnemyController> ().Damage (damage);
+			}
+	}*/
 
     public void RemoveAction() {
         if (TurnController._instance.GetIsPlayerTurn()) {
