@@ -4,13 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - melee
+  - Tile
+  - BlockingLayer
   - Enemy
-  - Wall
-  - Key
-  - DeadBody
-  - Exit
-  - Door
   layers:
   - Default
   - TransparentFX
