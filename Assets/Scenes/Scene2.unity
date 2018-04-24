@@ -246,6 +246,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1690683649544790, guid: 8c419fff459632243968954ed567db47, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c419fff459632243968954ed567db47, type: 2}
   m_IsPrefabParent: 0
@@ -570,7 +574,7 @@ GameObject:
   - component: {fileID: 1706679330}
   m_Layer: 0
   m_Name: turrets
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
