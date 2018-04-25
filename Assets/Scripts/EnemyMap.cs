@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Enemy : MonoBehaviour
+public class EnemyMap : MonoBehaviour
 {
     public Transform player;
     //public Scene battleScene;
     public int moveSpeed = 1; //movement speed
-    public int triggerDist = 1; //battle scene trigger distance
+    public float triggerDist = 1f; //battle scene trigger distance
 
     void Start(){
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     void Update(){
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     void triggerBattle(){
         if (Vector2.Distance(transform.position, player.position) <= triggerDist){
-            SceneManager.LoadScene("Dinh_TestBattleScene", LoadSceneMode.Single);
+            SceneManager.LoadScene(1);
         }
     }
 

@@ -126,8 +126,14 @@ public class PlayerProgramController : MonoBehaviour {
 		}
 	}
 
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Exit") {
+            Debug.Log("Win");
+        }
+    }
 
-	IEnumerator MoveRight() {
+
+    IEnumerator MoveRight() {
 
 		//currentPosition=player.transform.position;
 
@@ -197,7 +203,7 @@ public class PlayerProgramController : MonoBehaviour {
     IEnumerator ExecuteActionList() {
         DarkRoomController._instance.SetMoving(true);
         foreach (String actionFunc in actions) {
-            Debug.Log(actionFunc);
+            //Debug.Log(actionFunc);
             yield return StartCoroutine(actionFunc);
         }
         actions.Clear();
@@ -215,7 +221,7 @@ public class PlayerProgramController : MonoBehaviour {
             rigid.MovePosition(Vector2.Lerp(source, target, moveTimer / moveDuration));
             yield return null;
         }
-		while(isWall==true){
+		if(isWall==true){
 
 			player.transform.position=currentPosition;
 			isWall = false;

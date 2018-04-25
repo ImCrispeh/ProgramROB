@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Dinh_TestScene.unity
-    guid: 5a72e557cccb4044a85767f57e82df8e
+    path: Assets/Scenes/Level1.unity
+    guid: 586a457fe5773374dab6737e3323f425
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: a55f2902a36062c409653d91c6c4619b
+    path: Assets/Scenes/Scene2.unity
+    guid: a172f457314102e4dac023865c72708f

@@ -43,7 +43,7 @@ public class TurnController : MonoBehaviour {
 
     IEnumerator EnemyTurnTimeTest() {
         DarkRoomController._instance.ToggleEffect(false);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.5f);
         DarkRoomController._instance.ToggleEffect(true);
         PlayerTurn();
     }
