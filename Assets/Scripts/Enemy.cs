@@ -1,61 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using System.Collections;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MovingObject
 {
-    public Transform player;
-    //public Scene battleScene;
-    public int moveSpeed = 1; //movement speed
-    public int triggerDist = 1; //battle scene trigger distance
+    private Transform target;
 
-    void Start(){
-
+    protected override void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        base.Start();
     }
 
     void Update(){
-        followPlayer();
-        triggerBattle();
-    }
-
-    void triggerBattle(){
-        if (Vector2.Distance(transform.position, player.position) <= triggerDist){
-            SceneManager.LoadScene("Dinh_TestBattleScene", LoadSceneMode.Single);
+        if (Vector2.Distance(gameObject.transform.position, target.transform.position) > 1){
+            MoveEnemy();
         }
     }
 
-    void followPlayer(){
-        if (Vector2.Distance(transform.position, player.position) > triggerDist){
-            if (player.position.y > transform.position.y)
-                MoveUp();
-            else if (player.position.x < transform.position.x)
-                MoveLeft();
-            else if (player.position.y < transform.position.y)
-                MoveDown();
-            else if (player.position.x > transform.position.x)
-                MoveRight();
+    protected override void AttemptMove<T>(int xDir, int yDir)
+    {
+        base.AttemptMove<T>(xDir, yDir);
+    }
+
+    public void MoveEnemy()
+    {
+        //These values allow us to choose between the cardinal directions: up, down, left and right.
+        int xDir = 0;
+        int yDir = 0;
+
+        //If the difference in positions is approximately zero (Epsilon) do the following:
+        if (Mathf.Abs(target.position.x - transform.position.x) < float.Epsilon)
+        {
+            yDir = target.position.y > transform.position.y ? 1 : -1;
         }
+        else
+        {
+            xDir = target.position.x > transform.position.x ? 1 : -1;
+        }
+
+        //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
+        AttemptMove<Player>(xDir, yDir);
     }
 
-    void MoveUp(){
-        transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
-        print("enemy_command: up");
-    }
-
-    void MoveDown(){
-        transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
-        print("enemy_command: down");
-    }
-
-    void MoveRight(){
-        transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
-        print("enemy_command: right");
-    }
-
-    void MoveLeft() {
-        transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
-        print("enemy_command: left");
+    //OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject 
+    protected override void OnCantMove<T>(T component)
+    {
+        Player hitPlayer = component as Player;
     }
 }
