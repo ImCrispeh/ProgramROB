@@ -84,7 +84,7 @@ MonoBehaviour:
   attackRange: 7
   chaseRange: 14
   attackDelay: 2
-  projectTile: {fileID: 1938708249115540, guid: c9055a754ec41aa4d82dbd448e283d26,
+  projectTile: {fileID: 1069990758406160, guid: 207256a4ede8a2c4d9c6c9f2cc22a7dc,
     type: 2}
   bulletForce: 600
 --- !u!212 &212739982447375540
