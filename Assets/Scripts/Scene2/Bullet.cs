@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-    public int amount;
+    public int damage;
     private void Update()
     {
-        Destroy(gameObject, 1);
+        Destroy(gameObject, 7);
     }
-    private void OnTriggerEnter2D(Collider2D target)
-    {
-        if(target.gameObject.tag == "Player")
-        {
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Player") {
             Destroy(gameObject);
-            target.gameObject.GetComponent<Player>().damaged(amount);
+            collision.gameObject.GetComponent<PlayerCombatController>().damaged(damage);
+        }
+
+        if (collision.gameObject.tag == "Boundary") {
+            Destroy(gameObject);
         }
     }
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
     public float speed;
+    public int damage;
     Transform target;
     public float chaseRange;
     public float attackRange;
     private float lastAttackTime;
-    public int amount;
     public float attackDelay;
     public int health;
     void Start()
@@ -18,23 +18,22 @@ public class Enemy : MonoBehaviour {
     }
     void Update()
     {
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if(distanceToTarget < chaseRange)
-        {
-            if(distanceToTarget > attackRange)
-            {
+        if (target != null) {
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            //if(distanceToTarget < chaseRange)
+            //{
+            if (distanceToTarget > attackRange) {
                 transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-            } 
-        }
-        if (distanceToTarget < attackRange)
-        {
-            if (Time.time > lastAttackTime + attackDelay)
-            {
-                target.gameObject.GetComponent<Player>().damaged(amount);
-                lastAttackTime = Time.time;
             }
+            //}
+            if (distanceToTarget < attackRange) {
+                if (Time.time > lastAttackTime + attackDelay) {
+                    target.gameObject.GetComponent<PlayerCombatController>().damaged(damage);
+                    lastAttackTime = Time.time;
+                }
+            }
+            checkPosition();
         }
-        checkPosition();
     }
 
     private void checkPosition()
@@ -54,5 +53,9 @@ public class Enemy : MonoBehaviour {
     public void damaged(int amount)
     {
         health -= amount;
+        if (health <= 0) {
+            MapStateController._instance.CheckEnemiesAlive();
+            Destroy(gameObject);
+        }
     }
 }

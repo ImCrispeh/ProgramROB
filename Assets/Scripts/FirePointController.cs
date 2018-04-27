@@ -5,12 +5,12 @@ using UnityEngine;
 public class FirePointController : MonoBehaviour {
 
 	private Transform playerPos;
-	private PlayerProgramController player;
+	private PlayerCombatController player;
 
 	// Use this for initialization
 	void Start () {
 		playerPos = transform.parent.transform;
-		player = transform.parent.parent.GetComponent<PlayerProgramController> ();
+		player = transform.parent.parent.GetComponent<PlayerCombatController> ();
 	}
 	
 	// Update is called once per frame
@@ -27,8 +27,13 @@ public class FirePointController : MonoBehaviour {
 
 	private void OnTriggerStay2D (Collider2D other) {
 		if (Input.GetButtonDown ("Fire1") && other.transform.tag == "Enemy") {
-			other.gameObject.GetComponent<TestEnemyController> ().Damage (player.damage);
-			Debug.Log ("Hit");
-		}
+            if (other.GetComponent<Enemy>() != null) {
+                other.GetComponent<Enemy>().damaged(player.damage);
+            } else if (other.GetComponent<FireEnemy>() != null) {
+                other.GetComponent<FireEnemy>().damaged(player.damage);
+            } else if (other.GetComponent<Turrets>() != null) {
+                other.GetComponent<Turrets>().damaged(player.damage);
+            }
+        }
 	}
 }

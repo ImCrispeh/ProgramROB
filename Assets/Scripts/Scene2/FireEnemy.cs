@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class FireEnemy : MonoBehaviour
 {
-
     public int health;
-    public int amount;
     Transform target;
     public float Speed;
     bool isDetect;
@@ -16,29 +14,27 @@ public class FireEnemy : MonoBehaviour
     public float attackDelay;
     public GameObject projectTile;
     public float bulletForce;
-    //public Transform shootPoint;
+    public Transform shootPoint;
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
     }
     void Update()
     {
+        if (target != null) {
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            if (distanceToTarget > attackRange) {
+                Rotate();
+                transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
+            }
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if (distanceToTarget > attackRange)
-        {
-            Rotate();
-            transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
-        }
-
-        if (distanceToTarget < attackRange)
-        {
-            Rotate();
-            if (Time.time > lastAttackTime + attackDelay)
-            {
-                GameObject Bullet = Instantiate(projectTile, transform.position, transform.rotation);
-                Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
-                lastAttackTime = Time.time;
+            if (distanceToTarget < attackRange) {
+                Rotate();
+                if (Time.time > lastAttackTime + attackDelay) {
+                    GameObject Bullet = Instantiate(projectTile, shootPoint.position, transform.rotation);
+                    Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
+                    lastAttackTime = Time.time;
+                }
             }
         }
     }
@@ -56,8 +52,8 @@ public class FireEnemy : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
+            MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }
-        Debug.Log(health);
     }
 }

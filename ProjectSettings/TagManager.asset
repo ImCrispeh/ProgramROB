@@ -5,6 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - DeadBody
+  - Door
+  - Exit
+  - Key
+  - Wall
+  - melee
+  - Boundary
+  - Bullet
+  - Tile
+  - EndImg
+  - EndText
   layers:
   - Default
   - TransparentFX
@@ -15,8 +26,8 @@ TagManager:
   - 
   - 
   - Enemy
-  - 
-  - 
+  - Bullet
+  - Obstacle
   - 
   - 
   - 
