@@ -28,7 +28,7 @@ public class EnemyMap : MovingObject
         //These values allow us to choose between the cardinal directions: up, down, left and right.
         float xDir = 0;
         float yDir = 0;
-        if (Mathf.Abs(target.position.x - transform.position.x) > 0 && Mathf.Abs(target.position.x - transform.position.x) < moveDist/2)
+        if (Mathf.Abs(target.position.x - transform.position.x) >= 0 && Mathf.Abs(target.position.x - transform.position.x) < moveDist/2)
         {
             yDir = target.position.y > transform.position.y ? moveDist : moveDist * -1;
         }
