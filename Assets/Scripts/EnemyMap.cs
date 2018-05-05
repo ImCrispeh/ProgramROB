@@ -39,8 +39,7 @@ public class EnemyMap : MovingObject
 
         //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
         AttemptMove<Player>(xDir, yDir);
-
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(base.moveWait);
     }
 
     //OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject 
@@ -61,9 +60,13 @@ public class EnemyMap : MovingObject
         base.lastPos = new Vector2(-9999, -9999);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Player") {
-
+    public void ChangeSpeed(bool isFast) {
+        if (isFast) {
+            base.moveDuration = base.moveDuration / 2;
+            base.moveWait = base.moveDuration;
+        } else {
+            base.moveDuration = base.moveDuration * 2;
+            base.moveWait = base.moveDuration + 0.2f;
         }
     }
 }

@@ -9,7 +9,8 @@ public class TurnController : MonoBehaviour {
     public Text turnText;
     public GameObject player;
     public GameObject[] enemies;
-    public Canvas canvas;
+    public Toggle speedChangeTgl;
+    //public Canvas canvas;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -31,6 +32,18 @@ public class TurnController : MonoBehaviour {
 		
 	}
 
+    public void ChangeSpeed(bool isFast) {
+        player.GetComponent<PlayerProgramController>().ChangeSpeed(isFast);
+
+        foreach (GameObject enemy in enemies) {
+            enemy.GetComponent<EnemyMap>().ChangeSpeed(isFast);
+        }
+    }
+
+    public void EnableSpeedChange(bool isEnabled) {
+        speedChangeTgl.interactable = isEnabled;
+    }
+
     public bool GetIsPlayerTurn() {
         return isPlayerTurn;
     }
@@ -51,8 +64,9 @@ public class TurnController : MonoBehaviour {
     }
 
     IEnumerator EnemyMovement() {
-        DarkRoomController._instance.ToggleEffect(false);
-        canvas.gameObject.SetActive(false);
+        DarkRoomController._instance.ShowEnemies(true);
+        DarkRoomController._instance.SetEnemiesMoving(true);
+        //canvas.gameObject.SetActive(false);
         foreach(GameObject enemy in enemies) {
             if (enemy != null) {
                 int i = 0;
@@ -63,9 +77,10 @@ public class TurnController : MonoBehaviour {
                 enemy.GetComponent<EnemyMap>().ResetAfterTurn();
             }
         }
-        yield return new WaitForSeconds(2f);
-        DarkRoomController._instance.ToggleEffect(true);
-        canvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        DarkRoomController._instance.ShowEnemies(false);
+        DarkRoomController._instance.SetEnemiesMoving(false);
+        //canvas.gameObject.SetActive(true);
         PlayerTurn();
     }
 }

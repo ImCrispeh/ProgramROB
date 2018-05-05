@@ -19,8 +19,8 @@ public class StatsController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,8 +31,8 @@ public class StatsController : MonoBehaviour {
         actionPointsText.text = "Remaining action points:" + "\n" + actionPoints;
     }
 
-    public void UpdateActionsList(List<string> actions) {
-        actionsText.text = "";
+    public void UpdateActionsList(int currActions, int maxActions, List<string> actions) {
+        actionsText.text = "Amount of actions queued: " + currActions + "/" + maxActions + "\n";
         foreach (string action in actions) {
             actionsText.text += action + "\n";
         }

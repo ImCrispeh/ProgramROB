@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class MovingObject : MonoBehaviour
 {
     public float moveDuration = 1f;
+    public float moveWait;
     public float moveTimer = 0f;
     //public float moveTime = 0.1f;           
     public LayerMask blockingLayer;
@@ -19,7 +20,8 @@ public abstract class MovingObject : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
-        //inverseMoveTime = 1f / moveTime;
+        moveWait = moveDuration + 0.2f;
+    //inverseMoveTime = 1f / moveTime;
     }
 
     protected bool Move(float xDir, float yDir, out RaycastHit2D hit)

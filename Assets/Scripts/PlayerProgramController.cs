@@ -10,6 +10,7 @@ public class PlayerProgramController : MonoBehaviour {
     public Vector2 lastPos;
     public float moveDist = 1.5f;
     public float moveDuration = 1f;
+    public float moveWait;
     public float moveTimer = 0f;
     private bool isMoving = false;
     public int currNumOfActions = 0;
@@ -23,8 +24,10 @@ public class PlayerProgramController : MonoBehaviour {
         actions = new List<String>();
         StatsController._instance.UpdateActionPoints(actionPoints);
         StatsController._instance.UpdateHealth(currHealth);
+        StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
         rigid = GetComponent<Rigidbody2D>();
         lastPos = transform.position;
+        moveWait = moveDuration + 0.2f;
 	}
 
 	// Update is called once per frame
@@ -68,7 +71,7 @@ public class PlayerProgramController : MonoBehaviour {
             if (currNumOfActions > 0) {
                 currNumOfActions--;
                 actions.RemoveAt(currNumOfActions);
-                StatsController._instance.UpdateActionsList(actions);
+                StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
                 actionPoints++;
                 StatsController._instance.UpdateActionPoints(actionPoints);
             }
@@ -88,14 +91,10 @@ public class PlayerProgramController : MonoBehaviour {
                 if (currNumOfActions < maxNumOfActions) {
                     actions.Add(action);
                     currNumOfActions++;
-                    StatsController._instance.UpdateActionsList(actions);
+                    StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
                     actionPoints--;
                     StatsController._instance.UpdateActionPoints(actionPoints);
-                } else {
-                    Debug.Log("Maximum amount of actions reached");
                 }
-            } else {
-                Debug.Log("No action points remaining");
             }
         }
     }
@@ -106,28 +105,28 @@ public class PlayerProgramController : MonoBehaviour {
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x + moveDist, transform.position.y)));
         }
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(moveWait);
     }
 
     IEnumerator MoveLeft() {
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x - moveDist, transform.position.y)));
         }
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(moveWait);
     }
 
     IEnumerator MoveUp() {
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x, transform.position.y + moveDist)));
         }
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(moveWait);
     }
 
     IEnumerator MoveDown() {
         if (!isMoving) {
             StartCoroutine(Move(transform.position, new Vector2(transform.position.x, transform.position.y - moveDist)));
         }
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(moveWait);
     }
 
     IEnumerator ExecuteActionList() {
@@ -136,14 +135,14 @@ public class PlayerProgramController : MonoBehaviour {
         }
         actions.Clear();
         currNumOfActions = 0;
-        StatsController._instance.UpdateActionsList(actions);
+        StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
         TurnController._instance.EnemyTurn();
     }
 
     IEnumerator Move(Vector2 source, Vector2 target) {
         lastPos = transform.position;
         isMoving = true;
-        DarkRoomController._instance.SetMoving(isMoving);
+        DarkRoomController._instance.SetPlayerMoving(isMoving);
         while (moveTimer < moveDuration) {
             moveTimer += Time.deltaTime;
             rigid.MovePosition(Vector2.Lerp(source, target, moveTimer / moveDuration));
@@ -154,9 +153,19 @@ public class PlayerProgramController : MonoBehaviour {
             hitWall = false;
         }
         isMoving = false;
-        DarkRoomController._instance.SetMoving(isMoving);
+        DarkRoomController._instance.SetPlayerMoving(isMoving);
         moveTimer = 0f;
         lastPos = transform.position;
+    }
+
+    public void ChangeSpeed(bool isFast) {
+        if (isFast) {
+            moveDuration = moveDuration / 2;
+            moveWait = moveDuration;
+        } else {
+            moveDuration = moveDuration * 2;
+            moveWait = moveDuration + 0.2f;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

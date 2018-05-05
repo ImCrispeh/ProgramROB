@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class DarkRoomController : MonoBehaviour {
     public static DarkRoomController _instance;
-    public Transform darkRoomEffect;
+    public GameObject darkness;
+    public GameObject maskObj;
+    public Transform maskParent;
+    public GameObject playerMask;
+    public GameObject[] enemyMasks;
+    public GameObject[] enemies;
     public Transform player;
-    private bool isMoving = false;
+    public bool isPlayerMoving = false;
+    public bool isEnemiesMoving = false;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -19,21 +25,47 @@ public class DarkRoomController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        darkRoomEffect.position = new Vector3(player.position.x, player.position.y, darkRoomEffect.position.z);
+        playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemyMasks = new GameObject[enemies.Length];
+        for (int i = 0; i < enemyMasks.Length; i++) {
+            enemyMasks[i] = Instantiate(maskObj, enemies[i].transform.position, Quaternion.identity, maskParent);
+        }
+        ShowEnemies(false);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (isMoving) {
-            darkRoomEffect.position = new Vector3(player.position.x, player.position.y, darkRoomEffect.position.z);
+        if (isPlayerMoving) {
+            playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
+        }
+
+		if (isEnemiesMoving) {
+            for (int i = 0; i < enemyMasks.Length; i++) {
+                if (enemies[i] != null) {
+                    enemyMasks[i].transform.position = Camera.main.WorldToScreenPoint(enemies[i].transform.position);
+                }
+            }
         }
 	}
 
-    public void ToggleEffect(bool toggle) {
-        darkRoomEffect.gameObject.SetActive(toggle);
+    public void ShowEnemies(bool toggle) {
+        foreach (GameObject mask in enemyMasks) {
+            mask.SetActive(toggle);
+        }
     }
 
-    public void SetMoving(bool moving) {
-        isMoving = moving;
+    public void DisableEffect() {
+        darkness.SetActive(false);
+    }
+
+    public void SetPlayerMoving(bool moving) {
+        isPlayerMoving = moving;
+        TurnController._instance.EnableSpeedChange(!moving);
+    }
+
+    public void SetEnemiesMoving(bool moving) {
+        isEnemiesMoving = moving;
+        TurnController._instance.EnableSpeedChange(!moving);
     }
 }
