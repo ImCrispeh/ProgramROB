@@ -42,16 +42,26 @@ public class DarkRoomController : MonoBehaviour {
 
 		if (isEnemiesMoving) {
             for (int i = 0; i < enemyMasks.Length; i++) {
-                if (enemies[i] != null) {
-                    enemyMasks[i].transform.position = Camera.main.WorldToScreenPoint(enemies[i].transform.position);
+                if (enemyMasks[i] != null) {
+                    if (enemies[i] == null) {
+                        Destroy(enemyMasks[i]);
+                    } else {
+                        enemyMasks[i].transform.position = Camera.main.WorldToScreenPoint(enemies[i].transform.position);
+                    }
                 }
             }
         }
 	}
 
     public void ShowEnemies(bool toggle) {
-        foreach (GameObject mask in enemyMasks) {
-            mask.SetActive(toggle);
+        for (int i = 0; i < enemyMasks.Length; i++) {
+            if (enemyMasks[i] != null) {
+                if (enemies[i] == null) {
+                    Destroy(enemyMasks[i]);
+                } else {
+                    enemyMasks[i].SetActive(toggle);
+                }
+            }
         }
     }
 
@@ -66,6 +76,6 @@ public class DarkRoomController : MonoBehaviour {
 
     public void SetEnemiesMoving(bool moving) {
         isEnemiesMoving = moving;
-        TurnController._instance.EnableSpeedChange(!moving);
+        TurnController._instance.EnableSpeedChange(moving);
     }
 }

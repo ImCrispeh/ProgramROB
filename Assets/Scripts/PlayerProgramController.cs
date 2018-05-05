@@ -22,7 +22,7 @@ public class PlayerProgramController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         actions = new List<String>();
-        StatsController._instance.UpdateActionPoints(actionPoints);
+        StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
         StatsController._instance.UpdateHealth(currHealth);
         StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
         rigid = GetComponent<Rigidbody2D>();
@@ -72,8 +72,7 @@ public class PlayerProgramController : MonoBehaviour {
                 currNumOfActions--;
                 actions.RemoveAt(currNumOfActions);
                 StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
-                actionPoints++;
-                StatsController._instance.UpdateActionPoints(actionPoints);
+                StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
             }
         }
     }
@@ -92,8 +91,7 @@ public class PlayerProgramController : MonoBehaviour {
                     actions.Add(action);
                     currNumOfActions++;
                     StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
-                    actionPoints--;
-                    StatsController._instance.UpdateActionPoints(actionPoints);
+                    StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
                 }
             }
         }
@@ -131,10 +129,12 @@ public class PlayerProgramController : MonoBehaviour {
 
     IEnumerator ExecuteActionList() {
         foreach (String actionFunc in actions) {
+            currNumOfActions--;
+            actionPoints--;
+            StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
             yield return StartCoroutine(actionFunc);
         }
         actions.Clear();
-        currNumOfActions = 0;
         StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
         TurnController._instance.EnemyTurn();
     }

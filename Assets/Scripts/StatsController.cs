@@ -27,8 +27,8 @@ public class StatsController : MonoBehaviour {
 		
 	}
 
-    public void UpdateActionPoints(int actionPoints) {
-        actionPointsText.text = "Remaining action points:" + "\n" + actionPoints;
+    public void UpdateActionPoints(int actionPoints, int currActions) {
+        actionPointsText.text = "Remaining action points:" + "\n" + actionPoints + " (" + currActions + " queued to be used)";
     }
 
     public void UpdateActionsList(int currActions, int maxActions, List<string> actions) {
