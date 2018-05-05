@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: a2494649cc252e9448771c3a61f58070
+folderAsset: yes
+timeCreated: 1523769985
+=======
 guid: 3e666a4b4942b0d4db3f3d24100b5629
 folderAsset: yes
 timeCreated: 1523793914
+>>>>>>> AI_Dinh
 licenseType: Free
 DefaultImporter:
   userData: 

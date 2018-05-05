@@ -4,10 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Tile
-  - BlockingLayer
   - Enemy
+  - DeadBody
+  - Door
+  - Exit
+  - Key
   - Wall
+  - melee
+  - Boundary
+  - Bullet
+  - Tile
+  - EndImg
+  - EndText
+  - PUHealth
+  - PUActionPoints
   layers:
   - Default
   - TransparentFX
@@ -17,9 +27,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Bullet
+  - Obstacle
   - 
   - 
   - 
