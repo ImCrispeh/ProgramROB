@@ -19,6 +19,7 @@ public class MapStateController : MonoBehaviour {
     private int enemiesCount;
     private string mapFileName;
     private string combatFileName;
+    private string upgradeFileName;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -38,19 +39,26 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        endImg = GameObject.FindGameObjectWithTag("EndImg");
-        endText = endImg.GetComponentInChildren<Text>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (scene.buildIndex == 0) {
+        if (scene.name == "Level1") {
+            endImg = GameObject.FindGameObjectWithTag("EndImg");
+            endText = endImg.GetComponentInChildren<Text>();
+            player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
             key = GameObject.FindGameObjectWithTag("Key");
             enemiesCount = enemies.Length;
             combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
             mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
+            upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
             LoadMapData();
+            if (File.Exists(upgradeFileName)) {
+                IntegrateUpgrades();
+            }
         }
 
-        if (scene.buildIndex == 1) {
+        if (scene.name == "Level1_Combat") {
+            endImg = GameObject.FindGameObjectWithTag("EndImg");
+            endText = endImg.GetComponentInChildren<Text>();
+            player = GameObject.FindGameObjectWithTag("Player");
             combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
             LoadCombatData();
         }
@@ -66,39 +74,62 @@ public class MapStateController : MonoBehaviour {
         enemiesCount = enemies.Length;
         mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
         combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
+        upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.R)) {
-            if (File.Exists(combatFileName)) {
-                File.Delete(combatFileName);
-            }
+    //private void Update() {
+    //    if (Input.GetKeyDown(KeyCode.R)) {
+    //        if (File.Exists(combatFileName)) {
+    //            File.Delete(combatFileName);
+    //        }
 
-            if (File.Exists(mapFileName)) {
-                File.Delete(mapFileName);
-            }
-            Time.timeScale = 1;
-            SceneManager.LoadScene(0);
-        }
+    //        if (File.Exists(mapFileName)) {
+    //            File.Delete(mapFileName);
+    //        }
+    //        Time.timeScale = 1;
+    //        SceneManager.LoadScene("UpgradeTest");
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (File.Exists(combatFileName)) {
-                File.Delete(combatFileName);
-            }
+    //    if (Input.GetKeyDown(KeyCode.Escape)) {
+    //        if (File.Exists(combatFileName)) {
+    //            File.Delete(combatFileName);
+    //        }
 
-            if (File.Exists(mapFileName)) {
-                File.Delete(mapFileName);
-            }
-            Time.timeScale = 1;
-            Application.Quit();
-        }
+    //        if (File.Exists(mapFileName)) {
+    //            File.Delete(mapFileName);
+    //        }
+    //        Time.timeScale = 1;
+    //        Application.Quit();
+    //    }
+    //}
+
+    public void IntegrateUpgrades() {
+        PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
+        string jsonSave = File.ReadAllText(upgradeFileName);
+
+        UpgradeData loadedUpgradeData = JsonUtility.FromJson<UpgradeData>(jsonSave);
+
+        playerCont.actionPoints += loadedUpgradeData.apIncrease;
+        playerCont.maxHealth += loadedUpgradeData.healthIncrease;
+        playerCont.currHealth = playerCont.maxHealth;
+
+        MapData mapData = new MapData();
+        CombatData combatData = new CombatData();
+
+        mapData.playerAP = playerCont.actionPoints;
+        mapData.playerMaxHealth = playerCont.maxHealth;
+
+        combatData.health = playerCont.maxHealth;
+
+        File.Delete(upgradeFileName);
     }
 
     public void SaveMapData() {
         MapData data = new MapData();
-
-        data.playerPos = player.GetComponent<PlayerProgramController>().lastPos;
-        data.playerAP = player.GetComponent<PlayerProgramController>().actionPoints;
+        PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
+        data.playerPos = playerCont.lastPos;
+        data.playerAP = playerCont.actionPoints;
+        data.playerMaxHealth = playerCont.maxHealth;
 
         data.enemyPos = new Vector3[enemiesCount];
         data.enemyState = new bool[enemiesCount];
@@ -216,6 +247,7 @@ public class MapStateController : MonoBehaviour {
 class MapData {
     public Vector3 playerPos;
     public int playerAP;
+    public int playerMaxHealth;
 
     public Vector3[] enemyPos;
     public bool[] enemyState;

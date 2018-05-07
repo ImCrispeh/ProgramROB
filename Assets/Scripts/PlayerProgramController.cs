@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerProgramController : MonoBehaviour {
     public bool hitWall;
-    public int currHealth = 15;
+    public int maxHealth = 15;
+    public int currHealth;
     public Vector2 lastPos;
     public float moveDist = 1.5f;
     public float moveDuration = 1f;

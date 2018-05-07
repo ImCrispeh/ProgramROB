@@ -3154,6 +3154,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.5837499
       objectReference: {fileID: 0}
+    - target: {fileID: 1264811297610258, guid: 389f15540fd4b064ca548f7bcc6110b5, type: 2}
+      propertyPath: m_Name
+      value: PlayerMask
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 389f15540fd4b064ca548f7bcc6110b5, type: 2}
   m_IsPrefabParent: 0
