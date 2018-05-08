@@ -237,7 +237,7 @@ public class MapStateController : MonoBehaviour {
         }
         endImg.GetComponent<RectTransform>().localPosition = new Vector2(0, 0);
         if (DarkRoomController._instance != null) {
-            DarkRoomController._instance.DisableEffect();
+            DarkRoomController._instance.ToggleEffect(false);
         }
         Time.timeScale = 0;
     }

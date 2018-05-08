@@ -65,8 +65,8 @@ public class DarkRoomController : MonoBehaviour {
         }
     }
 
-    public void DisableEffect() {
-        darkness.SetActive(false);
+    public void ToggleEffect(bool toggle) {
+        darkness.SetActive(toggle);
     }
 
     public void SetPlayerMoving(bool moving) {
