@@ -23,17 +23,23 @@ public class FireEnemy : MonoBehaviour
     {
         if (target != null) {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
-            if (distanceToTarget > attackRange) {
-                Rotate();
-                transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
-            }
+            if (distanceToTarget < chaseRange)
+            {
+                if (distanceToTarget > attackRange)
+                {
+                    Rotate();
+                    transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
+                }
 
-            if (distanceToTarget < attackRange) {
-                Rotate();
-                if (Time.time > lastAttackTime + attackDelay) {
-                    GameObject Bullet = Instantiate(projectTile, shootPoint.position, transform.rotation);
-                    Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
-                    lastAttackTime = Time.time;
+                if (distanceToTarget < attackRange)
+                {
+                    Rotate();
+                    if (Time.time > lastAttackTime + attackDelay)
+                    {
+                        GameObject Bullet = Instantiate(projectTile, shootPoint.position, transform.rotation);
+                        Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
+                        lastAttackTime = Time.time;
+                    }
                 }
             }
         }
