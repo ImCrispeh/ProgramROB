@@ -20,7 +20,7 @@ public class Turrets : MonoBehaviour
     void Update()
     {
         if (target != null) {
-            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            //float distanceToTarget = Vector3.Distance(transform.position, target.position);
             //if (distanceToTarget < attackRange)
             //{
             Vector3 targetDir = target.position - transform.position;

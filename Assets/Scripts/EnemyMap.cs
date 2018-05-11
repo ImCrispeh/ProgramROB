@@ -9,6 +9,13 @@ public class EnemyMap : MovingObject
     private float moveDist = 1.5f;
     public Transform target;
 
+	public bool isEnemy;
+	public bool isSpider;
+	public bool isTurret;
+	public int enemyAmt;
+	public int spiderAmt;
+	public int turretAmt;
+
     protected override void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;

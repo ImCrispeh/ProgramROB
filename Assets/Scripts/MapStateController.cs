@@ -13,6 +13,7 @@ public class MapStateController : MonoBehaviour {
     public Text endText;
 
     public GameObject player;
+	public GameObject generator;
     public GameObject[] enemies;
     public GameObject key;
 
@@ -35,7 +36,7 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnDisable() {
-        SceneManager.sceneLoaded -= OnLevelLoaded;
+		SceneManager.sceneLoaded -= OnLevelLoaded;
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
@@ -55,11 +56,14 @@ public class MapStateController : MonoBehaviour {
             }
         }
 
-        if (scene.name == "Level1_Combat") {
+        //if (scene.name == "Level1_Combat") {
+		if (scene.name == "Level1_Combat (Generation)") {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
-            combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
+			generator = GameObject.FindGameObjectWithTag ("Generator");
+			combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
+			mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
             LoadCombatData();
         }
     }
@@ -124,7 +128,7 @@ public class MapStateController : MonoBehaviour {
         File.Delete(upgradeFileName);
     }
 
-    public void SaveMapData() {
+	public void SaveMapData(GameObject details) {
         MapData data = new MapData();
         PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
         data.playerPos = playerCont.lastPos;
@@ -143,6 +147,13 @@ public class MapStateController : MonoBehaviour {
         }
 
         data.keyState = (key != null);
+
+		data.isEnemy = details.GetComponent<EnemyMap> ().isEnemy;
+		data.isSpider = details.GetComponent<EnemyMap> ().isSpider;
+		data.isTurret = details.GetComponent<EnemyMap> ().isTurret;
+		data.enemyAmt = details.GetComponent<EnemyMap> ().enemyAmt;
+		data.spiderAmt = details.GetComponent<EnemyMap> ().spiderAmt;
+		data.turretAmt = details.GetComponent<EnemyMap> ().turretAmt;
 
         string json = JsonUtility.ToJson(data);
 
@@ -202,22 +213,31 @@ public class MapStateController : MonoBehaviour {
     }
 
     public void LoadCombatData() {
-        if (File.Exists(combatFileName)) {
+		if (File.Exists(combatFileName) && File.Exists(mapFileName)) {
             string jsonSave = File.ReadAllText(combatFileName);
             CombatData loadedCombatData = JsonUtility.FromJson<CombatData>(jsonSave);
 
             player.GetComponent<PlayerCombatController>().health = loadedCombatData.health;
+
+			jsonSave = File.ReadAllText(mapFileName);
+			MapData loadedMapData = JsonUtility.FromJson<MapData> (jsonSave);
+			generator.GetComponent<CombatAreaGeneratorv3> ().isEnemy = loadedMapData.isEnemy;
+			generator.GetComponent<CombatAreaGeneratorv3> ().isSpider = loadedMapData.isSpider;
+			generator.GetComponent<CombatAreaGeneratorv3> ().isTurret = loadedMapData.isTurret;
+			generator.GetComponent<CombatAreaGeneratorv3> ().enemyAmt = loadedMapData.enemyAmt;
+			generator.GetComponent<CombatAreaGeneratorv3> ().spiderAmt = loadedMapData.spiderAmt;
+			generator.GetComponent<CombatAreaGeneratorv3> ().turretAmt = loadedMapData.turretAmt;
         }
     }
 
-    public void LoadCombatScene() {
-        SaveMapData();
-        SceneManager.LoadScene(1);
+	public void LoadCombatScene(GameObject details) {
+        SaveMapData(details);
+        SceneManager.LoadScene(3);
     }
 
     public void LoadMapScene() {
         SaveCombatData();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void CheckEnemiesAlive() {
@@ -252,7 +272,14 @@ class MapData {
     public Vector3[] enemyPos;
     public bool[] enemyState;
 
-    public bool keyState;
+	public bool keyState;
+
+	public bool isEnemy;
+	public bool isSpider;
+	public bool isTurret;
+	public int enemyAmt;
+	public int spiderAmt;
+	public int turretAmt;
 }
 
 [Serializable]
