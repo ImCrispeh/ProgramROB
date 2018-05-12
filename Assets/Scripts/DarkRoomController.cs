@@ -8,7 +8,6 @@ public class DarkRoomController : MonoBehaviour {
     public GameObject maskObj;
     public Transform maskParent;
     public GameObject playerMask;
-	public GameObject PowerGenMask;
     public GameObject[] enemyMasks;
     public GameObject[] enemies;
     public Transform player;
@@ -33,7 +32,6 @@ public class DarkRoomController : MonoBehaviour {
             enemyMasks[i] = Instantiate(maskObj, enemies[i].transform.position, Quaternion.identity, maskParent);
         }
         ShowEnemies(false);
-		PowerGenMask.SetActive (false);
     }
 	
 	// Update is called once per frame
@@ -80,8 +78,4 @@ public class DarkRoomController : MonoBehaviour {
         isEnemiesMoving = moving;
         TurnController._instance.EnableSpeedChange(moving);
     }
-
-	public void SetRoomsLight(bool choice){
-		PowerGenMask.SetActive (choice);
-	}
 }
