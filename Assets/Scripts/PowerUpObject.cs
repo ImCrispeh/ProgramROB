@@ -4,34 +4,49 @@ using UnityEngine;
 
 public class PowerUpObject : MonoBehaviour {
 
-    public int pointsAction = 3;
-    public int pointsHealth = 3;
-    public int pointsDamage = 2;
+    public int pointsAction = 0;
+    public int pointsHealth = 0;
+    public int pointsDamage = 0;
 
-    public int dmgBuffDuration = 0;
-    private int dmgCap = 5; //damage cap
-    private int dmgNormal;
-    private bool dmgBuffActive = false;
+    public int visionBuffDuration = 0;
+    private Vector3 visionNormal;
+    private bool visionBuffActive = false;
 
     void Start()
     {
-        dmgNormal = FindObjectOfType<PlayerCombatController>().damage; //temp value for original damage
+        //dmgNormal = FindObjectOfType<PlayerCombatController>().damage; //temp value for original damage
+        visionNormal = FindObjectOfType<DarkRoomController>().transform.localScale;
+    }
+
+    void Update()
+    {
+        //if (visionBuffActive && FindObjectOfType<TurnController>().GetIsPlayerTurn() == false)
+        //{ // decrement from the buff duration every turn 
+        //    visionBuffDuration -= 1;
+        //}
+
+        //if (!visionBuffActive && visionBuffDuration <= 0)
+        //{ //all buff duration expires, remove buff
+        //    RmVisionBuff();
+        //    visionBuffActive = false;
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.tag == "Player"){
 
             if (IsHealth())
-                AddHealth();
+                IncHealth();
 
             if (IsActionPoint())
-                AddActionPoints();
+                IncActionPoints();
 
-            if (IsDamageBuff()){
-                dmgBuffDuration = 3;
-                dmgBuffActive = true;
+            //if (IsDamageBuff()){
+            //    IncDamageBuff();
+            //}
 
-            }
+            if (IsVision())
+                IncVision();
 
             Debug.Log("Collision: PowerUp");
             Destroy(gameObject);
@@ -52,43 +67,41 @@ public class PowerUpObject : MonoBehaviour {
         return false;
     }
 
-    private bool IsDamageBuff()
-    {
+    private bool IsDamageBuff(){
         if (gameObject.tag == "PUDamage"){
             return true;
         }
         return false;
     }
 
-    private bool DamageBuffActive(){
-        if(dmgBuffDuration > 0){
+    private bool IsVision(){
+        if(gameObject.tag == "PUVision"){
             return true;
         }
-
         return false;
     }
 
-    private void AddActionPoints(){
+    private void IncActionPoints(){
         FindObjectOfType<PlayerProgramController>().actionPoints += pointsAction;
         FindObjectOfType<StatsController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints);
     }
 
-    private void AddHealth(){
+    private void IncHealth(){
         FindObjectOfType<PlayerProgramController>().currHealth += pointsHealth;
         FindObjectOfType<StatsController>().UpdateHealth(FindObjectOfType<PlayerProgramController>().currHealth);
     }
 
-    private void AddDamageBuff()
-    {
-        if(FindObjectOfType<PlayerCombatController>().damage <= dmgCap)
-            FindObjectOfType<PlayerCombatController>().damage += pointsDamage;
+    //private void IncDamageBuff(){
+    //  FindObjectOfType<PlayerCombatController>().damage += pointsDamage;
+    //}
 
+    private void IncVision(){
+        FindObjectOfType<DarkRoomController>().transform.localScale += new Vector3(0.5f,0.5f,0.5f);
+        visionBuffDuration = 3;
     }
 
-    private void RemoveDamageBuff() //for removing damage buff after turn duration ends
-    {
-        if (FindObjectOfType<PlayerCombatController>().damage > dmgNormal && dmgBuffActive == false)
-            FindObjectOfType<PlayerCombatController>().damage = dmgNormal;
+    private void RmVisionBuff(){ //for removing vision buff after buff duration ends
+        FindObjectOfType<DarkRoomController>().transform.localScale = visionNormal;
     }
 
 
