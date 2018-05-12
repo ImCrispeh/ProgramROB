@@ -5,17 +5,17 @@ using UnityEngine;
 public class FireEnemy : MonoBehaviour
 {
     public int health;
-    Transform target;
+    protected Transform target;
     public float Speed;
     bool isDetect;
     public float attackRange;
     public float chaseRange;
-    private float lastAttackTime = 0;
+    protected float lastAttackTime = 0;
     public float attackDelay;
     public GameObject projectTile;
     public float bulletForce;
     public Transform shootPoint;
-    private void Start()
+    protected void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
     }
@@ -58,7 +58,7 @@ public class FireEnemy : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
-            MapStateController._instance.CheckEnemiesAlive();
+            //MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }
     }

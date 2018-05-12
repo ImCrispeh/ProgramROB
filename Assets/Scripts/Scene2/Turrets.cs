@@ -42,7 +42,7 @@ public class Turrets : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
-            MapStateController._instance.CheckEnemiesAlive();
+            //MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }
     }
