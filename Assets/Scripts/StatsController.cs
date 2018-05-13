@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class StatsController : MonoBehaviour {
     public static StatsController _instance;
     public Text actionPointsText;
-    public Text actionsText;
+    public int previousQueueSize;
+    public Vector3[] actionImagesOffsets;
+    public GameObject actionImagesSpawn;
+    public GameObject movementImage;
+    public Text maxActionsText;
     public Text healthText;
 
     private void Awake() {
@@ -31,14 +35,38 @@ public class StatsController : MonoBehaviour {
         actionPointsText.text = "Remaining action points:" + "\n" + actionPoints + " (" + currActions + " queued to be used)";
     }
 
-    public void UpdateActionsList(int currActions, int maxActions, List<string> actions) {
-        actionsText.text = "Amount of actions queued: " + currActions + "/" + maxActions + "\n";
-        foreach (string action in actions) {
-            actionsText.text += action + "\n";
+    public void UpdateActionsList(List<string> actions) {
+        if (actions.Count > previousQueueSize) {
+            string newAction = actions[actions.Count - 1];
+            GameObject newActionImage = Instantiate(movementImage, actionImagesSpawn.transform) as GameObject;
+            newActionImage.transform.localPosition = actionImagesOffsets[actions.Count - 1];
+            if (newAction == "MoveUp") {
+                newActionImage.transform.rotation = Quaternion.identity;
+            } else if (newAction == "MoveLeft") {
+                newActionImage.transform.rotation = Quaternion.Euler(0, 0, 90);
+            } else if (newAction == "MoveRight") {
+                newActionImage.transform.rotation = Quaternion.Euler(0, 0, -90);
+            } else if (newAction == "MoveDown") {
+                newActionImage.transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
+        } else if (actions.Count < previousQueueSize) {
+            Destroy(actionImagesSpawn.transform.GetChild(0).gameObject);
         }
+
+        previousQueueSize = actions.Count;
     }
 
     public void UpdateHealth(int health) {
         healthText.text = "Health: " + health;
+    }
+
+    public void DisplayMax() {
+        StartCoroutine(DisplayMaxMessage());
+    }
+
+    IEnumerator DisplayMaxMessage() {
+        maxActionsText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        maxActionsText.gameObject.SetActive(false);
     }
 }

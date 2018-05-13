@@ -10,14 +10,13 @@ public class PowerUpObject : MonoBehaviour {
     public PlayerProgramController playerMap;
     public PlayerCombatController playerCombat;
 
-    public int visionBuffDuration = 0;
-    private Vector3 visionNormal;
-    private bool visionBuffActive = false;
+    public float visionBuffDuration = 0;
+    public int visionIncrease;
+    public float visionNorm;
 
     void Start()
     {
         //dmgNormal = FindObjectOfType<PlayerCombatController>().damage; //temp value for original damage
-        visionNormal = FindObjectOfType<DarkRoomController>().transform.localScale;
     }
 
     void Update()
@@ -34,7 +33,7 @@ public class PowerUpObject : MonoBehaviour {
         //}
     }
 
-    private void OnCollisionEnter2D(Collision2D col){
+    private void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject.tag == "Player"){
 
             if (IsHealth())
@@ -43,15 +42,17 @@ public class PowerUpObject : MonoBehaviour {
             if (IsActionPoint())
                 IncActionPoints();
 
-            //if (IsDamageBuff()){
-            //    IncDamageBuff();
-            //}
+            if (IsDamageBuff()){
+                IncDamageBuff();
+            }
 
             if (IsVision())
                 IncVision();
 
             Debug.Log("Collision: PowerUp");
-            Destroy(gameObject);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            Destroy(gameObject, 6f);
         }
     }
 
@@ -85,25 +86,40 @@ public class PowerUpObject : MonoBehaviour {
 
     private void IncActionPoints(){
         FindObjectOfType<PlayerProgramController>().actionPoints += pointsAction;
-        //FindObjectOfType<StatsController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints);
+        FindObjectOfType<StatsController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints, FindObjectOfType<PlayerProgramController>().currNumOfActions);
     }
 
     private void IncHealth(){
-        FindObjectOfType<PlayerProgramController>().currHealth += pointsHealth;
-        FindObjectOfType<StatsController>().UpdateHealth(FindObjectOfType<PlayerProgramController>().currHealth);
+        if (FindObjectOfType<PlayerProgramController>() != null) {
+            FindObjectOfType<PlayerProgramController>().currHealth += pointsHealth;
+            FindObjectOfType<StatsController>().UpdateHealth(FindObjectOfType<PlayerProgramController>().currHealth);
+        } else {
+            FindObjectOfType<PlayerCombatController>().health += pointsHealth;
+        }
     }
 
-    //private void IncDamageBuff(){
-    //  FindObjectOfType<PlayerCombatController>().damage += pointsDamage;
-    //}
+    private void IncDamageBuff(){
+        FindObjectOfType<PlayerCombatController>().damage += pointsDamage;
+    }
 
     private void IncVision(){
-        FindObjectOfType<DarkRoomController>().transform.localScale += new Vector3(0.5f,0.5f,0.5f);
-        visionBuffDuration = 3;
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerProgramController>() != null) {
+            GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetComponent<Light>().spotAngle += visionIncrease;
+        } else {
+            Debug.Log("test");
+            visionNorm = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2).GetComponent<Light>().spotAngle;
+            StartCoroutine(CombatVisionIncrease());
+        }
+    }
+
+    IEnumerator CombatVisionIncrease() {
+        GameObject.FindGameObjectWithTag("Player").transform.GetChild(2).GetComponent<Light>().spotAngle += visionIncrease;
+        yield return new WaitForSeconds(visionBuffDuration);
+        GameObject.FindGameObjectWithTag("Player").transform.GetChild(2).GetComponent<Light>().spotAngle = visionNorm;
     }
 
     private void RmVisionBuff(){ //for removing vision buff after buff duration ends
-        FindObjectOfType<DarkRoomController>().transform.localScale = visionNormal;
+        
     }
 
 

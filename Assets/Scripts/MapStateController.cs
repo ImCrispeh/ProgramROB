@@ -272,7 +272,8 @@ public class MapStateController : MonoBehaviour {
 
             jsonSave = File.ReadAllText(mapFileName);
 			MapData loadedMapData = JsonUtility.FromJson<MapData> (jsonSave);
-			generator.GetComponent<CombatAreaGeneratorv3> ().isEnemy = loadedMapData.isEnemy;
+            playerCont.transform.GetChild(2).GetComponent<Light>().spotAngle = 50 * (loadedMapData.playerVisibility - 0.05f);
+            generator.GetComponent<CombatAreaGeneratorv3> ().isEnemy = loadedMapData.isEnemy;
 			generator.GetComponent<CombatAreaGeneratorv3> ().isSpider = loadedMapData.isSpider;
 			generator.GetComponent<CombatAreaGeneratorv3> ().isTurret = loadedMapData.isTurret;
 			generator.GetComponent<CombatAreaGeneratorv3> ().enemyAmt = loadedMapData.enemyAmt;
@@ -335,7 +336,7 @@ public class MapStateController : MonoBehaviour {
         }
         endImg.GetComponent<RectTransform>().localPosition = new Vector2(0, 0);
         if (DarkRoomController._instance != null) {
-            DarkRoomController._instance.ToggleEffect(false);
+            DarkRoomController._instance.ToggleEffect(true);
         }
         Time.timeScale = 0;
     }

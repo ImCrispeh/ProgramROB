@@ -28,7 +28,7 @@ public class PlayerProgramController : MonoBehaviour {
         actions = new List<String>();
         StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
         StatsController._instance.UpdateHealth(currHealth);
-        StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
+        StatsController._instance.UpdateActionsList(actions);
         rigid = GetComponent<Rigidbody2D>();
         lastPos = transform.position;
         moveWait = moveDuration + 0.2f;
@@ -37,19 +37,19 @@ public class PlayerProgramController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // Key inputs here for hotkeys
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) {
             AddAction("MoveRight");
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) {
             AddAction("MoveLeft");
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) {
             AddAction("MoveUp");
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) {
             AddAction("MoveDown");
         }
 
@@ -75,7 +75,7 @@ public class PlayerProgramController : MonoBehaviour {
             if (currNumOfActions > 0) {
                 currNumOfActions--;
                 actions.RemoveAt(currNumOfActions);
-                StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
+                StatsController._instance.UpdateActionsList(actions);
                 StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
             }
         }
@@ -94,8 +94,10 @@ public class PlayerProgramController : MonoBehaviour {
                 if (currNumOfActions < maxNumOfActions) {
                     actions.Add(action);
                     currNumOfActions++;
-                    StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
+                    StatsController._instance.UpdateActionsList(actions);
                     StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                } else {
+                    StatsController._instance.DisplayMax();
                 }
             }
         }
@@ -132,14 +134,17 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     IEnumerator ExecuteActionList() {
-        foreach (String actionFunc in actions) {
+        actions.Reverse();
+        for (int i = actions.Count-1; i >= 0; i--) {
             currNumOfActions--;
             actionPoints--;
             StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
-            yield return StartCoroutine(actionFunc);
+            yield return StartCoroutine(actions[i]);
+            actions.RemoveAt(i);
+            StatsController._instance.UpdateActionsList(actions);
         }
-        actions.Clear();
-        StatsController._instance.UpdateActionsList(currNumOfActions, maxNumOfActions, actions);
+        //actions.Clear();
+        //StatsController._instance.UpdateActionsList(actions);
         TurnController._instance.EnemyTurn();
     }
 

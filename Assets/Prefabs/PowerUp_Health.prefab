@@ -51,7 +51,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -80,8 +80,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointsAction: 0
   pointsHealth: 3
-  pointsDamage: 2
-  dmgBuffDuration: 0
+  pointsDamage: 0
+  playerMap: {fileID: 0}
+  playerCombat: {fileID: 0}
+  visionBuffDuration: 0
+  visionIncrease: 0
+  visionNorm: 0
 --- !u!212 &212294156920512858
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -95,7 +99,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 947884f0ce2813146abf669c9d8d042c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

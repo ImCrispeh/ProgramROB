@@ -72,7 +72,7 @@ public class PlayerCombatController : MonoBehaviour {
         gameObject.AddComponent<LineRenderer>();
         LineRenderer lr = gameObject.GetComponent<LineRenderer>();
         lr.material = new Material(Shader.Find("Sprites/Default"));
-        lr.widthMultiplier = 0.3f;
+        lr.widthMultiplier = 0.05f;
         Vector2 dir = (end - firePoint).normalized;
         lr.SetPosition(0, firePoint);
         if (hitEnemy) {

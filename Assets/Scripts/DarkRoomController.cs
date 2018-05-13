@@ -27,51 +27,62 @@ public class DarkRoomController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
-        playerMask.transform.localScale = playerMask.transform.localScale * player.GetComponent<PlayerProgramController>().visibilityMultiplier;
+        player.transform.GetChild(0).GetComponent<Light>().spotAngle = 50 * (player.GetComponent<PlayerProgramController>().visibilityMultiplier - 0.05f);
+        //playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
+        //playerMask.transform.localScale = playerMask.transform.localScale * player.GetComponent<PlayerProgramController>().visibilityMultiplier;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        enemyMasks = new GameObject[enemies.Length];
-        for (int i = 0; i < enemyMasks.Length; i++) {
-            enemyMasks[i] = Instantiate(maskObj, enemies[i].transform.position, Quaternion.identity, maskParent);
-        }
+        //enemyMasks = new GameObject[enemies.Length];
+        //for (int i = 0; i < enemyMasks.Length; i++) {
+        //    enemyMasks[i] = Instantiate(maskObj, enemies[i].transform.position, Quaternion.identity, maskParent);
+        //}
         ShowEnemies(false);
-		PowerGenMask.SetActive (false);
-		Room2PowerGenMask.SetActive (false);
+		//PowerGenMask.SetActive (false);
+		//Room2PowerGenMask.SetActive (false);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (isPlayerMoving) {
-            playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
-        }
+        //if (isPlayerMoving) {
+        //    playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
+        //}
 
-		if (isEnemiesMoving) {
-            for (int i = 0; i < enemyMasks.Length; i++) {
-                if (enemyMasks[i] != null) {
-                    if (enemies[i] == null) {
-                        Destroy(enemyMasks[i]);
-                    } else {
-                        enemyMasks[i].transform.position = Camera.main.WorldToScreenPoint(enemies[i].transform.position);
-                    }
-                }
-            }
-        }
+		//if (isEnemiesMoving) {
+  //          foreach (GameObject enemy in enemies) {
+  //              enemy.transform.GetChild(0)
+  //          }
+  //          for (int i = 0; i < enemyMasks.Length; i++) {
+  //              if (enemyMasks[i] != null) {
+  //                  if (enemies[i] == null) {
+  //                      Destroy(enemyMasks[i]);
+  //                  } else {
+  //                      enemyMasks[i].transform.position = Camera.main.WorldToScreenPoint(enemies[i].transform.position);
+  //                  }
+  //              }
+  //          }
+  //      }
 	}
 
     public void ShowEnemies(bool toggle) {
-        for (int i = 0; i < enemyMasks.Length; i++) {
-            if (enemyMasks[i] != null) {
-                if (enemies[i] == null) {
-                    Destroy(enemyMasks[i]);
-                } else {
-                    enemyMasks[i].SetActive(toggle);
-                }
-            }
+        foreach (GameObject enemy in enemies) {
+            enemy.transform.GetChild(0).gameObject.SetActive(toggle);
         }
+        //for (int i = 0; i < enemyMasks.Length; i++) {
+        //    if (enemyMasks[i] != null) {
+        //        if (enemies[i] == null) {
+        //            Destroy(enemyMasks[i]);
+        //        } else {
+        //            enemyMasks[i].SetActive(toggle);
+        //        }
+        //    }
+        //}
     }
 
-    public void ToggleEffect(bool toggle) {
-        darkness.SetActive(toggle);
+    public void ToggleEffect(bool isEnd) {
+        //darkness.SetActive(toggle);
+        if (isEnd) {
+            player.transform.GetChild(0).GetComponent<Light>().type = LightType.Directional;
+            player.transform.GetChild(0).GetComponent<Light>().intensity = 1;
+        }
     }
 
     public void SetPlayerMoving(bool moving) {
@@ -85,9 +96,9 @@ public class DarkRoomController : MonoBehaviour {
     }
 
 	public void SetRoomsLight(bool choice){
-		PowerGenMask.SetActive (choice);
+		//PowerGenMask.SetActive (choice);
 	}
 	public void SetRoom2Light(bool choice){
-		Room2PowerGenMask.SetActive (choice);
+		//Room2PowerGenMask.SetActive (choice);
 	}
 }

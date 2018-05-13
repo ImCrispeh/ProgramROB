@@ -177,7 +177,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   health: 15
   range: 25
   rigid: {fileID: 0}
-  speed: 5
+  speed: 4
   damage: 3
   fireRate: 1
   timeToFire: 0

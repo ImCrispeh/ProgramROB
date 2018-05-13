@@ -65,7 +65,7 @@ public class TurnController : MonoBehaviour {
 
     IEnumerator EnemyMovement() {
         DarkRoomController._instance.ShowEnemies(true);
-        DarkRoomController._instance.SetEnemiesMoving(true);
+        //DarkRoomController._instance.SetEnemiesMoving(true);
         //canvas.gameObject.SetActive(false);
         foreach(GameObject enemy in enemies) {
             if (enemy != null) {
@@ -81,7 +81,7 @@ public class TurnController : MonoBehaviour {
         }
         yield return new WaitForSeconds(1f);
         DarkRoomController._instance.ShowEnemies(false);
-        DarkRoomController._instance.SetEnemiesMoving(false);
+        //DarkRoomController._instance.SetEnemiesMoving(false);
         //canvas.gameObject.SetActive(true);
         PlayerTurn();
     }

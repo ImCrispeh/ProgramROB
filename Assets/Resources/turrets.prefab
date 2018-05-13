@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1316817100875742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.15, y: 0.07, z: 0}
+  m_LocalPosition: {x: -1.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4310477119479802}
@@ -176,7 +176,7 @@ MonoBehaviour:
   health: 15
   attackRange: 30
   attackDelay: 3
-  bulletForce: 0
+  bulletForce: 300
   shootPoint: {fileID: 4448892191506384}
   projectTile: {fileID: 1673271027749316, guid: bf04c5c4d1995384b8a32bb8bf007c26,
     type: 2}
