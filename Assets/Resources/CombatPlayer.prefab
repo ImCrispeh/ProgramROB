@@ -290,7 +290,7 @@ MonoBehaviour:
   healthText: {fileID: 0}
   allowHit:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
 --- !u!124 &124237542999516576
 Behaviour:
   m_ObjectHideFlags: 1
