@@ -9,6 +9,7 @@ public class DarkRoomController : MonoBehaviour {
     public Transform maskParent;
     public GameObject playerMask;
 	public GameObject PowerGenMask;
+	public GameObject Room2PowerGenMask;
     public GameObject[] enemyMasks;
     public GameObject[] enemies;
     public Transform player;
@@ -34,6 +35,7 @@ public class DarkRoomController : MonoBehaviour {
         }
         ShowEnemies(false);
 		PowerGenMask.SetActive (false);
+		Room2PowerGenMask.SetActive (false);
     }
 	
 	// Update is called once per frame
@@ -83,5 +85,8 @@ public class DarkRoomController : MonoBehaviour {
 
 	public void SetRoomsLight(bool choice){
 		PowerGenMask.SetActive (choice);
+	}
+	public void SetRoom2Light(bool choice){
+		Room2PowerGenMask.SetActive (choice);
 	}
 }
