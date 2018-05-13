@@ -2254,6 +2254,16 @@ Prefab:
       propertyPath: moveDuration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: isEnemy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: enemyAmt
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
   m_IsPrefabParent: 0
@@ -3356,6 +3366,16 @@ Prefab:
       propertyPath: moveDuration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: enemyAmt
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
   m_IsPrefabParent: 0
@@ -4354,6 +4374,7 @@ MonoBehaviour:
   endImg: {fileID: 0}
   endText: {fileID: 0}
   player: {fileID: 0}
+  generator: {fileID: 0}
   enemies: []
   key: {fileID: 0}
 --- !u!4 &2123980705

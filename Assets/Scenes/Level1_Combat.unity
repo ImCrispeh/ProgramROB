@@ -474,6 +474,10 @@ Prefab:
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1876122067818518, guid: 4dcb78ad92896b540b132c1bcef9b8ec, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dcb78ad92896b540b132c1bcef9b8ec, type: 2}
   m_IsPrefabParent: 0
@@ -515,6 +519,10 @@ Prefab:
     - target: {fileID: 4852493019285136, guid: 8c419fff459632243968954ed567db47, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690683649544790, guid: 8c419fff459632243968954ed567db47, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8c419fff459632243968954ed567db47, type: 2}
@@ -778,7 +786,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 33
   m_Depth: -1
   m_CullingMask:
@@ -895,7 +903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1706679330
 MonoBehaviour:
   m_ObjectHideFlags: 0

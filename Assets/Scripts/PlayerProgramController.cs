@@ -179,7 +179,7 @@ public class PlayerProgramController : MonoBehaviour {
 
         if (collision.gameObject.tag == "Enemy") {
             collision.gameObject.GetComponent<EnemyMap>().isAlive = false;
-            MapStateController._instance.LoadCombatScene();
+			MapStateController._instance.LoadCombatScene(collision.gameObject);
         }
     }
 

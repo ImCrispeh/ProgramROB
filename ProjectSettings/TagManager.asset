@@ -16,6 +16,7 @@ TagManager:
   - Tile
   - EndImg
   - EndText
+  - Generator
   layers:
   - Default
   - TransparentFX
