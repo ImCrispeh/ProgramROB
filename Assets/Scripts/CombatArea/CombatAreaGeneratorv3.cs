@@ -52,8 +52,8 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 		RandomLayout (player, "player", 1, 1); //Random places player
 		RandomLayout (wallTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
 		if (isEnemy) RandomLayout (enemy[0], "enemy", enemyAmt, enemyAmt);	//Random places enemies
-		//if (isSpider) RandomLayout (enemy[1], "enemy", spiderAmt, spiderAmt);	//Random places spiders
-		//if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
+		if (isSpider) RandomLayout (enemy[1], "enemy", spiderAmt, spiderAmt);	//Random places spiders
+		if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
 	}
 	
 	// Update is called once per frame
