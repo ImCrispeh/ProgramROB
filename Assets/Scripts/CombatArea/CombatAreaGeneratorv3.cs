@@ -54,8 +54,7 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 		if (isEnemy) RandomLayout (enemy[0], "enemy", enemyAmt, enemyAmt);	//Random places enemies
 		if (isSpider) RandomLayout (enemy[1], "enemy", spiderAmt, spiderAmt);	//Random places spiders
 		if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
-        MapStateController._instance.player = player;
-    }
+	}
 	
 	// Update is called once per frame
 	void Update () {

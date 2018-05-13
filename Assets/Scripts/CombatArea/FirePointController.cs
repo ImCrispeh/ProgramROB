@@ -28,11 +28,11 @@ public class FirePointController : MonoBehaviour {
 	private void OnTriggerStay2D (Collider2D other) {
 		if (Input.GetButtonDown ("Fire1") && other.transform.tag == "Enemy") {
             if (other.GetComponent<Enemy>() != null) {
-                other.GetComponent<Enemy>().damaged(player.damage);
+                other.GetComponent<Enemy>().damaged(player.damage * 2);
             } else if (other.GetComponent<FireEnemy>() != null) {
-                other.GetComponent<FireEnemy>().damaged(player.damage);
+                other.GetComponent<FireEnemy>().damaged(player.damage * 2);
             } else if (other.GetComponent<Turrets>() != null) {
-                other.GetComponent<Turrets>().damaged(player.damage);
+                other.GetComponent<Turrets>().damaged(player.damage * 2);
             }
         }
 	}

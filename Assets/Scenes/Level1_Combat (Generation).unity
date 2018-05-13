@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -629,8 +629,8 @@ MonoBehaviour:
   wallAmt:
     minimum: 56
     maximum: 96
-  enemyAmt: 5
-  spiderAmt: 2
+  enemyAmt: 1
+  spiderAmt: 1
   turretAmt: 1
   floorTile: {fileID: 1831044803964638, guid: c6b2c21600e24c0499c3f38bf91f47ed, type: 2}
   wallTile: {fileID: 1705354731055368, guid: 29569d9b2ce7c7e4db893bbbc1c9865b, type: 2}
@@ -640,8 +640,8 @@ MonoBehaviour:
   - {fileID: 1959558026936298, guid: 2be0b60761af6ba48a143b72cd768813, type: 2}
   player: {fileID: 1515158118519536, guid: e71e65303d48965448a16e01883f4e4b, type: 2}
   isEnemy: 1
-  isSpider: 0
-  isTurret: 0
+  isSpider: 1
+  isTurret: 1
 --- !u!4 &1994247065
 Transform:
   m_ObjectHideFlags: 0
