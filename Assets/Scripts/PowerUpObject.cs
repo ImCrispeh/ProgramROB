@@ -7,6 +7,8 @@ public class PowerUpObject : MonoBehaviour {
     public int pointsAction = 0;
     public int pointsHealth = 0;
     public int pointsDamage = 0;
+    public PlayerProgramController playerMap;
+    public PlayerCombatController playerCombat;
 
     public int visionBuffDuration = 0;
     private Vector3 visionNormal;
@@ -83,7 +85,7 @@ public class PowerUpObject : MonoBehaviour {
 
     private void IncActionPoints(){
         FindObjectOfType<PlayerProgramController>().actionPoints += pointsAction;
-        FindObjectOfType<StatsController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints);
+        //FindObjectOfType<StatsController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints);
     }
 
     private void IncHealth(){

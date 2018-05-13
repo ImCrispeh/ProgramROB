@@ -6,14 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/UpgradeTest.unity
-    guid: 0094d5a62e7405e4385e39a0dcbafb85
+    path: Assets/Scenes/Sprint2/Upgrades.unity
+    guid: 5d5921eb76a01e249bfcc551bcd6f19e
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: 586a457fe5773374dab6737e3323f425
+    path: Assets/Scenes/Sprint2/Level1v2.unity
+    guid: 3c5a397d2683f754aa9893b3e23c3e81
   - enabled: 1
-    path: Assets/Scenes/Level1_Combat.unity
-    guid: c8d9d772c0c02224da7808fcc6944ac3
-  - enabled: 1
-    path: Assets/Scenes/Level1_Combat (Generation).unity
-    guid: d45585737e68c524b91ca5b94e55a550
+    path: Assets/Scenes/Sprint2/Level1v2_Combat.unity
+    guid: 00000000000000000000000000000000

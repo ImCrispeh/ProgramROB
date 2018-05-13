@@ -283,14 +283,14 @@ MonoBehaviour:
   health: 15
   range: 25
   rigid: {fileID: 0}
-  speed: 10
+  speed: 5
   damage: 3
   fireRate: 1
   timeToFire: 0
   healthText: {fileID: 0}
   allowHit:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
 --- !u!124 &124237542999516576
 Behaviour:
   m_ObjectHideFlags: 1

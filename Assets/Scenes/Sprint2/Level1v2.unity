@@ -753,7 +753,7 @@ Prefab:
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
       propertyPath: enemyID
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
@@ -3191,8 +3191,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitWall: 0
+  visibilityMultiplier: 1
   maxHealth: 15
   currHealth: 15
+  damage: 3
   lastPos: {x: 0, y: 0}
   moveDist: 1.5
   moveDuration: 1
@@ -3201,6 +3203,7 @@ MonoBehaviour:
   currNumOfActions: 0
   maxNumOfActions: 5
   actionPoints: 30
+  maxActionPoints: 30
   actions: []
   rigid: {fileID: 0}
 --- !u!50 &1096009011
@@ -5022,7 +5025,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4960360702688678, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.25
+      value: 5.21
       objectReference: {fileID: 0}
     - target: {fileID: 4960360702688678, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -6228,7 +6231,7 @@ Prefab:
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
       propertyPath: enemyID
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
@@ -6420,6 +6423,7 @@ MonoBehaviour:
   endImg: {fileID: 0}
   endText: {fileID: 0}
   player: {fileID: 0}
+  generator: {fileID: 0}
   enemies: []
   keys: []
 --- !u!4 &2123980705

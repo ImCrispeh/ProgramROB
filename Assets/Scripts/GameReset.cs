@@ -51,7 +51,7 @@ public class GameReset : MonoBehaviour {
             }
 
             Time.timeScale = 1;
-            SceneManager.LoadScene("UpgradeTest");
+            SceneManager.LoadScene("UpgradeScreen");
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -80,7 +80,7 @@ public class GameReset : MonoBehaviour {
             }
 
             Time.timeScale = 1;
-            SceneManager.LoadScene("UpgradeTest");
+            SceneManager.LoadScene("UpgradeScreen");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {

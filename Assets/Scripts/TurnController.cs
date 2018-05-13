@@ -69,12 +69,14 @@ public class TurnController : MonoBehaviour {
         //canvas.gameObject.SetActive(false);
         foreach(GameObject enemy in enemies) {
             if (enemy != null) {
-                int i = 0;
-                while (i < 3 && !enemy.GetComponent<EnemyMap>().isMoving) {
-                    yield return StartCoroutine(enemy.GetComponent<EnemyMap>().MoveEnemy());
-                    i++;
+                if (enemy.GetComponent<Renderer>().isVisible) {
+                    int i = 0;
+                    while (i < 3 && !enemy.GetComponent<EnemyMap>().isMoving) {
+                        yield return StartCoroutine(enemy.GetComponent<EnemyMap>().MoveEnemy());
+                        i++;
+                    }
+                    enemy.GetComponent<EnemyMap>().ResetAfterTurn();
                 }
-                enemy.GetComponent<EnemyMap>().ResetAfterTurn();
             }
         }
         yield return new WaitForSeconds(1f);

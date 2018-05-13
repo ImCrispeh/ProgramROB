@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
-  attackRange: 15
+  attackRange: 30
   attackDelay: 3
   bulletForce: 0
   shootPoint: {fileID: 4448892191506384}

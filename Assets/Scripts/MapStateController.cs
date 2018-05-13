@@ -15,12 +15,13 @@ public class MapStateController : MonoBehaviour {
     public GameObject player;
 	public GameObject generator;
     public GameObject[] enemies;
-    public GameObject key;
+    public GameObject[] keys;
 
     private int enemiesCount;
     private string mapFileName;
     private string combatFileName;
     private string upgradeFileName;
+    private string levelEndFileName;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -40,27 +41,27 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Level1") {
+        if (scene.name == "Level1v2") {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            key = GameObject.FindGameObjectWithTag("Key");
+            keys = GameObject.FindGameObjectsWithTag("Key");
             enemiesCount = enemies.Length;
             combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
             mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
             upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
+            levelEndFileName = Path.Combine(Application.persistentDataPath, "LevelEndSaveData.json");
             LoadMapData();
             if (File.Exists(upgradeFileName)) {
                 IntegrateUpgrades();
             }
         }
 
-        //if (scene.name == "Level1_Combat") {
-		if (scene.name == "Level1_Combat (Generation)") {
+		if (scene.name == "Level1v2_Combat") {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
-            player = GameObject.FindGameObjectWithTag("Player");
+            //player = GameObject.FindGameObjectWithTag("Player");
 			generator = GameObject.FindGameObjectWithTag ("Generator");
 			combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
 			mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
@@ -74,7 +75,7 @@ public class MapStateController : MonoBehaviour {
         endText = endImg.GetComponentInChildren<Text>();
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        key = GameObject.FindGameObjectWithTag("Key");
+        keys = GameObject.FindGameObjectsWithTag("Key");
         enemiesCount = enemies.Length;
         mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
         combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
@@ -113,17 +114,29 @@ public class MapStateController : MonoBehaviour {
 
         UpgradeData loadedUpgradeData = JsonUtility.FromJson<UpgradeData>(jsonSave);
 
-        playerCont.actionPoints += loadedUpgradeData.apIncrease;
+        //make initial stats consistent with last level
+        LoadPreviousLevelData();
+
+        playerCont.maxActionPoints += loadedUpgradeData.apIncrease;
         playerCont.maxHealth += loadedUpgradeData.healthIncrease;
         playerCont.currHealth = playerCont.maxHealth;
+        playerCont.actionPoints = playerCont.maxActionPoints;
+        playerCont.damage += loadedUpgradeData.damageIncrease;
+        playerCont.visibilityMultiplier += loadedUpgradeData.visibilityIncrease;
 
-        MapData mapData = new MapData();
+        //save upgrades in the map data
+        playerCont.lastPos = playerCont.transform.position;
+        SaveMapData(null);
+
         CombatData combatData = new CombatData();
-
-        mapData.playerAP = playerCont.actionPoints;
-        mapData.playerMaxHealth = playerCont.maxHealth;
-
         combatData.health = playerCont.maxHealth;
+        combatData.damage = playerCont.damage;
+        string json = JsonUtility.ToJson(combatData);
+        if (File.Exists(combatFileName)) {
+            File.Delete(combatFileName);
+        }
+        combatData.health = playerCont.maxHealth;
+        File.WriteAllText(combatFileName, json);
 
         File.Delete(upgradeFileName);
     }
@@ -134,9 +147,12 @@ public class MapStateController : MonoBehaviour {
         data.playerPos = playerCont.lastPos;
         data.playerAP = playerCont.actionPoints;
         data.playerMaxHealth = playerCont.maxHealth;
+        data.playerMaxAP = playerCont.maxActionPoints;
+        data.playerVisibility = playerCont.visibilityMultiplier;
 
         data.enemyPos = new Vector3[enemiesCount];
         data.enemyState = new bool[enemiesCount];
+        data.keyState = new bool[keys.Length];
 
         foreach (GameObject enemy in enemies) {
             if (enemy != null) {
@@ -146,14 +162,21 @@ public class MapStateController : MonoBehaviour {
             }
         }
 
-        data.keyState = (key != null);
+        foreach (GameObject key in keys) {
+            if (key != null) {
+                KeyController keyData = key.GetComponent<KeyController>();
+                data.keyState[keyData.keyID] = keyData.isCollected;
+            }
+        }
 
-		data.isEnemy = details.GetComponent<EnemyMap> ().isEnemy;
-		data.isSpider = details.GetComponent<EnemyMap> ().isSpider;
-		data.isTurret = details.GetComponent<EnemyMap> ().isTurret;
-		data.enemyAmt = details.GetComponent<EnemyMap> ().enemyAmt;
-		data.spiderAmt = details.GetComponent<EnemyMap> ().spiderAmt;
-		data.turretAmt = details.GetComponent<EnemyMap> ().turretAmt;
+        if (details != null) {
+            data.isEnemy = details.GetComponent<EnemyMap>().isEnemy;
+            data.isSpider = details.GetComponent<EnemyMap>().isSpider;
+            data.isTurret = details.GetComponent<EnemyMap>().isTurret;
+            data.enemyAmt = details.GetComponent<EnemyMap>().enemyAmt;
+            data.spiderAmt = details.GetComponent<EnemyMap>().spiderAmt;
+            data.turretAmt = details.GetComponent<EnemyMap>().turretAmt;
+        }
 
         string json = JsonUtility.ToJson(data);
 
@@ -173,6 +196,9 @@ public class MapStateController : MonoBehaviour {
 
             player.transform.position = loadedMapData.playerPos;
             playerCont.actionPoints = loadedMapData.playerAP;
+            playerCont.maxHealth = loadedMapData.playerMaxHealth;
+            playerCont.maxActionPoints = loadedMapData.playerMaxAP;
+            playerCont.visibilityMultiplier = loadedMapData.playerVisibility;
 
             foreach (GameObject enemy in enemies) {
                 EnemyMap enemyData = enemy.GetComponent<EnemyMap>();
@@ -183,9 +209,15 @@ public class MapStateController : MonoBehaviour {
                 }
             }
 
-            if (!loadedMapData.keyState) {
-                Destroy(key);
-                Destroy(GameObject.FindGameObjectWithTag("Door"));
+            foreach (GameObject key in keys) {
+                if (key != null) {
+                    KeyController keyData = key.GetComponent<KeyController>();
+                    keyData.isCollected = loadedMapData.keyState[keyData.keyID];
+                    if (keyData.isCollected) {
+                        Destroy(key);
+                        Destroy(keyData.door);
+                    }
+                }
             }
         }
 
@@ -199,10 +231,25 @@ public class MapStateController : MonoBehaviour {
 
     public void SaveCombatData() {
         CombatData data = new CombatData();
-
-        data.health = player.GetComponent<PlayerCombatController>().health;
+        PlayerCombatController playerCont = player.GetComponent<PlayerCombatController>();
+        data.health = playerCont.health;
         data.apToAdd = 5;
+        data.upgradesToAdd = 5;
 
+        if (File.Exists(combatFileName)) {
+            string jsonSave = File.ReadAllText(combatFileName);
+            CombatData loadedCombatData = JsonUtility.FromJson<CombatData>(jsonSave);
+            data.damage = loadedCombatData.damage;
+        }
+
+        string upgradeCostFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostSaveData.json");
+        if (File.Exists(upgradeCostFileName)) {
+            string jsonSave = File.ReadAllText(upgradeCostFileName);
+            UpgradeCostData upgradeCostData = JsonUtility.FromJson<UpgradeCostData>(jsonSave);
+            upgradeCostData.upgradePoints += 5;
+            string jsonCosts = JsonUtility.ToJson(upgradeCostData);
+            File.WriteAllText(upgradeCostFileName, jsonCosts);
+        }
         string json = JsonUtility.ToJson(data);
 
         if (File.Exists(combatFileName)) {
@@ -216,10 +263,14 @@ public class MapStateController : MonoBehaviour {
 		if (File.Exists(combatFileName) && File.Exists(mapFileName)) {
             string jsonSave = File.ReadAllText(combatFileName);
             CombatData loadedCombatData = JsonUtility.FromJson<CombatData>(jsonSave);
+            //if (player != null) {
+                PlayerCombatController playerCont = player.GetComponent<PlayerCombatController>();
 
-            player.GetComponent<PlayerCombatController>().health = loadedCombatData.health;
+                playerCont.health = loadedCombatData.health;
+                playerCont.damage = loadedCombatData.damage;
+            //}
 
-			jsonSave = File.ReadAllText(mapFileName);
+            jsonSave = File.ReadAllText(mapFileName);
 			MapData loadedMapData = JsonUtility.FromJson<MapData> (jsonSave);
 			generator.GetComponent<CombatAreaGeneratorv3> ().isEnemy = loadedMapData.isEnemy;
 			generator.GetComponent<CombatAreaGeneratorv3> ().isSpider = loadedMapData.isSpider;
@@ -230,14 +281,41 @@ public class MapStateController : MonoBehaviour {
         }
     }
 
-	public void LoadCombatScene(GameObject details) {
+    public void SaveEndOfLevelData() {
+        LevelEndData LevelEndData = new LevelEndData();
+        PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
+        LevelEndData.playerMaxHealth = playerCont.maxHealth;
+        LevelEndData.playerAP = playerCont.maxActionPoints;
+        LevelEndData.playerDamage = playerCont.damage;
+        LevelEndData.playerVisibility = playerCont.visibilityMultiplier;
+        
+        string json = JsonUtility.ToJson(LevelEndData);
+        if (File.Exists(levelEndFileName)) {
+            File.Delete(levelEndFileName);
+        }
+
+        File.WriteAllText(levelEndFileName, json);
+    }
+
+    public void LoadPreviousLevelData() {
+        if (File.Exists(levelEndFileName)) {
+            string jsonSave = File.ReadAllText(levelEndFileName);
+            LevelEndData loadedLevelEndData = JsonUtility.FromJson<LevelEndData>(jsonSave);
+            PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
+            playerCont.maxActionPoints = loadedLevelEndData.playerAP;
+            playerCont.maxHealth = loadedLevelEndData.playerMaxHealth;
+            playerCont.visibilityMultiplier = loadedLevelEndData.playerVisibility;
+            playerCont.damage = loadedLevelEndData.playerDamage;
+        }
+    }
+    public void LoadCombatScene(GameObject details) {
         SaveMapData(details);
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("Level1v2_Combat");
     }
 
     public void LoadMapScene() {
         SaveCombatData();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Level1v2");
     }
 
     public void CheckEnemiesAlive() {
@@ -268,11 +346,13 @@ class MapData {
     public Vector3 playerPos;
     public int playerAP;
     public int playerMaxHealth;
+    public int playerMaxAP;
+    public float playerVisibility;
 
     public Vector3[] enemyPos;
     public bool[] enemyState;
 
-	public bool keyState;
+	public bool[] keyState;
 
 	public bool isEnemy;
 	public bool isSpider;
@@ -286,4 +366,15 @@ class MapData {
 class CombatData {
     public int health;
     public int apToAdd;
+    public int damage;
+    public int upgradesToAdd;
+}
+
+//this is used to capture the player stats at the beginning of each level, before the chosen upgrades are applied
+[Serializable]
+class LevelEndData {
+    public int playerAP;
+    public int playerMaxHealth;
+    public float playerVisibility;
+    public int playerDamage;
 }

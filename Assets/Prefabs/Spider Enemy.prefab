@@ -120,8 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 15
   Speed: 2
-  attackRange: 7
-  chaseRange: 10
+  attackRange: 25
+  chaseRange: 20
   attackDelay: 2
   projectTile: {fileID: 1069990758406160, guid: 207256a4ede8a2c4d9c6c9f2cc22a7dc,
     type: 2}

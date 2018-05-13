@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   damage: 3
-  chaseRange: 3
+  chaseRange: 20
   attackRange: 0.75
   attackDelay: 2
   health: 15
