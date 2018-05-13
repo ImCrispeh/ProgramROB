@@ -14,7 +14,7 @@ public class MapStateController : MonoBehaviour {
 
     public GameObject player;
     public GameObject[] enemies;
-    public GameObject key;
+    public GameObject[] keys;
 
     private int enemiesCount;
     private string mapFileName;
@@ -44,7 +44,7 @@ public class MapStateController : MonoBehaviour {
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            key = GameObject.FindGameObjectWithTag("Key");
+            keys = GameObject.FindGameObjectsWithTag("Key");
             enemiesCount = enemies.Length;
             combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
             mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
@@ -70,7 +70,7 @@ public class MapStateController : MonoBehaviour {
         endText = endImg.GetComponentInChildren<Text>();
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        key = GameObject.FindGameObjectWithTag("Key");
+        keys = GameObject.FindGameObjectsWithTag("Key");
         enemiesCount = enemies.Length;
         mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
         combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
@@ -142,7 +142,12 @@ public class MapStateController : MonoBehaviour {
             }
         }
 
-        data.keyState = (key != null);
+        foreach (GameObject key in keys) {
+            if (key != null) {
+                KeyController keyData = key.GetComponent<KeyController>();
+                data.keyState[keyData.keyID] = keyData.isCollected;
+            }
+        }
 
         string json = JsonUtility.ToJson(data);
 
@@ -172,9 +177,13 @@ public class MapStateController : MonoBehaviour {
                 }
             }
 
-            if (!loadedMapData.keyState) {
-                Destroy(key);
-                Destroy(GameObject.FindGameObjectWithTag("Door"));
+            foreach (GameObject key in keys) {
+                KeyController keyData = key.GetComponent<KeyController>();
+                keyData.isCollected = loadedMapData.keyState[keyData.keyID];
+                if (keyData.isCollected) {
+                    Destroy(keyData.door);
+                    Destroy(key);
+                }
             }
         }
 
@@ -252,7 +261,7 @@ class MapData {
     public Vector3[] enemyPos;
     public bool[] enemyState;
 
-    public bool keyState;
+    public bool[] keyState;
 }
 
 [Serializable]
