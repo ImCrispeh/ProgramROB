@@ -5,17 +5,17 @@ using UnityEngine;
 public class FireEnemy : MonoBehaviour
 {
     public int health;
-    Transform target;
+    protected Transform target;
     public float Speed;
     bool isDetect;
     public float attackRange;
     public float chaseRange;
-    private float lastAttackTime = 0;
+    protected float lastAttackTime = 0;
     public float attackDelay;
     public GameObject projectTile;
     public float bulletForce;
     public Transform shootPoint;
-    private void Start()
+    protected void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
     }
@@ -23,17 +23,23 @@ public class FireEnemy : MonoBehaviour
     {
         if (target != null) {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
-            if (distanceToTarget > attackRange) {
-                Rotate();
-                transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
-            }
+            if (distanceToTarget < chaseRange)
+            {
+                if (distanceToTarget > attackRange)
+                {
+                    Rotate();
+                    transform.position = Vector2.MoveTowards(transform.position, target.position, Speed * Time.deltaTime);
+                }
 
-            if (distanceToTarget < attackRange) {
-                Rotate();
-                if (Time.time > lastAttackTime + attackDelay) {
-                    GameObject Bullet = Instantiate(projectTile, shootPoint.position, transform.rotation);
-                    Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
-                    lastAttackTime = Time.time;
+                if (distanceToTarget < attackRange)
+                {
+                    Rotate();
+                    if (Time.time > lastAttackTime + attackDelay)
+                    {
+                        GameObject Bullet = Instantiate(projectTile, shootPoint.position, transform.rotation);
+                        Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
+                        lastAttackTime = Time.time;
+                    }
                 }
             }
         }
@@ -52,7 +58,7 @@ public class FireEnemy : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
-            MapStateController._instance.CheckEnemiesAlive();
+            //MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }
     }

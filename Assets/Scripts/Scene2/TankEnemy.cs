@@ -2,52 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class TankEnemy : MonoBehaviour
+{
     public float speed;
     public int damage;
     Transform target;
+    public Transform SpawnPoint;
+    public GameObject Enemies;
     public float chaseRange;
     public float attackRange;
     private float lastAttackTime;
     public float attackDelay;
-    public int health;
-    Animator anim;
+    public int health, numberOfEnemies;
+    int count = 0;
+    bool isEnd = false;
     void Start()
     {
-        anim = GetComponent<Animator>();
         target = GameObject.FindWithTag("Player").transform;
-        
     }
     void Update()
     {
-        if (target != null && anim != null) {
+        if (target != null)
+        {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
             Debug.Log(distanceToTarget);
-            if(distanceToTarget > chaseRange)
-            {
-                anim.SetInteger("EnemyAct", 0);
-            }
-            if(distanceToTarget < chaseRange)
+            if (distanceToTarget < chaseRange)
             {
                 if (distanceToTarget > attackRange)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-                    anim.SetInteger("EnemyAct", 1);
-                    anim.SetBool("isAttack", false);
+                    if (isEnd == false)
+                    {
+                        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+                        checkPosition();
+                    }
                 }
                 if (distanceToTarget <= attackRange)
                 {
-                    anim.SetBool("isAttack", true);
-                    if (Time.time > lastAttackTime + attackDelay)
+                    if(count < numberOfEnemies)
                     {
-                        target.gameObject.GetComponent<PlayerCombatController>().damaged(damage);
-                        lastAttackTime = Time.time;
+                        if (Time.time > lastAttackTime + attackDelay)
+                        {
+                            Instantiate(Enemies, SpawnPoint.position, SpawnPoint.rotation);
+                            lastAttackTime = Time.time;
+
+                            count++;
+                        }
+
+                    }
+                    else
+                    {
+                        isEnd = true;
                     }
                 }
             }
             
-           
-            checkPosition();
         }
     }
 
@@ -56,19 +64,20 @@ public class Enemy : MonoBehaviour {
         if (target.position.x > transform.position.x)
         {
             //face right
-            transform.localScale = new Vector3(-9f, 8f, 1);
+            transform.localScale = new Vector3(-2.5f, 2.5f, 1);
         }
         else if (target.position.x < transform.position.x)
         {
             //face left
-            transform.localScale = new Vector3(9f, 8f, 1);
+            transform.localScale = new Vector3(2.5f, 2.5f, 1);
         }
     }
 
     public void damaged(int amount)
     {
         health -= amount;
-        if (health <= 0) {
+        if (health <= 0)
+        {
             //MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }
