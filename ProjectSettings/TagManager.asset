@@ -17,6 +17,10 @@ TagManager:
   - EndImg
   - EndText
   - Generator
+  - PUHealth
+  - PUActionPoints
+  - PUDamage
+  - PUVision
   layers:
   - Default
   - TransparentFX
