@@ -28,6 +28,7 @@ public class DarkRoomController : MonoBehaviour {
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
+        playerMask.transform.localScale = playerMask.transform.localScale * player.GetComponent<PlayerProgramController>().visibilityMultiplier;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         enemyMasks = new GameObject[enemies.Length];
         for (int i = 0; i < enemyMasks.Length; i++) {

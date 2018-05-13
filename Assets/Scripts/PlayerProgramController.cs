@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class PlayerProgramController : MonoBehaviour {
     public bool hitWall;
+    public float visibilityMultiplier = 1f;
     public int maxHealth = 15;
     public int currHealth;
+    public int damage = 3;
     public Vector2 lastPos;
     public float moveDist = 1.5f;
     public float moveDuration = 1f;
@@ -16,7 +18,8 @@ public class PlayerProgramController : MonoBehaviour {
     private bool isMoving = false;
     public int currNumOfActions = 0;
     public int maxNumOfActions = 5;
-    public int actionPoints = 30;
+    public int actionPoints;
+    public int maxActionPoints = 30;
     public List<String> actions;
     public Rigidbody2D rigid;
 
@@ -33,7 +36,7 @@ public class PlayerProgramController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        // Key inputs here for testing before implementing on buttons
+        // Key inputs here for hotkeys
         if (Input.GetKeyDown(KeyCode.RightArrow)) {
             AddAction("MoveRight");
         }
@@ -182,6 +185,7 @@ public class PlayerProgramController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Exit") {
+            MapStateController._instance.SaveEndOfLevelData();
             MapStateController._instance.EndGame(true, "");
         }
     }

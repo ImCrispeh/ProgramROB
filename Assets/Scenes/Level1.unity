@@ -2341,6 +2341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitWall: 0
+  maxHealth: 15
   currHealth: 15
   lastPos: {x: 0, y: 0}
   moveDist: 1.5
