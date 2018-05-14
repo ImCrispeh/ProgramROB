@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
-  range: 25
+  range: 3
   rigid: {fileID: 0}
   speed: 4
   damage: 3
