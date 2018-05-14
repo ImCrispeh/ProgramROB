@@ -12,9 +12,11 @@ public class EnemyMap : MovingObject
 	public bool isEnemy;
 	public bool isSpider;
 	public bool isTurret;
+    public bool isTank;
 	public int enemyAmt;
 	public int spiderAmt;
 	public int turretAmt;
+    public int tankAmt;
 
     protected override void Start()
     {

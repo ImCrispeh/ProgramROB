@@ -64,7 +64,9 @@ public class DarkRoomController : MonoBehaviour {
 
     public void ShowEnemies(bool toggle) {
         foreach (GameObject enemy in enemies) {
-            enemy.transform.GetChild(0).gameObject.SetActive(toggle);
+            if (enemy != null) {
+                enemy.transform.GetChild(0).gameObject.SetActive(toggle);
+            }
         }
         //for (int i = 0; i < enemyMasks.Length; i++) {
         //    if (enemyMasks[i] != null) {

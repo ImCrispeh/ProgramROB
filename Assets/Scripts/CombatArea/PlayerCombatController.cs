@@ -62,6 +62,8 @@ public class PlayerCombatController : MonoBehaviour {
                 hitObj.GetComponent<FireEnemy>().damaged(damage);
             } else if (hitObj.GetComponent<Turrets>() != null) {
                 hitObj.GetComponent<Turrets>().damaged(damage);
+            } else if (hitObj.GetComponent<TankEnemy>() != null) {
+                hitObj.GetComponent<TankEnemy>().damaged(damage);
             }
         } else {
             DrawFiringLine(mousePos, firePointPos, false);

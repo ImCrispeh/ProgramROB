@@ -65,7 +65,7 @@ public class MapStateController : MonoBehaviour {
 			generator = GameObject.FindGameObjectWithTag ("Generator");
 			combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
 			mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
-            LoadCombatData();
+            //LoadCombatData();
         }
     }
 
@@ -173,9 +173,11 @@ public class MapStateController : MonoBehaviour {
             data.isEnemy = details.GetComponent<EnemyMap>().isEnemy;
             data.isSpider = details.GetComponent<EnemyMap>().isSpider;
             data.isTurret = details.GetComponent<EnemyMap>().isTurret;
+            data.isTank = details.GetComponent<EnemyMap>().isTank;
             data.enemyAmt = details.GetComponent<EnemyMap>().enemyAmt;
             data.spiderAmt = details.GetComponent<EnemyMap>().spiderAmt;
             data.turretAmt = details.GetComponent<EnemyMap>().turretAmt;
+            data.tankAmt = details.GetComponent<EnemyMap>().tankAmt;
         }
 
         string json = JsonUtility.ToJson(data);
@@ -240,6 +242,7 @@ public class MapStateController : MonoBehaviour {
             string jsonSave = File.ReadAllText(combatFileName);
             CombatData loadedCombatData = JsonUtility.FromJson<CombatData>(jsonSave);
             data.damage = loadedCombatData.damage;
+            Debug.Log(data.damage);
         }
 
         string upgradeCostFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostSaveData.json");
@@ -276,9 +279,11 @@ public class MapStateController : MonoBehaviour {
             generator.GetComponent<CombatAreaGeneratorv3> ().isEnemy = loadedMapData.isEnemy;
 			generator.GetComponent<CombatAreaGeneratorv3> ().isSpider = loadedMapData.isSpider;
 			generator.GetComponent<CombatAreaGeneratorv3> ().isTurret = loadedMapData.isTurret;
-			generator.GetComponent<CombatAreaGeneratorv3> ().enemyAmt = loadedMapData.enemyAmt;
+            generator.GetComponent<CombatAreaGeneratorv3>().isTank = loadedMapData.isTank;
+            generator.GetComponent<CombatAreaGeneratorv3> ().enemyAmt = loadedMapData.enemyAmt;
 			generator.GetComponent<CombatAreaGeneratorv3> ().spiderAmt = loadedMapData.spiderAmt;
 			generator.GetComponent<CombatAreaGeneratorv3> ().turretAmt = loadedMapData.turretAmt;
+            generator.GetComponent<CombatAreaGeneratorv3>().tankAmt = loadedMapData.tankAmt;
         }
     }
 
@@ -323,7 +328,7 @@ public class MapStateController : MonoBehaviour {
         Debug.Log("check");
         GameObject[] check = GameObject.FindGameObjectsWithTag("Enemy");
         Debug.Log(check.Length);
-        if (check.Length == 1) {
+        if (check.Length == 0) {
             LoadMapScene();
         }
     }
@@ -358,9 +363,11 @@ class MapData {
 	public bool isEnemy;
 	public bool isSpider;
 	public bool isTurret;
+    public bool isTank;
 	public int enemyAmt;
 	public int spiderAmt;
 	public int turretAmt;
+    public int tankAmt;
 }
 
 [Serializable]

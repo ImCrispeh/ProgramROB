@@ -24,6 +24,7 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 	public int enemyAmt;
 	public int spiderAmt;
 	public int turretAmt;
+    public int tankAmt;
 
 	//Usuable Prefabs
 	public GameObject floorTile;
@@ -43,17 +44,21 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 	public bool isEnemy;
 	public bool isSpider;
 	public bool isTurret;
+    public bool isTank;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		InitHolders ();	//Keeps Hierarchy clean
 		InitList ();	//Position to generate random layout
 		GridGen ();		//Outerwall and floor
 		RandomLayout (player, "player", 1, 1); //Random places player
-		RandomLayout (wallTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
-		if (isEnemy) RandomLayout (enemy[0], "enemy", enemyAmt, enemyAmt);	//Random places enemies
+        RandomLayout (wallTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
+        MapStateController._instance.player = GameObject.FindGameObjectWithTag("Player");
+        MapStateController._instance.LoadCombatData();
+        if (isEnemy) RandomLayout (enemy[0], "enemy", enemyAmt, enemyAmt);	//Random places enemies
 		if (isSpider) RandomLayout (enemy[1], "enemy", spiderAmt, spiderAmt);	//Random places spiders
 		if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
+        if (isTank) RandomLayout(enemy[3], "enemy", tankAmt, tankAmt);
 	}
 	
 	// Update is called once per frame

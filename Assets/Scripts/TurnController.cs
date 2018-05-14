@@ -36,7 +36,9 @@ public class TurnController : MonoBehaviour {
         player.GetComponent<PlayerProgramController>().ChangeSpeed(isFast);
 
         foreach (GameObject enemy in enemies) {
-            enemy.GetComponent<EnemyMap>().ChangeSpeed(isFast);
+            if (enemy != null) {
+                enemy.GetComponent<EnemyMap>().ChangeSpeed(isFast);
+            }
         }
     }
 

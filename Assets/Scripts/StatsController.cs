@@ -35,7 +35,7 @@ public class StatsController : MonoBehaviour {
         actionPointsText.text = "Remaining action points:" + "\n" + actionPoints + " (" + currActions + " queued to be used)";
     }
 
-    public void UpdateActionsList(List<string> actions) {
+    public void UpdateActionsList(List<string> actions, bool isExecuted) {
         if (actions.Count > previousQueueSize) {
             string newAction = actions[actions.Count - 1];
             GameObject newActionImage = Instantiate(movementImage, actionImagesSpawn.transform) as GameObject;
@@ -50,7 +50,11 @@ public class StatsController : MonoBehaviour {
                 newActionImage.transform.rotation = Quaternion.Euler(0, 0, 180);
             }
         } else if (actions.Count < previousQueueSize) {
-            Destroy(actionImagesSpawn.transform.GetChild(0).gameObject);
+            if (isExecuted) {
+                Destroy(actionImagesSpawn.transform.GetChild(0).gameObject);
+            } else {
+                Destroy(actionImagesSpawn.transform.GetChild(actions.Count).gameObject);
+            }
         }
 
         previousQueueSize = actions.Count;
