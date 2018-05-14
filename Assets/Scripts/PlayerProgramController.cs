@@ -16,6 +16,7 @@ public class PlayerProgramController : MonoBehaviour {
     public float moveWait;
     public float moveTimer = 0f;
     private bool isMoving = false;
+    private bool isPerformingActions;
     public int currNumOfActions = 0;
     public int maxNumOfActions = 5;
     public int actionPoints;
@@ -71,33 +72,39 @@ public class PlayerProgramController : MonoBehaviour {
 	}*/
 
     public void RemoveAction() {
-        if (TurnController._instance.GetIsPlayerTurn()) {
-            if (currNumOfActions > 0) {
-                currNumOfActions--;
-                actions.RemoveAt(currNumOfActions);
-                StatsController._instance.UpdateActionsList(actions, false);
-                StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+        if (!isPerformingActions) {
+            if (TurnController._instance.GetIsPlayerTurn()) {
+                if (currNumOfActions > 0) {
+                    currNumOfActions--;
+                    actions.RemoveAt(currNumOfActions);
+                    StatsController._instance.UpdateActionsList(actions, false);
+                    StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                }
             }
         }
     }
 
     public void LoadActionList() {
-        if (TurnController._instance.GetIsPlayerTurn()) {
-            StartCoroutine(ExecuteActionList());
+        if (!isPerformingActions) {
+            if (TurnController._instance.GetIsPlayerTurn()) {
+                StartCoroutine(ExecuteActionList());
+            }
         }
     }
 
     // For buttons to use
     public void AddAction(String action) {
         if (TurnController._instance.GetIsPlayerTurn()) {
-            if (actionPoints > 0) {
-                if (currNumOfActions < maxNumOfActions) {
-                    actions.Add(action);
-                    currNumOfActions++;
-                    StatsController._instance.UpdateActionsList(actions, false);
-                    StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
-                } else {
-                    StatsController._instance.DisplayMax();
+            if (!isPerformingActions) {
+                if (actionPoints > 0) {
+                    if (currNumOfActions < maxNumOfActions) {
+                        actions.Add(action);
+                        currNumOfActions++;
+                        StatsController._instance.UpdateActionsList(actions, false);
+                        StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                    } else {
+                        StatsController._instance.DisplayMax();
+                    }
                 }
             }
         }
@@ -134,18 +141,22 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     IEnumerator ExecuteActionList() {
-        actions.Reverse();
-        for (int i = actions.Count-1; i >= 0; i--) {
-            currNumOfActions--;
-            actionPoints--;
-            StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
-            yield return StartCoroutine(actions[i]);
-            actions.RemoveAt(i);
-            StatsController._instance.UpdateActionsList(actions, true);
+        if (!isPerformingActions) {
+            isPerformingActions = true;
+            actions.Reverse();
+            for (int i = actions.Count - 1; i >= 0; i--) {
+                currNumOfActions--;
+                actionPoints--;
+                StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                yield return StartCoroutine(actions[i]);
+                actions.RemoveAt(i);
+                StatsController._instance.UpdateActionsList(actions, true);
+            }
+            actions.Clear();
+            //StatsController._instance.UpdateActionsList(actions);
+            TurnController._instance.EnemyTurn();
+            isPerformingActions = false;
         }
-        //actions.Clear();
-        //StatsController._instance.UpdateActionsList(actions);
-        TurnController._instance.EnemyTurn();
     }
 
     IEnumerator Move(Vector2 source, Vector2 target) {

@@ -64,12 +64,12 @@ public class TankEnemy : MonoBehaviour
         if (target.position.x > transform.position.x)
         {
             //face right
-            transform.localScale = new Vector3(-2.5f, 2.5f, 1);
+            GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (target.position.x < transform.position.x)
         {
             //face left
-            transform.localScale = new Vector3(2.5f, 2.5f, 1);
+            GetComponent<SpriteRenderer>().flipX = false;
         }
     }
 
@@ -78,7 +78,7 @@ public class TankEnemy : MonoBehaviour
         health -= amount;
         if (health <= 0)
         {
-            //MapStateController._instance.CheckEnemiesAlive();
+            MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }
     }

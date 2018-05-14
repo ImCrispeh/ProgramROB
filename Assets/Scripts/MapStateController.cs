@@ -325,6 +325,11 @@ public class MapStateController : MonoBehaviour {
     }
 
     public void CheckEnemiesAlive() {
+        StartCoroutine(EnemiesCheck());
+    }
+
+    IEnumerator EnemiesCheck() {
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("check");
         GameObject[] check = GameObject.FindGameObjectsWithTag("Enemy");
         Debug.Log(check.Length);
