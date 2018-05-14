@@ -146,7 +146,7 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 6
+  m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 50
   m_CookieSize: 10
@@ -185,9 +185,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   damage: 3
-  chaseRange: 10
-  attackRange: 3
-  attackDelay: 1
+  chaseRange: 20
+  attackRange: 1
+  attackDelay: 2
   health: 10
 --- !u!212 &212917068329676030
 SpriteRenderer:
