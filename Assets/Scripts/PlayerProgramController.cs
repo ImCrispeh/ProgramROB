@@ -169,10 +169,10 @@ public class PlayerProgramController : MonoBehaviour {
 
     public void ChangeSpeed(bool isFast) {
         if (isFast) {
-            moveDuration = moveDuration / 2;
-            moveWait = moveDuration;
+            moveDuration = 0.5f;
+            moveWait = moveDuration + 0.05f;
         } else {
-            moveDuration = moveDuration * 2;
+            moveDuration = 1f;
             moveWait = moveDuration + 0.2f;
         }
     }

@@ -71,10 +71,10 @@ public class EnemyMap : MovingObject
 
     public void ChangeSpeed(bool isFast) {
         if (isFast) {
-            base.moveDuration = base.moveDuration / 2;
-            base.moveWait = base.moveDuration;
+            base.moveDuration = 0.5f;
+            base.moveWait = base.moveDuration + 0.05f;
         } else {
-            base.moveDuration = base.moveDuration * 2;
+            base.moveDuration = 1f;
             base.moveWait = base.moveDuration + 0.2f;
         }
     }

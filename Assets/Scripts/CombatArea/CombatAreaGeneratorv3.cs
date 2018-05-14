@@ -59,6 +59,7 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 		if (isSpider) RandomLayout (enemy[1], "enemy", spiderAmt, spiderAmt);	//Random places spiders
 		if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
         if (isTank) RandomLayout(enemy[3], "enemy", tankAmt, tankAmt);
+        map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z + 1f);
 	}
 	
 	// Update is called once per frame

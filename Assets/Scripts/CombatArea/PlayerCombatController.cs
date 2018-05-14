@@ -14,6 +14,7 @@ public class PlayerCombatController : MonoBehaviour {
     public float timeToFire = 0;
     public Text healthText;
     public LayerMask allowHit;
+    public Material lineMat;
 
     // Use this for initialization
     void Start () {
@@ -73,7 +74,7 @@ public class PlayerCombatController : MonoBehaviour {
     private void DrawFiringLine(Vector2 end, Vector2 firePoint, bool hitEnemy) {
         gameObject.AddComponent<LineRenderer>();
         LineRenderer lr = gameObject.GetComponent<LineRenderer>();
-        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.material = lineMat;
         lr.widthMultiplier = 0.05f;
         Vector2 dir = (end - firePoint).normalized;
         lr.SetPosition(0, firePoint);
