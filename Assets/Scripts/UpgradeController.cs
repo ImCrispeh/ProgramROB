@@ -124,7 +124,7 @@ public class UpgradeController : MonoBehaviour {
             upgradeCostData = JsonUtility.FromJson<UpgradeCostData>(jsonSave);
         } else {
             upgradeCostData = new UpgradeCostData();
-            upgradeCostData.upgradePoints = 5;
+            upgradeCostData.upgradePoints = 10;
             upgradeCostData.healthCost = 1;
             upgradeCostData.damageCost = 1;
             upgradeCostData.visibilityCost = 1;

@@ -121,7 +121,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61633624954112576
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -194,12 +194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187a3624956bd354f8fc5cbadf99a157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 0
   damage: 0
   SpawnPoint: {fileID: 4391784658993332}
   Enemies: {fileID: 1871505479088456, guid: 6e5df5bac97afff4c9ad14803567887d, type: 2}
-  chaseRange: 15
-  attackRange: 7
+  chaseRange: 5
+  attackRange: 5
   attackDelay: 2
   health: 10
   numberOfEnemies: 4
