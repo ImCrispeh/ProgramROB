@@ -89,12 +89,10 @@ public class DarkRoomController : MonoBehaviour {
 
     public void SetPlayerMoving(bool moving) {
         isPlayerMoving = moving;
-        TurnController._instance.EnableSpeedChange(!moving);
     }
 
     public void SetEnemiesMoving(bool moving) {
         isEnemiesMoving = moving;
-        TurnController._instance.EnableSpeedChange(moving);
     }
 
 	public void SetRoomsLight(bool choice){

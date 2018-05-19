@@ -153,6 +153,8 @@ public class MapStateController : MonoBehaviour {
         data.enemyPos = new Vector3[enemiesCount];
         data.enemyState = new bool[enemiesCount];
         data.keyState = new bool[keys.Length];
+        data.isFastForward = TurnController._instance.speedChangeTgl.isOn;
+        Debug.Log(data.isFastForward);
 
         foreach (GameObject enemy in enemies) {
             if (enemy != null) {
@@ -201,6 +203,8 @@ public class MapStateController : MonoBehaviour {
             playerCont.maxHealth = loadedMapData.playerMaxHealth;
             playerCont.maxActionPoints = loadedMapData.playerMaxAP;
             playerCont.visibilityMultiplier = loadedMapData.playerVisibility;
+            TurnController._instance.speedChangeTgl.isOn = loadedMapData.isFastForward;
+            TurnController._instance.ChangeSpeed(loadedMapData.isFastForward);
 
             foreach (GameObject enemy in enemies) {
                 EnemyMap enemyData = enemy.GetComponent<EnemyMap>();
@@ -330,9 +334,9 @@ public class MapStateController : MonoBehaviour {
 
     IEnumerator EnemiesCheck() {
         yield return new WaitForSeconds(0.5f);
-        Debug.Log("check");
+        //Debug.Log("check");
         GameObject[] check = GameObject.FindGameObjectsWithTag("Enemy");
-        Debug.Log(check.Length);
+        //Debug.Log(check.Length);
         if (check.Length == 0) {
             LoadMapScene();
         }
@@ -364,6 +368,7 @@ class MapData {
     public bool[] enemyState;
 
 	public bool[] keyState;
+    public bool isFastForward;
 
 	public bool isEnemy;
 	public bool isSpider;

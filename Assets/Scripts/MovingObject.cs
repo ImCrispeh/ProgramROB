@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class MovingObject : MonoBehaviour
 {
-    public float moveDuration = 1f;
+    public float moveDuration;
     public float moveWait;
     public float moveTimer = 0f;
     //public float moveTime = 0.1f;           
@@ -20,7 +20,6 @@ public abstract class MovingObject : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
-        moveWait = moveDuration + 0.2f;
     //inverseMoveTime = 1f / moveTime;
     }
 

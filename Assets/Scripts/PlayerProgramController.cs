@@ -12,7 +12,7 @@ public class PlayerProgramController : MonoBehaviour {
     public int damage = 3;
     public Vector2 lastPos;
     public float moveDist = 1.5f;
-    public float moveDuration = 1f;
+    public float moveDuration;
     public float moveWait;
     public float moveTimer = 0f;
     private bool isMoving = false;
@@ -24,16 +24,16 @@ public class PlayerProgramController : MonoBehaviour {
     public List<String> actions;
     public Rigidbody2D rigid;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         actions = new List<String>();
         StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
         StatsController._instance.UpdateHealth(currHealth);
         StatsController._instance.UpdateActionsList(actions, false);
         rigid = GetComponent<Rigidbody2D>();
         lastPos = transform.position;
-        moveWait = moveDuration + 0.2f;
-	}
+        ChangeSpeed(TurnController._instance.speedChangeTgl.isOn);
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -85,6 +85,7 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     public void LoadActionList() {
+        TurnController._instance.EnableSpeedChange(false);
         if (!isPerformingActions) {
             if (TurnController._instance.GetIsPlayerTurn()) {
                 StartCoroutine(ExecuteActionList());
@@ -180,11 +181,11 @@ public class PlayerProgramController : MonoBehaviour {
 
     public void ChangeSpeed(bool isFast) {
         if (isFast) {
-            moveDuration = 0.5f;
+            moveDuration = 0.4f;
             moveWait = moveDuration + 0.05f;
         } else {
-            moveDuration = 1f;
-            moveWait = moveDuration + 0.2f;
+            moveDuration = 0.75f;
+            moveWait = moveDuration + 0.1f;
         }
     }
 

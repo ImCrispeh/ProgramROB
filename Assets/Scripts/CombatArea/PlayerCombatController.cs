@@ -54,7 +54,7 @@ public class PlayerCombatController : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(firePointPos, mousePos - firePointPos, range, allowHit);
         //Debug.DrawLine (firePointPos, mousePos, Color.red);
         if (hit.collider != null) {
-            DrawFiringLine(hit.transform.position, firePointPos, true);
+            DrawFiringLine(hit.point, firePointPos, true);
             GameObject hitObj = hit.collider.gameObject;
             //Debug.DrawLine(firePointPos, hit.point, Color.red);
             if (hitObj.GetComponent<Enemy>() != null) {

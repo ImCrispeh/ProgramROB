@@ -21,6 +21,7 @@ public class EnemyMap : MovingObject
     protected override void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        ChangeSpeed(TurnController._instance.speedChangeTgl.isOn);
         base.Start();
     }
 
@@ -71,11 +72,11 @@ public class EnemyMap : MovingObject
 
     public void ChangeSpeed(bool isFast) {
         if (isFast) {
-            base.moveDuration = 0.5f;
+            base.moveDuration = 0.4f;
             base.moveWait = base.moveDuration + 0.05f;
         } else {
-            base.moveDuration = 1f;
-            base.moveWait = base.moveDuration + 0.2f;
+            base.moveDuration = 0.75f;
+            base.moveWait = base.moveDuration + 0.1f;
         }
     }
 }
