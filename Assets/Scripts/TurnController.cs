@@ -29,7 +29,10 @@ public class TurnController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown(KeyCode.F)) {
+            speedChangeTgl.isOn = !speedChangeTgl.isOn;
+            ChangeSpeed(speedChangeTgl.isOn);
+        }
 	}
 
     public void ChangeSpeed(bool isFast) {

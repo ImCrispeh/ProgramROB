@@ -27,9 +27,9 @@ public class PlayerProgramController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         actions = new List<String>();
-        StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
-        StatsController._instance.UpdateHealth(currHealth);
-        StatsController._instance.UpdateActionsList(actions, false);
+        OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+        OverlayController._instance.UpdateHealth(currHealth);
+        OverlayController._instance.UpdateActionsList(actions, false);
         rigid = GetComponent<Rigidbody2D>();
         lastPos = transform.position;
         ChangeSpeed(TurnController._instance.speedChangeTgl.isOn);
@@ -77,8 +77,8 @@ public class PlayerProgramController : MonoBehaviour {
                 if (currNumOfActions > 0) {
                     currNumOfActions--;
                     actions.RemoveAt(currNumOfActions);
-                    StatsController._instance.UpdateActionsList(actions, false);
-                    StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                    OverlayController._instance.UpdateActionsList(actions, false);
+                    OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
                 }
             }
         }
@@ -101,10 +101,10 @@ public class PlayerProgramController : MonoBehaviour {
                     if (currNumOfActions < maxNumOfActions) {
                         actions.Add(action);
                         currNumOfActions++;
-                        StatsController._instance.UpdateActionsList(actions, false);
-                        StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                        OverlayController._instance.UpdateActionsList(actions, false);
+                        OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
                     } else {
-                        StatsController._instance.DisplayMax();
+                        OverlayController._instance.DisplayMax();
                     }
                 }
             }
@@ -148,10 +148,10 @@ public class PlayerProgramController : MonoBehaviour {
             for (int i = actions.Count - 1; i >= 0; i--) {
                 currNumOfActions--;
                 actionPoints--;
-                StatsController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
                 yield return StartCoroutine(actions[i]);
                 actions.RemoveAt(i);
-                StatsController._instance.UpdateActionsList(actions, true);
+                OverlayController._instance.UpdateActionsList(actions, true);
             }
             actions.Clear();
             //StatsController._instance.UpdateActionsList(actions);

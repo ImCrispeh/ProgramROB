@@ -115,7 +115,7 @@ public class UpgradeController : MonoBehaviour {
         json = JsonUtility.ToJson(upgradeCostData);
         File.WriteAllText(upgradeCostFileName, json);
 
-        SceneManager.LoadScene("Level1v2");
+        SceneManager.LoadScene("Level1v2 UI Tweaks");
     }
 
     public void SetCosts() {

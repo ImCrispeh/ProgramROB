@@ -41,7 +41,7 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Level1v2") {
+        if (scene.name == "Level1v2 UI Tweaks") {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
@@ -154,7 +154,7 @@ public class MapStateController : MonoBehaviour {
         data.enemyState = new bool[enemiesCount];
         data.keyState = new bool[keys.Length];
         data.isFastForward = TurnController._instance.speedChangeTgl.isOn;
-        Debug.Log(data.isFastForward);
+        data.areHotkeysDisplayed = OverlayController._instance.areHotkeysDisplayed;
 
         foreach (GameObject enemy in enemies) {
             if (enemy != null) {
@@ -205,6 +205,7 @@ public class MapStateController : MonoBehaviour {
             playerCont.visibilityMultiplier = loadedMapData.playerVisibility;
             TurnController._instance.speedChangeTgl.isOn = loadedMapData.isFastForward;
             TurnController._instance.ChangeSpeed(loadedMapData.isFastForward);
+            OverlayController._instance.areHotkeysDisplayed = loadedMapData.areHotkeysDisplayed;
 
             foreach (GameObject enemy in enemies) {
                 EnemyMap enemyData = enemy.GetComponent<EnemyMap>();
@@ -369,6 +370,7 @@ class MapData {
 
 	public bool[] keyState;
     public bool isFastForward;
+    public bool areHotkeysDisplayed;
 
 	public bool isEnemy;
 	public bool isSpider;

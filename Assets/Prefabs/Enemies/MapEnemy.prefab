@@ -183,9 +183,11 @@ MonoBehaviour:
   isEnemy: 0
   isSpider: 0
   isTurret: 0
+  isTank: 0
   enemyAmt: 0
   spiderAmt: 0
   turretAmt: 0
+  tankAmt: 0
 --- !u!212 &212674033158869678
 SpriteRenderer:
   m_ObjectHideFlags: 1

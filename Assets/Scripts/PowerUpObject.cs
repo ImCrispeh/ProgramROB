@@ -86,13 +86,13 @@ public class PowerUpObject : MonoBehaviour {
 
     private void IncActionPoints(){
         FindObjectOfType<PlayerProgramController>().actionPoints += pointsAction;
-        FindObjectOfType<StatsController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints, FindObjectOfType<PlayerProgramController>().currNumOfActions);
+        FindObjectOfType<OverlayController>().UpdateActionPoints(FindObjectOfType<PlayerProgramController>().actionPoints, FindObjectOfType<PlayerProgramController>().currNumOfActions);
     }
 
     private void IncHealth(){
         if (FindObjectOfType<PlayerProgramController>() != null) {
             FindObjectOfType<PlayerProgramController>().currHealth += pointsHealth;
-            FindObjectOfType<StatsController>().UpdateHealth(FindObjectOfType<PlayerProgramController>().currHealth);
+            FindObjectOfType<OverlayController>().UpdateHealth(FindObjectOfType<PlayerProgramController>().currHealth);
         } else {
             FindObjectOfType<PlayerCombatController>().health += pointsHealth;
         }

@@ -21,6 +21,8 @@ TagManager:
   - PUActionPoints
   - PUDamage
   - PUVision
+  - ActionBtn
+  - FFToggle
   layers:
   - Default
   - TransparentFX
