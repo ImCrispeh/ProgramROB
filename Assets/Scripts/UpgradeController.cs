@@ -112,10 +112,15 @@ public class UpgradeController : MonoBehaviour {
         json = JsonUtility.ToJson(totalUpgradeData);
         File.WriteAllText(totalUpgradeFileName, json);
 
+        DataCollectionController._instance.UpdateHealthUpgrade(totalUpgradeData.healthIncrease / 3);
+        DataCollectionController._instance.UpdateDamageUpgrade(totalUpgradeData.damageIncrease);
+        DataCollectionController._instance.UpdateVisibilityUpgrade((int)(totalUpgradeData.visibilityIncrease * 10));
+        DataCollectionController._instance.UpdateApUpgrade(totalUpgradeData.apIncrease / 5);
+
         json = JsonUtility.ToJson(upgradeCostData);
         File.WriteAllText(upgradeCostFileName, json);
 
-        SceneManager.LoadScene("Level1v2 UI Tweaks");
+        SceneManager.LoadScene(1);
     }
 
     public void SetCosts() {

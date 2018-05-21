@@ -39,6 +39,11 @@ public class PlayerCombatController : MonoBehaviour {
                 Shooting();
             }
         }
+
+        //have this for every attempted attack? or every successful attack?
+        if (Input.GetButtonDown("Fire1")) {
+            DataCollectionController._instance.UpdateMeleeAttacks();
+        }
     }
 
     private void FixedUpdate() {
@@ -69,6 +74,9 @@ public class PlayerCombatController : MonoBehaviour {
         } else {
             DrawFiringLine(mousePos, firePointPos, false);
         }
+
+        //have this for every attempted attack? or every successful attack?
+        DataCollectionController._instance.UpdateRangedAttacks();
     }
 
     private void DrawFiringLine(Vector2 end, Vector2 firePoint, bool hitEnemy) {

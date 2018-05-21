@@ -29,6 +29,7 @@ public class Turrets : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 90 * Time.deltaTime);
             if (Time.time > lastAttackTime + attackDelay) {
                 GameObject Bullet = Instantiate(projectTile, shootPoint.transform.position, Quaternion.identity);
+                Bullet.GetComponent<Bullet>().isTurretSpawned = true;
                 Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
                 lastAttackTime = Time.time;
 

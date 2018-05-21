@@ -189,6 +189,7 @@ MonoBehaviour:
   attackRange: 1
   attackDelay: 2
   health: 10
+  isTankSpawed: 1
 --- !u!212 &212917068329676030
 SpriteRenderer:
   m_ObjectHideFlags: 1

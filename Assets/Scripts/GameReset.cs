@@ -33,6 +33,32 @@ public class GameReset : MonoBehaviour {
         totalUpgradeFileName = Path.Combine(Application.persistentDataPath, "TotalUpgradeSaveData.json");
     }
 
+    private void OnApplicationQuit() {
+        if (File.Exists(combatFileName)) {
+            File.Delete(combatFileName);
+        }
+
+        if (File.Exists(mapFileName)) {
+            File.Delete(mapFileName);
+        }
+
+        if (File.Exists(upgradeFileName)) {
+            File.Delete(upgradeFileName);
+        }
+
+        if (File.Exists(levelEndFileName)) {
+            File.Delete(levelEndFileName);
+        }
+
+        if (File.Exists(upgradeCostFileName)) {
+            File.Delete(upgradeCostFileName);
+        }
+
+        if (File.Exists(totalUpgradeFileName)) {
+            File.Delete(totalUpgradeFileName);
+        }
+    }
+
     private void Update() {
 
         if (Input.GetKeyDown(KeyCode.P)) {
@@ -80,34 +106,11 @@ public class GameReset : MonoBehaviour {
             }
 
             Time.timeScale = 1;
+            DataCollectionController._instance.WriteToFile();
             SceneManager.LoadScene("UpgradeScreen");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (File.Exists(combatFileName)) {
-                File.Delete(combatFileName);
-            }
-
-            if (File.Exists(mapFileName)) {
-                File.Delete(mapFileName);
-            }
-
-            if (File.Exists(upgradeFileName)) {
-                File.Delete(upgradeFileName);
-            }
-
-            if (File.Exists(levelEndFileName)) {
-                File.Delete(levelEndFileName);
-            }
-
-            if (File.Exists(upgradeCostFileName)) {
-                File.Delete(upgradeCostFileName);
-            }
-
-            if (File.Exists(totalUpgradeFileName)) {
-                File.Delete(totalUpgradeFileName);
-            }
-
             Time.timeScale = 1;
             Application.Quit();
         }

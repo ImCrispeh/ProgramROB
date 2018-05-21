@@ -41,7 +41,7 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Level1v2 UI Tweaks") {
+        if (scene.buildIndex % 2 == 1) {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
@@ -58,7 +58,7 @@ public class MapStateController : MonoBehaviour {
             }
         }
 
-		if (scene.name == "Level1v2_Combat") {
+		if (scene.buildIndex % 2 == 0 && scene.buildIndex != 0) {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             //player = GameObject.FindGameObjectWithTag("Player");
@@ -81,32 +81,6 @@ public class MapStateController : MonoBehaviour {
         combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
         upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
     }
-
-    //private void Update() {
-    //    if (Input.GetKeyDown(KeyCode.R)) {
-    //        if (File.Exists(combatFileName)) {
-    //            File.Delete(combatFileName);
-    //        }
-
-    //        if (File.Exists(mapFileName)) {
-    //            File.Delete(mapFileName);
-    //        }
-    //        Time.timeScale = 1;
-    //        SceneManager.LoadScene("UpgradeTest");
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Escape)) {
-    //        if (File.Exists(combatFileName)) {
-    //            File.Delete(combatFileName);
-    //        }
-
-    //        if (File.Exists(mapFileName)) {
-    //            File.Delete(mapFileName);
-    //        }
-    //        Time.timeScale = 1;
-    //        Application.Quit();
-    //    }
-    //}
 
     public void IntegrateUpgrades() {
         PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
@@ -321,12 +295,12 @@ public class MapStateController : MonoBehaviour {
     }
     public void LoadCombatScene(GameObject details) {
         SaveMapData(details);
-        SceneManager.LoadScene("Level1v2_Combat");
+        SceneManager.LoadScene(2);
     }
 
     public void LoadMapScene() {
         SaveCombatData();
-        SceneManager.LoadScene("Level1v2");
+        SceneManager.LoadScene(1);
     }
 
     public void CheckEnemiesAlive() {
@@ -345,14 +319,33 @@ public class MapStateController : MonoBehaviour {
 
     public void EndGame(bool isWin, String reason) {
         if (isWin) {
-            endText.text = "You Win!";
+            endText.text = "You Win!" + "\n" + "Press R to reset or Esc to quit";
         } else {
-            endText.text = "You Lose" + "\n" + reason;
+            endText.text = "You Lose" + "\n" + reason + "\n" + "Press R to reset or Esc to quit";
         }
-        endImg.GetComponent<RectTransform>().localPosition = new Vector2(0, 0);
+        endImg.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (DarkRoomController._instance != null) {
             DarkRoomController._instance.ToggleEffect(true);
         }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player.GetComponent<PlayerCombatController>() != null) {
+            player.GetComponent<PlayerCombatController>().enabled = false;
+        }
+
+        if (player.GetComponent<PlayerProgramController>() != null) {
+            player.GetComponent<PlayerProgramController>().enabled = false;
+        }
+
+        foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
+            btn.interactable = false;
+        }
+
+        foreach (Toggle tgl in GameObject.FindObjectsOfType<Toggle>()) {
+            tgl.interactable = false;
+        }
+
         Time.timeScale = 0;
     }
 }

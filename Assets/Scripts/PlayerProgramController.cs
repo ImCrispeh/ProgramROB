@@ -146,6 +146,7 @@ public class PlayerProgramController : MonoBehaviour {
             isPerformingActions = true;
             actions.Reverse();
             for (int i = actions.Count - 1; i >= 0; i--) {
+                DataCollectionController._instance.UpdateMovementUsed();
                 currNumOfActions--;
                 actionPoints--;
                 OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
@@ -202,6 +203,7 @@ public class PlayerProgramController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Exit") {
+            DataCollectionController._instance.UpdateIsWin(true);
             MapStateController._instance.SaveEndOfLevelData();
             MapStateController._instance.EndGame(true, "");
         }

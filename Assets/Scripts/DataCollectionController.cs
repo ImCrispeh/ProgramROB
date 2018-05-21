@@ -21,19 +21,22 @@ public class DataCollectionController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        directory = Application.dataPath + @"\SessionData";
-        if (!Directory.Exists(directory)) {
-            Directory.CreateDirectory(directory);
-        }
+        //this makes it so it will only capture data in the built game (leave this commented for testing)
+        //if (!Application.isEditor) {
+            directory = Application.dataPath + @"\SessionData";
+            if (!Directory.Exists(directory)) {
+                Directory.CreateDirectory(directory);
+            }
 
-        int i = 0;
-        while (File.Exists(directory + @"\session" + i + ".txt")) {
-            i++;
-        }
-        filePath = directory + @"\session" + i + ".txt";
-        StreamWriter writer = new StreamWriter(filePath);
-        writer.WriteLine("playtime_(s),ranged_attacks,melee_attacks,melee_damage,ranged_damage,turret_damage,tankspawn_damage,movement_used,health_upgrades,damage_upgrade,visibility_upgrade,ap_upgrade");
-        writer.Close();
+            int i = 0;
+            while (File.Exists(directory + @"\session" + i + ".txt")) {
+                i++;
+            }
+            filePath = directory + @"\session" + i + ".txt";
+            StreamWriter writer = new StreamWriter(filePath);
+            writer.WriteLine("playtime_(s),level,ranged_attacks,melee_attacks,melee_damage,ranged_damage,turret_damage,tankspawn_damage,movement_used,health_upgrades,damage_upgrade,visibility_upgrade,ap_upgrade,did_win");
+            writer.Close();
+        //}
         data = new DataCollector();
     }
 	
@@ -41,7 +44,7 @@ public class DataCollectionController : MonoBehaviour {
 	void Update () {
         data.playtime += Time.deltaTime;
 		if (Input.GetKeyDown(KeyCode.U)) {
-            WriteToFile();
+            MapStateController._instance.EndGame(true, "");
         }
 	}
 
@@ -73,48 +76,52 @@ public class DataCollectionController : MonoBehaviour {
         data.movementUsed++;
     }
 
-    public void UpdateHealthUpgrade() {
-        data.healthUpgrade++;
+    public void UpdateHealthUpgrade(int amount) {
+        data.healthUpgrade += amount;
     }
 
-    public void UpdateDamageUpgrade() {
-        data.damageUpgrade++;
+    public void UpdateDamageUpgrade(int amount) {
+        data.damageUpgrade += amount;
     }
 
-    public void UpdateVisibilityUpgrade() {
-        data.visibilityUpgrade++;
+    public void UpdateVisibilityUpgrade(int amount) {
+        data.visibilityUpgrade += amount;
     }
 
-    public void UpdateApUpgrade() {
-        data.apUpgrade++;
+    public void UpdateApUpgrade(int amount) {
+        data.apUpgrade += amount;
     }
 
     public void UpdateIsWin(bool didWin) {
         data.isWin = didWin;
     }
 
+    private void OnApplicationQuit() {
+        WriteToFile();
+    }
+
     public void WriteToFile() {
         //if (!Application.isEditor) {
-        FileStream appendToFile = File.Open(filePath, FileMode.Append);
-        StreamWriter writer = new StreamWriter(appendToFile);
-        data.level = 1; //will change this later with more levels
-        string output = "\n" + data.playtime.ToString("F2");
-        output += "," + data.level;
-        output += "," + data.rangedAttacks;
-        output += "," + data.meleeAttacks;
-        output += "," + data.meleeDamage;
-        output += "," + data.rangedDamage;
-        output += "," + data.turretDamage;
-        output += "," + data.tankSpawnDamage;
-        output += "," + data.movementUsed;
-        output += "," + data.healthUpgrade;
-        output += "," + data.damageUpgrade;
-        output += "," + data.visibilityUpgrade;
-        output += "," + data.apUpgrade;
-        output += "," + data.isWin;
-        writer.WriteLine(output);
-        writer.Close();
-        data = new DataCollector();
+            FileStream appendToFile = File.Open(filePath, FileMode.Append);
+            StreamWriter writer = new StreamWriter(appendToFile);
+            data.level = 1; //will change this later with more levels
+            string output = "\n" + data.playtime.ToString("F2");
+            output += "," + data.level;
+            output += "," + data.rangedAttacks;
+            output += "," + data.meleeAttacks;
+            output += "," + data.meleeDamage;
+            output += "," + data.rangedDamage;
+            output += "," + data.turretDamage;
+            output += "," + data.tankSpawnDamage;
+            output += "," + data.movementUsed;
+            output += "," + data.healthUpgrade;
+            output += "," + data.damageUpgrade;
+            output += "," + data.visibilityUpgrade;
+            output += "," + data.apUpgrade;
+            output += "," + data.isWin;
+            writer.WriteLine(output);
+            writer.Close();
+            data = new DataCollector();
         //}
     }
 }

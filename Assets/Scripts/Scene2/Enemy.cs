@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour {
     private float lastAttackTime;
     public float attackDelay;
     public int health;
+    public bool isTankSpawed;
 
     void Start() {
         target = GameObject.FindWithTag("Player").transform;
@@ -30,6 +31,11 @@ public class Enemy : MonoBehaviour {
                 if (Time.time > lastAttackTime + attackDelay) {
                     target.gameObject.GetComponent<PlayerCombatController>().damaged(damage);
                     lastAttackTime = Time.time;
+                    if (isTankSpawed) {
+                        DataCollectionController._instance.UpdateTankSpawnDamage(damage);
+                    } else {
+                        DataCollectionController._instance.UpdateMeleeDamage(damage);
+                    }
                 }
             }
             //checkPosition();
