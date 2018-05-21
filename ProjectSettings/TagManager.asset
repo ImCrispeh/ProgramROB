@@ -21,6 +21,7 @@ TagManager:
   - PUActionPoints
   - PUDamage
   - PUVision
+  - FixWall
   layers:
   - Default
   - TransparentFX

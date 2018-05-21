@@ -356,7 +356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1579034987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -595,6 +595,21 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114983172758323282, guid: 9e935803616d2734984d4bad303ef940,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.007352948
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983172758323282, guid: 9e935803616d2734984d4bad303ef940,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.0002703288
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983172758323282, guid: 9e935803616d2734984d4bad303ef940,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.0002703288
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9e935803616d2734984d4bad303ef940, type: 2}
   m_IsPrefabParent: 0
@@ -640,7 +655,7 @@ MonoBehaviour:
   turretAmt: 1
   tankAmt: 0
   floorTile: {fileID: 1831044803964638, guid: c6b2c21600e24c0499c3f38bf91f47ed, type: 2}
-  wallTile: {fileID: 1705354731055368, guid: 29569d9b2ce7c7e4db893bbbc1c9865b, type: 2}
+  wallTile: {fileID: 1895635733751684, guid: c436ecacfcd29b44488ba0ea7c516f48, type: 2}
   enemy:
   - {fileID: 1197943685287152, guid: 18e8a6e9878d21e4892aa871709ed055, type: 2}
   - {fileID: 1025894673279108, guid: a83c9fefa15780b49bc8145e04724eeb, type: 2}

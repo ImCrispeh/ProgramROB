@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour {
             collision.gameObject.GetComponent<PlayerCombatController>().damaged(damage);
         }
 
-        if (collision.gameObject.tag == "Boundary" || collision.gameObject.tag == "Wall") {
+        if (collision.gameObject.tag == "FixWall") {
             Destroy(gameObject);
         }
     }
