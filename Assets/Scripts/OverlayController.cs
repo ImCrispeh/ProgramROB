@@ -50,7 +50,11 @@ public class OverlayController : MonoBehaviour {
             areHotkeysDisplayed = !areHotkeysDisplayed;
             DisplayHotkeys();
         }
-	}
+
+        if (Input.GetKeyDown(KeyCode.I)) {
+            DisplayInstructions();
+        }
+    }
 
     public void UpdateActionPoints(int actionPoints, int currActions) {
         actionPointsText.text = "Remaining action points:" + "\n" + actionPoints + " (" + currActions + " queued to be used)";
