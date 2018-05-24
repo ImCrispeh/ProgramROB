@@ -19,7 +19,14 @@ public class UpgradeController : MonoBehaviour {
     public Text apText;
     public Text damageText;
     public Text visibilityText;
+    public Text repelText;
+    public Text revealText;
+    public Text convertText;
     public Text upgradePointsText;
+
+    public Button repelBtn;
+    public Button revealBtn;
+    public Button convertBtn;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -42,6 +49,9 @@ public class UpgradeController : MonoBehaviour {
         UpdateAPText();
         UpdateDamageText();
         UpdateVisibilityText();
+        UpdateRepelText();
+        UpdateRevealText();
+        UpdateConvertText();
         UpdateUpgradePointsText();
     }
 
@@ -89,6 +99,33 @@ public class UpgradeController : MonoBehaviour {
         }
     }
 
+    public void PurchaseRepel() {
+        if (upgradeCostData.upgradePoints >= 5) {
+            upgradeCostData.upgradePoints -= 5;
+            upgradeData.isRepelPurchased = true;
+            UpdateRepelText();
+            UpdateUpgradePointsText();
+        }
+    }
+
+    public void PurchaseReveal() {
+        if (upgradeCostData.upgradePoints >= 5) {
+            upgradeCostData.upgradePoints -= 5;
+            upgradeData.isRevealPurchased = true;
+            UpdateRevealText();
+            UpdateUpgradePointsText();
+        }
+    }
+
+    public void PurchaseConvert() {
+        if (upgradeCostData.upgradePoints >= 5) {
+            upgradeCostData.upgradePoints -= 5;
+            upgradeData.isConvertPurchased = true;
+            UpdateConvertText();
+            UpdateUpgradePointsText();
+        }
+    }
+
     public void ResetUpgrades() {
         upgradeData = new UpgradeData();
         SetCosts();
@@ -97,7 +134,11 @@ public class UpgradeController : MonoBehaviour {
         UpdateAPText();
         UpdateDamageText();
         UpdateVisibilityText();
+        UpdateRepelText();
+        UpdateRevealText();
+        UpdateConvertText();
         UpdateUpgradePointsText();
+
     }
 
     public void SaveUpgrades() {
@@ -147,23 +188,46 @@ public class UpgradeController : MonoBehaviour {
     }
 
     public void UpdateHealthText() {
-        healthText.text = "Total Health Increase: " + totalUpgradeData.healthIncrease + "\n"
-                        + "Cost: " + upgradeCostData.healthCost;
+        healthText.text = "Total Health Increase: " + totalUpgradeData.healthIncrease + "\n" + "Cost: " + upgradeCostData.healthCost;
     }
 
     public void UpdateAPText() {
-        apText.text = "Total AP Increase: " + totalUpgradeData.apIncrease + "\n"
-                        + "Cost: " + upgradeCostData.apCost;
+        apText.text = "Total AP Increase: " + totalUpgradeData.apIncrease + "\n" + "Cost: " + upgradeCostData.apCost;
     }
 
     public void UpdateDamageText() {
-        damageText.text = "Total Damage Increase: " + totalUpgradeData.damageIncrease + "\n"
-                        + "Cost: " + upgradeCostData.damageCost;
+        damageText.text = "Total Damage Increase: " + totalUpgradeData.damageIncrease + "\n" + "Cost: " + upgradeCostData.damageCost;
     }
 
     public void UpdateVisibilityText() {
-        visibilityText.text = "Total Visibility Increase: " + (int)(totalUpgradeData.visibilityIncrease * 100) + "% \n"
-                        + "Cost: " + upgradeCostData.visibilityCost;
+        visibilityText.text = "Total Visibility Increase: " + (int)(totalUpgradeData.visibilityIncrease * 100) + "% \n" + "Cost: " + upgradeCostData.visibilityCost;
+    }
+
+    public void UpdateRepelText() {
+        if (upgradeData.isRepelPurchased) {
+            repelText.text = "Uses 3 AP" + "\n" + "Cost: N/A";
+        } else {
+            repelText.text = "Uses 3 AP" + "\n" + "Cost: 5";
+        }
+        repelBtn.interactable = !upgradeData.isRepelPurchased;
+    }
+
+    public void UpdateRevealText() {
+        if (upgradeData.isRevealPurchased) {
+            revealText.text = "Uses 5 AP" + "\n" + "Cost: N/A";
+        } else {
+            revealText.text = "Uses 5 AP" + "\n" + "Cost: 5";
+        }
+        revealBtn.interactable = !upgradeData.isRevealPurchased;
+    }
+
+    public void UpdateConvertText() {
+        if (upgradeData.isConvertPurchased) {
+            convertText.text = "Drains 1 AP per turn" + "\n" + "Cost: N/A";
+        } else {
+            convertText.text = "Drains 1 AP per turn" + "\n" + "Cost: 5";
+        }
+        convertBtn.interactable = !upgradeData.isConvertPurchased;
     }
 
     public void UpdateUpgradePointsText() {
@@ -177,6 +241,9 @@ class UpgradeData {
     public int apIncrease;
     public int damageIncrease;
     public int healthIncrease;
+    public bool isRepelPurchased;
+    public bool isRevealPurchased;
+    public bool isConvertPurchased;
 }
 
 [Serializable]

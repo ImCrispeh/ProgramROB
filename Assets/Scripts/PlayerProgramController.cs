@@ -19,17 +19,30 @@ public class PlayerProgramController : MonoBehaviour {
     private bool isPerformingActions;
     public int currNumOfActions = 0;
     public int maxNumOfActions = 5;
+    public int estCost;
     public int actionPoints;
     public int maxActionPoints = 30;
     public List<String> actions;
     public Rigidbody2D rigid;
 
+    public bool isRepelAvailable;
+    public bool isRevealAvailable;
+    public bool isConvertAvailable;
+
+    public bool isConversionActive;
+    public bool isRevealUsed;
+
     // Use this for initialization
     void Start() {
         actions = new List<String>();
-        OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+        if (isConversionActive) {
+            estCost = 1;
+        } else {
+            estCost = 0;
+        }
+        OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
         OverlayController._instance.UpdateHealth(currHealth);
-        OverlayController._instance.UpdateActionsList(actions, false);
+        OverlayController._instance.UpdateActionsList(actions, false, false);
         rigid = GetComponent<Rigidbody2D>();
         lastPos = transform.position;
         ChangeSpeed(TurnController._instance.speedChangeTgl.isOn);
@@ -54,6 +67,18 @@ public class PlayerProgramController : MonoBehaviour {
             AddAction("MoveDown");
         }
 
+        if (Input.GetKeyDown(KeyCode.E)) {
+            AddAction("RepelEnemies");
+        }
+
+        if (Input.GetKeyDown(KeyCode.M)) {
+            AddAction("RevealMap");
+        }
+
+        if (Input.GetKeyDown(KeyCode.C)) {
+            AddAction("ToggleConversion");
+        }
+
         if (Input.GetKeyDown(KeyCode.Space)) {
             LoadActionList();
         }
@@ -75,10 +100,23 @@ public class PlayerProgramController : MonoBehaviour {
         if (!isPerformingActions) {
             if (TurnController._instance.GetIsPlayerTurn()) {
                 if (currNumOfActions > 0) {
+
+                    if (actions[actions.Count - 1] == "ToggleConversion") {
+                        isConversionActive = !isConversionActive;
+                        OverlayController._instance.convertBtn.interactable = true;
+                    }
+
+                    if (actions[actions.Count - 1] == "RevealMap") {
+                        isRevealUsed = !isRevealUsed;
+                        OverlayController._instance.revealBtn.interactable = true;
+                    }
+
+                    int cost = CheckCost(actions[actions.Count-1]);
                     currNumOfActions--;
-                    actions.RemoveAt(currNumOfActions);
-                    OverlayController._instance.UpdateActionsList(actions, false);
-                    OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                    estCost -= cost;
+                    actions.RemoveAt(actions.Count-1);
+                    OverlayController._instance.UpdateActionsList(actions, false, false);
+                    OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
                 }
             }
         }
@@ -95,20 +133,52 @@ public class PlayerProgramController : MonoBehaviour {
 
     // For buttons to use
     public void AddAction(String action) {
+        bool isMovement = CheckIfMovement(action);
+        int cost = CheckCost(action);
+
+        if (action == "ToggleConversion") {
+            isConversionActive = !isConversionActive;
+            OverlayController._instance.convertBtn.interactable = false;
+        }
+
+        if (action == "RevealMap") {
+            isRevealUsed = !isRevealUsed;
+            OverlayController._instance.revealBtn.interactable = false;
+        }
+
         if (TurnController._instance.GetIsPlayerTurn()) {
             if (!isPerformingActions) {
-                if (actionPoints > 0) {
+                if (actionPoints > estCost) {
                     if (currNumOfActions < maxNumOfActions) {
                         actions.Add(action);
                         currNumOfActions++;
-                        OverlayController._instance.UpdateActionsList(actions, false);
-                        OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                        estCost += cost;
+                        OverlayController._instance.UpdateActionsList(actions, false, isMovement);
+                        OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
                     } else {
                         OverlayController._instance.DisplayMax();
                     }
                 }
             }
         }
+    }
+
+    public bool CheckIfMovement(String action) {
+        return action.Contains("Move");
+    }
+
+    public int CheckCost(String action) {
+        if (CheckIfMovement(action) || (!isConversionActive && action == "ToggleConversion")) {
+            return 1;
+        } else if (isConversionActive && action == "ToggleConversion") {
+            return -1;
+        } else if (action == "RepelEnemies") {
+            return 3;
+        } else if (action == "RevealMap") {
+            return 5;
+        }
+
+        return 0;
     }
 
     // Coroutines used so that they can be queued
@@ -141,20 +211,49 @@ public class PlayerProgramController : MonoBehaviour {
         yield return new WaitForSeconds(moveWait);
     }
 
+    IEnumerator RepelEnemies() {
+        if (!isMoving) {
+            TurnController._instance.repelTurns = 3;
+        }
+        yield return new WaitForSeconds(0.05f);
+    }
+
+    IEnumerator RevealMap() {
+        if (!isMoving) {
+            CameraController._instance.RevealMapWrapper();
+        }
+        yield return new WaitForSeconds(5f);
+    }
+
+    IEnumerator ToggleConversion() {
+        if (!isMoving) {
+            DarkRoomController._instance.ToggleConversionAbility(isConversionActive);
+        }
+        yield return new WaitForSeconds(0.05f);
+    }
+
     IEnumerator ExecuteActionList() {
         if (!isPerformingActions) {
             isPerformingActions = true;
             actions.Reverse();
             for (int i = actions.Count - 1; i >= 0; i--) {
                 DataCollectionController._instance.UpdateMovementUsed();
+                int cost = CheckCost(actions[i]);
                 currNumOfActions--;
-                actionPoints--;
-                OverlayController._instance.UpdateActionPoints(actionPoints, currNumOfActions);
+                actionPoints -= cost;
+                estCost -= cost;
+                OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
                 yield return StartCoroutine(actions[i]);
                 actions.RemoveAt(i);
-                OverlayController._instance.UpdateActionsList(actions, true);
+                OverlayController._instance.UpdateActionsList(actions, true, false);
             }
             actions.Clear();
+            if (isConversionActive) {
+                estCost = 1;
+                actionPoints--;
+                OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
+            }
+            OverlayController._instance.EnableExtraActions();
             //StatsController._instance.UpdateActionsList(actions);
             TurnController._instance.EnemyTurn();
             isPerformingActions = false;

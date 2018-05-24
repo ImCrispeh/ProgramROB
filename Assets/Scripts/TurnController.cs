@@ -10,6 +10,8 @@ public class TurnController : MonoBehaviour {
     public GameObject player;
     public GameObject[] enemies;
     public Toggle speedChangeTgl;
+	public int repelTurns;
+	public bool isPlayerRepelling;
     //public Canvas canvas;
 
     private void Awake() {
@@ -60,9 +62,13 @@ public class TurnController : MonoBehaviour {
     }
 
     public void EnemyTurn() {
-        isPlayerTurn = false;
-        turnText.text = "Enemy Turn";
+		isPlayerRepelling = (repelTurns > 0);
+		isPlayerTurn = false;
+		turnText.text = "Enemy Turn";
         StartCoroutine(EnemyMovement());
+        if (isPlayerRepelling) {
+            repelTurns--;
+        }
     }
 
     public void PlayerTurn() {

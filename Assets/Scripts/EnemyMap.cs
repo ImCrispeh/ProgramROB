@@ -46,7 +46,14 @@ public class EnemyMap : MovingObject
         {
             xDir = target.position.x > transform.position.x ? moveDist : moveDist * -1;
         }
-
+		
+		if (TurnController._instance.isPlayerRepelling) {
+			yDir = -yDir;
+			xDir = -xDir;
+            base.blockingLayer = (1 << LayerMask.NameToLayer("Obstacle")) | (1 << LayerMask.NameToLayer("Player"));
+		} else {
+            base.blockingLayer = 1 << LayerMask.NameToLayer("Obstacle");
+        }
         //Call the AttemptMove function and pass in the generic parameter Player, because Enemy is moving and expecting to potentially encounter a Player
         AttemptMove<Player>(xDir, yDir);
         yield return new WaitForSeconds(base.moveWait);

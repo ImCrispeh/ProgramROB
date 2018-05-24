@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61539250933091282}
   - component: {fileID: 50584282747815350}
   - component: {fileID: 61958833597817912}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -207,6 +207,10 @@ MonoBehaviour:
   maxActionPoints: 30
   actions: []
   rigid: {fileID: 0}
+  isRepelAvailable: 0
+  isRevealAvailable: 0
+  isConvertAvailable: 0
+  isConversionActive: 0
 --- !u!212 &212695026753789540
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -28,13 +28,7 @@ public class DarkRoomController : MonoBehaviour {
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         player.transform.GetChild(0).GetComponent<Light>().spotAngle = 50 * (player.GetComponent<PlayerProgramController>().visibilityMultiplier - 0.05f);
-        //playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
-        //playerMask.transform.localScale = playerMask.transform.localScale * player.GetComponent<PlayerProgramController>().visibilityMultiplier;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        //enemyMasks = new GameObject[enemies.Length];
-        //for (int i = 0; i < enemyMasks.Length; i++) {
-        //    enemyMasks[i] = Instantiate(maskObj, enemies[i].transform.position, Quaternion.identity, maskParent);
-        //}
         ShowEnemies(false);
 		//PowerGenMask.SetActive (false);
 		//Room2PowerGenMask.SetActive (false);
@@ -42,24 +36,7 @@ public class DarkRoomController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //if (isPlayerMoving) {
-        //    playerMask.transform.position = Camera.main.WorldToScreenPoint(player.transform.position);
-        //}
-
-		//if (isEnemiesMoving) {
-  //          foreach (GameObject enemy in enemies) {
-  //              enemy.transform.GetChild(0)
-  //          }
-  //          for (int i = 0; i < enemyMasks.Length; i++) {
-  //              if (enemyMasks[i] != null) {
-  //                  if (enemies[i] == null) {
-  //                      Destroy(enemyMasks[i]);
-  //                  } else {
-  //                      enemyMasks[i].transform.position = Camera.main.WorldToScreenPoint(enemies[i].transform.position);
-  //                  }
-  //              }
-  //          }
-  //      }
+        
 	}
 
     public void ShowEnemies(bool toggle) {
@@ -68,15 +45,6 @@ public class DarkRoomController : MonoBehaviour {
                 enemy.transform.GetChild(0).gameObject.SetActive(toggle);
             }
         }
-        //for (int i = 0; i < enemyMasks.Length; i++) {
-        //    if (enemyMasks[i] != null) {
-        //        if (enemies[i] == null) {
-        //            Destroy(enemyMasks[i]);
-        //        } else {
-        //            enemyMasks[i].SetActive(toggle);
-        //        }
-        //    }
-        //}
     }
 
     public void ToggleEffect(bool isEnd) {
@@ -84,6 +52,14 @@ public class DarkRoomController : MonoBehaviour {
         if (isEnd) {
             player.transform.GetChild(0).GetComponent<Light>().type = LightType.Directional;
             player.transform.GetChild(0).GetComponent<Light>().intensity = 1;
+        }
+    }
+
+    public void ToggleConversionAbility(bool isOn) {
+        if (isOn) {
+            player.transform.GetChild(0).GetComponent<Light>().spotAngle *= 1.5f;
+        } else {
+            player.transform.GetChild(0).GetComponent<Light>().spotAngle /= 1.5f;
         }
     }
 
