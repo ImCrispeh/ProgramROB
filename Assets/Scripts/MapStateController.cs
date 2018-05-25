@@ -97,6 +97,9 @@ public class MapStateController : MonoBehaviour {
         playerCont.actionPoints = playerCont.maxActionPoints;
         playerCont.damage += loadedUpgradeData.damageIncrease;
         playerCont.visibilityMultiplier += loadedUpgradeData.visibilityIncrease;
+        playerCont.isRepelAvailable = loadedUpgradeData.isRepelPurchased;
+        playerCont.isRevealAvailable = loadedUpgradeData.isRevealPurchased;
+        playerCont.isConvertAvailable = loadedUpgradeData.isConvertPurchased;
 
         //save upgrades in the map data
         playerCont.lastPos = playerCont.transform.position;
@@ -123,6 +126,9 @@ public class MapStateController : MonoBehaviour {
         data.playerMaxHealth = playerCont.maxHealth;
         data.playerMaxAP = playerCont.maxActionPoints;
         data.playerVisibility = playerCont.visibilityMultiplier;
+        data.isRepelAvailable = playerCont.isRepelAvailable;
+        data.isRevealAvailable = playerCont.isRevealAvailable;
+        data.isConvertAvailable = playerCont.isConvertAvailable;
 
         data.enemyPos = new Vector3[enemiesCount];
         data.enemyState = new bool[enemiesCount];
@@ -177,6 +183,9 @@ public class MapStateController : MonoBehaviour {
             playerCont.maxHealth = loadedMapData.playerMaxHealth;
             playerCont.maxActionPoints = loadedMapData.playerMaxAP;
             playerCont.visibilityMultiplier = loadedMapData.playerVisibility;
+            playerCont.isRepelAvailable = loadedMapData.isRepelAvailable;
+            playerCont.isRevealAvailable = loadedMapData.isRevealAvailable;
+            playerCont.isConvertAvailable = loadedMapData.isConvertAvailable;
             TurnController._instance.speedChangeTgl.isOn = loadedMapData.isFastForward;
             TurnController._instance.ChangeSpeed(loadedMapData.isFastForward);
             OverlayController._instance.areHotkeysDisplayed = loadedMapData.areHotkeysDisplayed;
@@ -357,6 +366,9 @@ class MapData {
     public int playerMaxHealth;
     public int playerMaxAP;
     public float playerVisibility;
+    public bool isRepelAvailable;
+    public bool isRevealAvailable;
+    public bool isConvertAvailable;
 
     public Vector3[] enemyPos;
     public bool[] enemyState;

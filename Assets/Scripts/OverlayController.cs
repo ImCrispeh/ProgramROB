@@ -138,7 +138,7 @@ public class OverlayController : MonoBehaviour {
         bool isConvert = player.isConvertAvailable;
 
         repelBtn.interactable = isRepel;
-        revealBtn.interactable = (isReveal && isRevealUsed);
+        revealBtn.interactable = (isReveal && !isRevealUsed);
         convertBtn.interactable = isConvert;
     }
 

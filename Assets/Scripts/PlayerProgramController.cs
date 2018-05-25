@@ -43,6 +43,7 @@ public class PlayerProgramController : MonoBehaviour {
         OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
         OverlayController._instance.UpdateHealth(currHealth);
         OverlayController._instance.UpdateActionsList(actions, false, false);
+        OverlayController._instance.EnableExtraActions();
         rigid = GetComponent<Rigidbody2D>();
         lastPos = transform.position;
         ChangeSpeed(TurnController._instance.speedChangeTgl.isOn);
@@ -101,17 +102,21 @@ public class PlayerProgramController : MonoBehaviour {
             if (TurnController._instance.GetIsPlayerTurn()) {
                 if (currNumOfActions > 0) {
 
-                    if (actions[actions.Count - 1] == "ToggleConversion") {
-                        isConversionActive = !isConversionActive;
-                        OverlayController._instance.convertBtn.interactable = true;
-                    }
-
                     if (actions[actions.Count - 1] == "RevealMap") {
                         isRevealUsed = !isRevealUsed;
                         OverlayController._instance.revealBtn.interactable = true;
                     }
 
                     int cost = CheckCost(actions[actions.Count-1]);
+                    if (actions[actions.Count - 1] == "ToggleConversion") {
+                        isConversionActive = !isConversionActive;
+                        if (isConversionActive) {
+                            estCost++;
+                        } else {
+                            estCost--;
+                        }
+                        OverlayController._instance.convertBtn.interactable = true;
+                    }
                     currNumOfActions--;
                     estCost -= cost;
                     actions.RemoveAt(actions.Count-1);
@@ -133,21 +138,24 @@ public class PlayerProgramController : MonoBehaviour {
 
     // For buttons to use
     public void AddAction(String action) {
-        bool isMovement = CheckIfMovement(action);
-        int cost = CheckCost(action);
-
-        if (action == "ToggleConversion") {
-            isConversionActive = !isConversionActive;
-            OverlayController._instance.convertBtn.interactable = false;
-        }
-
-        if (action == "RevealMap") {
-            isRevealUsed = !isRevealUsed;
-            OverlayController._instance.revealBtn.interactable = false;
-        }
-
         if (TurnController._instance.GetIsPlayerTurn()) {
             if (!isPerformingActions) {
+                bool isMovement = CheckIfMovement(action);
+                if (action == "ToggleConversion") {
+                    isConversionActive = !isConversionActive;
+                    if (isConversionActive) {
+                        estCost++;
+                    } else {
+                        estCost--;
+                    }
+                    OverlayController._instance.convertBtn.interactable = false;
+                }
+                int cost = CheckCost(action);
+
+                if (action == "RevealMap") {
+                    isRevealUsed = !isRevealUsed;
+                    OverlayController._instance.revealBtn.interactable = false;
+                }
                 if (actionPoints > estCost) {
                     if (currNumOfActions < maxNumOfActions) {
                         actions.Add(action);
@@ -168,10 +176,8 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     public int CheckCost(String action) {
-        if (CheckIfMovement(action) || (!isConversionActive && action == "ToggleConversion")) {
+        if (CheckIfMovement(action)) {
             return 1;
-        } else if (isConversionActive && action == "ToggleConversion") {
-            return -1;
         } else if (action == "RepelEnemies") {
             return 3;
         } else if (action == "RevealMap") {
@@ -248,15 +254,15 @@ public class PlayerProgramController : MonoBehaviour {
                 OverlayController._instance.UpdateActionsList(actions, true, false);
             }
             actions.Clear();
+            OverlayController._instance.EnableExtraActions();
+            //StatsController._instance.UpdateActionsList(actions);
+            TurnController._instance.EnemyTurn();
+            isPerformingActions = false;
             if (isConversionActive) {
                 estCost = 1;
                 actionPoints--;
                 OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
             }
-            OverlayController._instance.EnableExtraActions();
-            //StatsController._instance.UpdateActionsList(actions);
-            TurnController._instance.EnemyTurn();
-            isPerformingActions = false;
         }
     }
 

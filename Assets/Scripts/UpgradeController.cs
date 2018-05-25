@@ -103,6 +103,7 @@ public class UpgradeController : MonoBehaviour {
         if (upgradeCostData.upgradePoints >= 5) {
             upgradeCostData.upgradePoints -= 5;
             upgradeData.isRepelPurchased = true;
+            totalUpgradeData.isRepelPurchased = true;
             UpdateRepelText();
             UpdateUpgradePointsText();
         }
@@ -112,6 +113,7 @@ public class UpgradeController : MonoBehaviour {
         if (upgradeCostData.upgradePoints >= 5) {
             upgradeCostData.upgradePoints -= 5;
             upgradeData.isRevealPurchased = true;
+            totalUpgradeData.isRevealPurchased = true;
             UpdateRevealText();
             UpdateUpgradePointsText();
         }
@@ -121,6 +123,7 @@ public class UpgradeController : MonoBehaviour {
         if (upgradeCostData.upgradePoints >= 5) {
             upgradeCostData.upgradePoints -= 5;
             upgradeData.isConvertPurchased = true;
+            totalUpgradeData.isConvertPurchased = true;
             UpdateConvertText();
             UpdateUpgradePointsText();
         }
@@ -170,7 +173,7 @@ public class UpgradeController : MonoBehaviour {
             upgradeCostData = JsonUtility.FromJson<UpgradeCostData>(jsonSave);
         } else {
             upgradeCostData = new UpgradeCostData();
-            upgradeCostData.upgradePoints = 10;
+            upgradeCostData.upgradePoints = 15;
             upgradeCostData.healthCost = 1;
             upgradeCostData.damageCost = 1;
             upgradeCostData.visibilityCost = 1;
@@ -182,6 +185,9 @@ public class UpgradeController : MonoBehaviour {
         if (File.Exists(totalUpgradeFileName)) {
             string jsonSave = File.ReadAllText(totalUpgradeFileName);
             totalUpgradeData = JsonUtility.FromJson<UpgradeData>(jsonSave);
+            upgradeData.isRepelPurchased = totalUpgradeData.isRepelPurchased;
+            upgradeData.isRevealPurchased = totalUpgradeData.isRevealPurchased;
+            upgradeData.isConvertPurchased = totalUpgradeData.isConvertPurchased;
         } else {
             totalUpgradeData = new UpgradeData();
         }
