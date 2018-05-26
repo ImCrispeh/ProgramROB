@@ -24,6 +24,19 @@ TagManager:
   - ActionBtn
   - FFToggle
   - FixWall
+  - UpgradeEntry
+  - S1Entry
+  - S2Entry
+  - S3Entry
+  - S4Entry
+  - S5Entry
+  - UpgradeAreaEntry
+  - End
+  - Key1
+  - Key2
+  - Key3
+  - Key4
+  - Key0
   layers:
   - Default
   - TransparentFX
@@ -38,7 +51,6 @@ TagManager:
   - Obstacle
   - Player
   - Tile
-  - 
   - 
   - 
   - 

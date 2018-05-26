@@ -19,8 +19,8 @@ public class PlayerCombatController : MonoBehaviour {
     public GameObject particle;
     // Use this for initialization
     void Start () {
-        //healthText = GameObject.Find("HealthText").GetComponent<Text>();
-        //healthText.text = "Health: " + health;
+        healthText = GameObject.Find("HealthText").GetComponent<Text>();
+        healthText.text = "Health: " + health;
         firePoint = transform.GetChild(0).GetChild(0);
         if (firePoint == null) {
             Debug.Log("Fire Point not Found");

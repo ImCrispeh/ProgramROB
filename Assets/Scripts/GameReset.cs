@@ -77,37 +77,68 @@ public class GameReset : MonoBehaviour {
             }
 
             Time.timeScale = 1;
-            SceneManager.LoadScene("UpgradeScreen");
+            SceneManager.LoadScene(5);
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
-            if (File.Exists(combatFileName)) {
-                File.Delete(combatFileName);
-            }
+            if (MapStateController._instance.endOfGame) {
+                if (File.Exists(combatFileName)) {
+                    File.Delete(combatFileName);
+                }
 
-            if (File.Exists(mapFileName)) {
-                File.Delete(mapFileName);
-            }
+                if (File.Exists(mapFileName)) {
+                    File.Delete(mapFileName);
+                }
 
-            if (File.Exists(upgradeFileName)) {
-                File.Delete(upgradeFileName);
-            }
+                if (File.Exists(upgradeFileName)) {
+                    File.Delete(upgradeFileName);
+                }
 
-            if (File.Exists(levelEndFileName)) {
-                File.Delete(levelEndFileName);
-            }
+                if (File.Exists(levelEndFileName)) {
+                    File.Delete(levelEndFileName);
+                }
 
-            if (File.Exists(upgradeCostFileName)) {
-                File.Delete(upgradeCostFileName);
-            }
+                if (File.Exists(upgradeCostFileName)) {
+                    File.Delete(upgradeCostFileName);
+                }
 
-            if (File.Exists(totalUpgradeFileName)) {
-                File.Delete(totalUpgradeFileName);
-            }
+                if (File.Exists(totalUpgradeFileName)) {
+                    File.Delete(totalUpgradeFileName);
+                }
 
-            Time.timeScale = 1;
-            DataCollectionController._instance.WriteToFile();
-            SceneManager.LoadScene("UpgradeScreen");
+                Time.timeScale = 1;
+                DataCollectionController._instance.WriteToFile();
+                SceneManager.LoadScene(0);
+            } else {
+                if (File.Exists(combatFileName)) {
+                    File.Delete(combatFileName);
+                }
+
+                if (File.Exists(mapFileName)) {
+                    File.Delete(mapFileName);
+                }
+
+                if (File.Exists(upgradeFileName)) {
+                    File.Delete(upgradeFileName);
+                }
+
+                Time.timeScale = 1;
+                DataCollectionController._instance.WriteToFile();
+                SceneManager.LoadScene("Hub");
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 0) {
+            if (Input.GetKeyDown(KeyCode.X)) {
+                if (File.Exists(combatFileName)) {
+                    File.Delete(combatFileName);
+                }
+
+                if (File.Exists(mapFileName)) {
+                    File.Delete(mapFileName);
+                }
+                SceneManager.LoadScene("Hub");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {

@@ -84,7 +84,7 @@ MonoBehaviour:
   playerMap: {fileID: 0}
   playerCombat: {fileID: 0}
   visionBuffDuration: 5
-  visionIncrease: 15
+  visionIncrease: 20
   visionNorm: 0
 --- !u!212 &212205375236769832
 SpriteRenderer:

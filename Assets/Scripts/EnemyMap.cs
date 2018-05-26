@@ -6,7 +6,7 @@ public class EnemyMap : MovingObject
     public int enemyID;
     public bool isAlive;
     public bool isMoving = false;
-    private float moveDist = 1.5f;
+    public float moveDist = 1.5f;
     public Transform target;
 
 	public bool isEnemy;

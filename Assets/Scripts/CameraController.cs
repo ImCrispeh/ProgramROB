@@ -5,8 +5,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
     public static CameraController _instance;
     public Camera mainCam;
-    public Vector3 pos1;
-    public Vector3 pos2;
     public Transform player;
     public float horizontalResolution = 1920;
     public bool isMapRevealed;
@@ -21,13 +19,13 @@ public class CameraController : MonoBehaviour {
             _instance = this;
         }
         float currentAspect = (float)Screen.width / (float)Screen.height;
-        Camera.main.orthographicSize = horizontalResolution / currentAspect / 180;
+        Camera.main.orthographicSize = horizontalResolution / currentAspect / 160;
     }
 
     void OnGUI() {
         if (!isMapRevealed) {
             float currentAspect = (float)Screen.width / (float)Screen.height;
-            Camera.main.orthographicSize = horizontalResolution / currentAspect / 180;
+            Camera.main.orthographicSize = horizontalResolution / currentAspect / 160;
         }
     }
 
@@ -35,22 +33,11 @@ public class CameraController : MonoBehaviour {
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         mainCam = Camera.main;
-        if (player.position.y < 4.5f) {
-            mainCam.transform.position = pos1;
-        } else {
-            mainCam.transform.position = pos2;
-        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (!isMapRevealed) {
-            if (player.position.y < 4.5f) {
-                mainCam.transform.position = pos1;
-            } else {
-                mainCam.transform.position = pos2;
-            }
-        }
+
     }
     
     public void RevealMapWrapper() {
@@ -59,12 +46,9 @@ public class CameraController : MonoBehaviour {
 
     IEnumerator RevealMap() {
         isMapRevealed = true;
-        mainCam.transform.position = (pos1 + pos2) / 2;
-        mainCam.orthographicSize *= 2;
         mapLight.enabled = true;
         playerLight.enabled = false;
         yield return new WaitForSeconds(5f);
-        mainCam.orthographicSize /= 2;
         mapLight.enabled = false;
         playerLight.enabled = true;
         isMapRevealed = false;

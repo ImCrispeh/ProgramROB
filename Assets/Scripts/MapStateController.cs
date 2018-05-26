@@ -15,7 +15,15 @@ public class MapStateController : MonoBehaviour {
     public GameObject player;
 	public GameObject generator;
     public GameObject[] enemies;
-    public GameObject[] keys;
+    public GameObject key;
+    public bool endOfGame;
+    public int currLevelNo;
+
+    public bool key1Collected;
+    public bool key2Collected;
+    public bool key3Collected;
+    public bool key4Collected;
+    public int numKeys;
 
     private int enemiesCount;
     private string mapFileName;
@@ -41,12 +49,31 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.buildIndex % 2 == 1) {
+        if (scene.buildIndex >= 1 && scene.buildIndex <= 4) {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            keys = GameObject.FindGameObjectsWithTag("Key");
+            key = GameObject.FindGameObjectWithTag("Key" + scene.buildIndex);
+
+            if (key != null) {
+                if (scene.buildIndex == 1 && key1Collected) {
+                    Destroy(key);
+                }
+
+                if (scene.buildIndex == 2 && key2Collected) {
+                    Destroy(key);
+                }
+
+                if (scene.buildIndex == 3 && key3Collected) {
+                    Destroy(key);
+                }
+
+                if (scene.buildIndex == 4 && key4Collected) {
+                    Destroy(key);
+                }
+            }
+
             enemiesCount = enemies.Length;
             combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
             mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
@@ -58,7 +85,7 @@ public class MapStateController : MonoBehaviour {
             }
         }
 
-		if (scene.buildIndex % 2 == 0 && scene.buildIndex != 0) {
+		if (scene.name == "Combat") {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             //player = GameObject.FindGameObjectWithTag("Player");
@@ -66,6 +93,11 @@ public class MapStateController : MonoBehaviour {
 			combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
 			mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
             //LoadCombatData();
+        }
+
+        if (scene.name == "Hub") {
+            endImg = GameObject.FindGameObjectWithTag("EndImg");
+            endText = endImg.GetComponentInChildren<Text>();
         }
     }
 
@@ -75,7 +107,25 @@ public class MapStateController : MonoBehaviour {
         endText = endImg.GetComponentInChildren<Text>();
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        keys = GameObject.FindGameObjectsWithTag("Key");
+        key = GameObject.FindGameObjectWithTag("Key" + SceneManager.GetActiveScene().buildIndex);
+
+        if (key != null) {
+            if (SceneManager.GetActiveScene().buildIndex == 1 && key1Collected) {
+                Destroy(key);
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 2 && key2Collected) {
+                Destroy(key);
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 3 && key3Collected) {
+                Destroy(key);
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 4 && key4Collected) {
+                Destroy(key);
+            }
+        }
         enemiesCount = enemies.Length;
         mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
         combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
@@ -132,7 +182,7 @@ public class MapStateController : MonoBehaviour {
 
         data.enemyPos = new Vector3[enemiesCount];
         data.enemyState = new bool[enemiesCount];
-        data.keyState = new bool[keys.Length];
+        data.keyState = (key == null);
         data.isFastForward = TurnController._instance.speedChangeTgl.isOn;
         data.areHotkeysDisplayed = OverlayController._instance.areHotkeysDisplayed;
 
@@ -141,13 +191,6 @@ public class MapStateController : MonoBehaviour {
                 EnemyMap enemyData = enemy.GetComponent<EnemyMap>();
                 data.enemyPos[enemyData.enemyID] = enemy.transform.position;
                 data.enemyState[enemyData.enemyID] = enemyData.isAlive;
-            }
-        }
-
-        foreach (GameObject key in keys) {
-            if (key != null) {
-                KeyController keyData = key.GetComponent<KeyController>();
-                data.keyState[keyData.keyID] = keyData.isCollected;
             }
         }
 
@@ -198,15 +241,11 @@ public class MapStateController : MonoBehaviour {
                     Destroy(enemy);
                 }
             }
-
-            foreach (GameObject key in keys) {
-                if (key != null) {
-                    KeyController keyData = key.GetComponent<KeyController>();
-                    keyData.isCollected = loadedMapData.keyState[keyData.keyID];
-                    if (keyData.isCollected) {
-                        Destroy(key);
-                        Destroy(keyData.door);
-                    }
+            if (key != null) {
+                KeyController keyData = key.GetComponent<KeyController>();
+                keyData.isCollected = loadedMapData.keyState;
+                if (keyData.isCollected) {
+                    Destroy(key);
                 }
             }
         }
@@ -276,13 +315,56 @@ public class MapStateController : MonoBehaviour {
     }
 
     public void SaveEndOfLevelData() {
+        //level is done so delete any data that was kept in case of losing and having to revert upgrades
+        string upgradeCostRevertFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostRevertData.json");
+        string totalUpgradeRevertFileName = Path.Combine(Application.persistentDataPath, "TotalUpgradeRevertData.json");
+
+        if (File.Exists(upgradeCostRevertFileName)) {
+            File.Delete(upgradeCostRevertFileName);
+        }
+
+        if (File.Exists(totalUpgradeRevertFileName)) {
+            File.Delete(totalUpgradeRevertFileName);
+        }
+
         LevelEndData LevelEndData = new LevelEndData();
         PlayerProgramController playerCont = player.GetComponent<PlayerProgramController>();
         LevelEndData.playerMaxHealth = playerCont.maxHealth;
         LevelEndData.playerAP = playerCont.maxActionPoints;
         LevelEndData.playerDamage = playerCont.damage;
         LevelEndData.playerVisibility = playerCont.visibilityMultiplier;
-        
+
+        //save if key has been collected in level
+        if (key == null) {
+            if (SceneManager.GetActiveScene().buildIndex == 1) {
+                if (!key1Collected) {
+                    key1Collected = true;
+                    numKeys++;
+                }
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 2) {
+                if (!key2Collected) {
+                    key2Collected = true;
+                    numKeys++;
+                }
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 3) {
+                if (!key3Collected) {
+                    key3Collected = true;
+                    numKeys++;
+                }
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 4) {
+                if (!key4Collected) {
+                    key4Collected = true;
+                    numKeys++;
+                }
+            }
+        }
+
         string json = JsonUtility.ToJson(LevelEndData);
         if (File.Exists(levelEndFileName)) {
             File.Delete(levelEndFileName);
@@ -302,14 +384,16 @@ public class MapStateController : MonoBehaviour {
             playerCont.damage = loadedLevelEndData.playerDamage;
         }
     }
-    public void LoadCombatScene(GameObject details) {
+
+    public void LoadCombatScene(GameObject details, int levelNo) {
         SaveMapData(details);
-        SceneManager.LoadScene(2);
+        currLevelNo = levelNo;
+        SceneManager.LoadScene("Combat");
     }
 
     public void LoadMapScene() {
         SaveCombatData();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(currLevelNo);
     }
 
     public void CheckEnemiesAlive() {
@@ -328,10 +412,12 @@ public class MapStateController : MonoBehaviour {
 
     public void EndGame(bool isWin, String reason) {
         if (isWin) {
-            endText.text = "You Win!" + "\n" + "Press R to reset or Esc to quit";
+            endText.text = "You Win!" + "\n" + "Press R to reset to beginning or Esc to quit";
         } else {
-            endText.text = "You Lose" + "\n" + reason + "\n" + "Press R to reset or Esc to quit";
+            endText.text = "You Lose" + "\n" + reason + "\n" + "Press R to undo upgrades and go to level select or Esc to quit";
         }
+        endOfGame = true;
+
         endImg.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (DarkRoomController._instance != null) {
             DarkRoomController._instance.ToggleEffect(true);
@@ -373,7 +459,7 @@ class MapData {
     public Vector3[] enemyPos;
     public bool[] enemyState;
 
-	public bool[] keyState;
+	public bool keyState;
     public bool isFastForward;
     public bool areHotkeysDisplayed;
 

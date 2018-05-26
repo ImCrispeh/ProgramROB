@@ -6,11 +6,29 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Sprint3/Tutorial.unity
+    guid: fbbec8c1fb8a347489f4eb5d0d1e1205
+  - enabled: 1
+    path: Assets/Scenes/Sprint3/Stage1.unity
+    guid: d91417fda48b40b42833c20b9e7da8c6
+  - enabled: 1
+    path: Assets/Scenes/Sprint3/Stage2.unity
+    guid: 46e93358edf53e04ca71ca8728cc7ea3
+  - enabled: 1
+    path: Assets/Scenes/Sprint3/Stage3.unity
+    guid: 5c8e055d3cb80bd408a3b0d1155f681e
+  - enabled: 1
+    path: Assets/Scenes/Sprint3/Stage4.unity
+    guid: a18b7d29f09725d4f8aad824d7697532
+  - enabled: 1
+    path: Assets/Scenes/Sprint3/Hub.unity
+    guid: 8a51453aaf66dd843bd013ab3afaa8b9
+  - enabled: 1
+    path: Assets/Scenes/Sprint3/UpgradeArea.unity
+    guid: 231cda526d4adcc4cb149cf85075d1ec
+  - enabled: 1
     path: Assets/Scenes/Sprint3/UpgradeScreen.unity
     guid: 8ee11e9433e80b241a419b94175fce8c
   - enabled: 1
-    path: Assets/Scenes/Sprint3/Level1.unity
-    guid: 3f07b370e72a9284ab1aca4f1b2d0250
-  - enabled: 1
-    path: Assets/Scenes/Sprint3/Level1_Combat.unity
+    path: Assets/Scenes/Sprint3/Combat.unity
     guid: 00000000000000000000000000000000

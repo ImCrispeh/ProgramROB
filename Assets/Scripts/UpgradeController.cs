@@ -11,6 +11,8 @@ public class UpgradeController : MonoBehaviour {
     private string upgradeFileName;
     private string upgradeCostFileName;
     private string totalUpgradeFileName;
+    private string upgradeCostRevertFileName;
+    private string totalUpgradeRevertFileName;
     private UpgradeData upgradeData;
     private UpgradeCostData upgradeCostData;
     private UpgradeData totalUpgradeData;
@@ -41,6 +43,8 @@ public class UpgradeController : MonoBehaviour {
         upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
         upgradeCostFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostSaveData.json");
         totalUpgradeFileName = Path.Combine(Application.persistentDataPath, "TotalUpgradeSaveData.json");
+        upgradeCostRevertFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostRevertData.json");
+        totalUpgradeRevertFileName = Path.Combine(Application.persistentDataPath, "TotalUpgradeRevertData.json");
         upgradeData = new UpgradeData();
 
         SetCosts();
@@ -57,8 +61,8 @@ public class UpgradeController : MonoBehaviour {
 
     public void AddVisibility() {
         if (upgradeCostData.upgradePoints >= upgradeCostData.visibilityCost) {
-            upgradeData.visibilityIncrease += 0.1f;
-            totalUpgradeData.visibilityIncrease += 0.1f;
+            upgradeData.visibilityIncrease += 0.125f;
+            totalUpgradeData.visibilityIncrease += 0.125f;
             upgradeCostData.upgradePoints -= upgradeCostData.visibilityCost;
             upgradeCostData.visibilityCost++;
             UpdateVisibilityText();
@@ -158,31 +162,43 @@ public class UpgradeController : MonoBehaviour {
 
         DataCollectionController._instance.UpdateHealthUpgrade(totalUpgradeData.healthIncrease / 3);
         DataCollectionController._instance.UpdateDamageUpgrade(totalUpgradeData.damageIncrease);
-        DataCollectionController._instance.UpdateVisibilityUpgrade((int)(totalUpgradeData.visibilityIncrease * 10));
+        DataCollectionController._instance.UpdateVisibilityUpgrade((int)(totalUpgradeData.visibilityIncrease * 10 / 1.25f));
         DataCollectionController._instance.UpdateApUpgrade(totalUpgradeData.apIncrease / 5);
 
         json = JsonUtility.ToJson(upgradeCostData);
         File.WriteAllText(upgradeCostFileName, json);
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(6);
     }
 
     public void SetCosts() {
-        if (File.Exists(upgradeCostFileName)) {
+        if (File.Exists(upgradeCostRevertFileName)) {
+            string jsonSave = File.ReadAllText(upgradeCostRevertFileName);
+            upgradeCostData = JsonUtility.FromJson<UpgradeCostData>(jsonSave);
+        } else if (File.Exists(upgradeCostFileName)) {
             string jsonSave = File.ReadAllText(upgradeCostFileName);
             upgradeCostData = JsonUtility.FromJson<UpgradeCostData>(jsonSave);
         } else {
             upgradeCostData = new UpgradeCostData();
-            upgradeCostData.upgradePoints = 15;
+            upgradeCostData.upgradePoints = 5;
             upgradeCostData.healthCost = 1;
             upgradeCostData.damageCost = 1;
             upgradeCostData.visibilityCost = 1;
             upgradeCostData.apCost = 1;
         }
+        string json = JsonUtility.ToJson(upgradeCostData);
+        File.WriteAllText(upgradeCostRevertFileName, json);
+        
     }
 
     public void SetTotals() {
-        if (File.Exists(totalUpgradeFileName)) {
+        if (File.Exists(totalUpgradeRevertFileName)) {
+            string jsonSave = File.ReadAllText(totalUpgradeRevertFileName);
+            totalUpgradeData = JsonUtility.FromJson<UpgradeData>(jsonSave);
+            upgradeData.isRepelPurchased = totalUpgradeData.isRepelPurchased;
+            upgradeData.isRevealPurchased = totalUpgradeData.isRevealPurchased;
+            upgradeData.isConvertPurchased = totalUpgradeData.isConvertPurchased;
+        } else if (File.Exists(totalUpgradeFileName)) {
             string jsonSave = File.ReadAllText(totalUpgradeFileName);
             totalUpgradeData = JsonUtility.FromJson<UpgradeData>(jsonSave);
             upgradeData.isRepelPurchased = totalUpgradeData.isRepelPurchased;
@@ -191,6 +207,9 @@ public class UpgradeController : MonoBehaviour {
         } else {
             totalUpgradeData = new UpgradeData();
         }
+
+        string json = JsonUtility.ToJson(totalUpgradeData);
+        File.WriteAllText(totalUpgradeRevertFileName, json);
     }
 
     public void UpdateHealthText() {
@@ -206,7 +225,7 @@ public class UpgradeController : MonoBehaviour {
     }
 
     public void UpdateVisibilityText() {
-        visibilityText.text = "Total Visibility Increase: " + (int)(totalUpgradeData.visibilityIncrease * 100) + "% \n" + "Cost: " + upgradeCostData.visibilityCost;
+        visibilityText.text = "Total Visibility Increase: " + (totalUpgradeData.visibilityIncrease * 100) + "% \n" + "Cost: " + upgradeCostData.visibilityCost;
     }
 
     public void UpdateRepelText() {

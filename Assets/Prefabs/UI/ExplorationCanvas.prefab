@@ -1810,7 +1810,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 46c2640f7094e064ab3b0287bc60b880, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b7c2584b11d4d51478827ad6701316f5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2085,10 +2085,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Reach the exit without running out of action points or dying.\n\nExploration\nUse
-    buttons on overlay or hotkeys\nto queue and perform actions.\n\nCombat\nMovement\t\t\t\t\tWASD
-    or arrow keys\nRanged attack\t\t\tRight click\nMelee attack\t\t\t\tLeft click\n\nMisc\nDisplay
-    hotkeys\t\t\tH\nReset game\t\t\t\tR\nQuit game\t\t\t\t\tEsc"
+  m_Text: "Collect all keys and open the door to the command centre.\n\nStage exploration\nUse
+    buttons on overlay or hotkeys\nto queue and perform actions.\n\nCombat (and movement
+    in level select)\nMovement\t\t\t\t\tWASD or arrow keys\nRanged attack\t\t\tRight
+    click\nMelee attack\t\t\t\tLeft click\n\nMisc\nDisplay hotkeys\t\t\t\tH\nReset
+    game (to hub)\t\tR\nQuit game\t\t\t\t\t\tEsc"
 --- !u!114 &114391987074356394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2941,10 +2942,10 @@ MonoBehaviour:
     You
 
 
-    Enemy groups (exploration)
+    Enemy groups
 
 
-    Door (opened by key)
+    Command centre door
 
 
     Key
@@ -3552,7 +3553,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: afe9e60affe889f47aae80a626f92085, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c3384949463ab2e4b9309bc57007e18f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4201,7 +4202,7 @@ RectTransform:
   m_GameObject: {fileID: 1017745940209124}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4983030238430874}
   m_RootOrder: 5
@@ -4209,7 +4210,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 532.7, y: 141.2}
-  m_SizeDelta: {x: 121, y: 59}
+  m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224169031504525182
 RectTransform:
@@ -4226,7 +4227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 685.2, y: 276.7}
+  m_AnchoredPosition: {x: 599.5, y: 276.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224172418960684212
@@ -4601,7 +4602,7 @@ RectTransform:
   m_GameObject: {fileID: 1355884308777330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 1, z: 1.18}
+  m_LocalScale: {x: 0.79999983, y: 0.9999972, z: 1.18}
   m_Children:
   - {fileID: 224723262309976346}
   - {fileID: 224613826933558560}
@@ -4612,8 +4613,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 469.54492, y: 262.5299}
-  m_SizeDelta: {x: 800.00006, y: 450.2128}
+  m_AnchoredPosition: {x: 469.54495, y: 262.52988}
+  m_SizeDelta: {x: 800.0001, y: 450.2128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224526170159791798
 RectTransform:
@@ -4703,7 +4704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 21, y: 0}
+  m_AnchoredPosition: {x: 13, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224619794217428734
@@ -4850,7 +4851,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 652.6, y: 232.2}
+  m_AnchoredPosition: {x: 657.1, y: 232.2}
   m_SizeDelta: {x: 90, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224715858540060472

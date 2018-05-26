@@ -34,7 +34,7 @@ public class DataCollectionController : MonoBehaviour {
             }
             filePath = directory + @"\session" + i + ".txt";
             StreamWriter writer = new StreamWriter(filePath);
-            writer.WriteLine("playtime_(s),level,ranged_attacks,melee_attacks,melee_damage,ranged_damage,turret_damage,tankspawn_damage,movement_used,health_upgrades,damage_upgrade,visibility_upgrade,ap_upgrade,did_win");
+            writer.WriteLine("playtime_(s),level,ranged_attacks,melee_attacks,melee_damage,ranged_damage,turret_damage,tankspawn_damage,movement_used,repel_used,reveal_used,convert_usedhealth_upgrades,damage_upgrade,visibility_upgrade,ap_upgrade,did_win");
             writer.Close();
         //}
         data = new DataCollector();
@@ -104,7 +104,7 @@ public class DataCollectionController : MonoBehaviour {
         //if (!Application.isEditor) {
             FileStream appendToFile = File.Open(filePath, FileMode.Append);
             StreamWriter writer = new StreamWriter(appendToFile);
-            data.level = 1; //will change this later with more levels
+            data.level = SceneManager.GetActiveScene().name;
             string output = "\n" + data.playtime.ToString("F2");
             output += "," + data.level;
             output += "," + data.rangedAttacks;
@@ -114,6 +114,9 @@ public class DataCollectionController : MonoBehaviour {
             output += "," + data.turretDamage;
             output += "," + data.tankSpawnDamage;
             output += "," + data.movementUsed;
+            output += "," + data.repelUsed;
+            output += "," + data.revealUsed;
+            output += "," + data.convertUsed;
             output += "," + data.healthUpgrade;
             output += "," + data.damageUpgrade;
             output += "," + data.visibilityUpgrade;
@@ -128,7 +131,7 @@ public class DataCollectionController : MonoBehaviour {
 
 class DataCollector {
     public float playtime;
-    public int level;
+    public string level;
     public int rangedAttacks;
     public int meleeAttacks;
     public int meleeDamage;
@@ -136,6 +139,9 @@ class DataCollector {
     public int turretDamage;
     public int tankSpawnDamage;
     public int movementUsed;
+    public int repelUsed;
+    public int revealUsed;
+    public int convertUsed;
     public int healthUpgrade;
     public int damageUpgrade;
     public int visibilityUpgrade;
