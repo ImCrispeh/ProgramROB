@@ -15,7 +15,7 @@ public class PlayerCombatController : MonoBehaviour {
     public Text healthText;
     public LayerMask allowHit;
     public Material lineMat;
-
+    public GameObject particle;
     // Use this for initialization
     void Start () {
         healthText = GameObject.Find("HealthText").GetComponent<Text>();
@@ -64,12 +64,16 @@ public class PlayerCombatController : MonoBehaviour {
             //Debug.DrawLine(firePointPos, hit.point, Color.red);
             if (hitObj.GetComponent<Enemy>() != null) {
                 hitObj.GetComponent<Enemy>().damaged(damage);
+                Instantiate(particle, hitObj.transform.position, Quaternion.identity);
             } else if (hitObj.GetComponent<FireEnemy>() != null) {
                 hitObj.GetComponent<FireEnemy>().damaged(damage);
+                Instantiate(particle, hitObj.transform.position, Quaternion.identity);
             } else if (hitObj.GetComponent<Turrets>() != null) {
                 hitObj.GetComponent<Turrets>().damaged(damage);
+                Instantiate(particle, hitObj.transform.position, Quaternion.identity);
             } else if (hitObj.GetComponent<TankEnemy>() != null) {
                 hitObj.GetComponent<TankEnemy>().damaged(damage);
+                Instantiate(particle, hitObj.transform.position, Quaternion.identity);
             }
         } else {
             DrawFiringLine(mousePos, firePointPos, false);
@@ -95,11 +99,12 @@ public class PlayerCombatController : MonoBehaviour {
     }
 
     public void damaged(int amount) {
+        Instantiate(particle, gameObject.transform.position, Quaternion.identity);
         health -= amount;
         healthText.text = "Health: " + health;
         if (health <= 0) {
             MapStateController._instance.EndGame(false, "You were destroyed");
-            //Destroy(gameObject);
+            
         }
     }
 }

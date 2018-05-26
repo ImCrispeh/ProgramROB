@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.tag == "Boundary" || collision.gameObject.tag == "Wall") {
+        if (collision.gameObject.tag == "Wall") {
             Destroy(gameObject);
         }
     }

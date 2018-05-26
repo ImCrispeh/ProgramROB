@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61432448877466544}
   m_Layer: 10
   m_Name: Test_Walls_3
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.16, y: 0.17}
   m_EdgeRadius: 0
 --- !u!212 &212804104123399856
 SpriteRenderer:

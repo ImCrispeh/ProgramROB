@@ -23,6 +23,7 @@ TagManager:
   - PUVision
   - ActionBtn
   - FFToggle
+  - FixWall
   layers:
   - Default
   - TransparentFX
