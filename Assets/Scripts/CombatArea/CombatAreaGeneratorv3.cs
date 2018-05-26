@@ -38,6 +38,8 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 	private Transform floor;
 	private Transform walls;
 	private Transform enemies;
+	private Transform playerPos;
+	private List<Vector3> enemyPosition = new List<Vector3> ();
 	private List<Vector3> gridPosition = new List<Vector3> ();
 
 	//What enemies to spawn
@@ -52,14 +54,14 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 		InitList ();	//Position to generate random layout
 		GridGen ();		//Outerwall and floor
 		RandomLayout (player, "player", 1, 1); //Random places player
-        RandomLayout (wallTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
         MapStateController._instance.player = GameObject.FindGameObjectWithTag("Player");
         MapStateController._instance.LoadCombatData();
         if (isEnemy) RandomLayout (enemy[0], "enemy", enemyAmt, enemyAmt);	//Random places enemies
 		if (isSpider) RandomLayout (enemy[1], "enemy", spiderAmt, spiderAmt);	//Random places spiders
 		if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
         if (isTank) RandomLayout(enemy[3], "enemy", tankAmt, tankAmt);
-        map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z + 1f);
+		map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z + 1f);
+		RandomLayout (wallTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
 	}
 	
 	// Update is called once per frame
@@ -68,6 +70,7 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 	}
 
 	private void InitList () {
+		enemyPosition.Clear ();
 		gridPosition.Clear ();
 		for (int x = 1; x < columns - 1; x++) {
 			for (int y = 1; y < rows - 1; y++) {
@@ -110,18 +113,39 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 		while (!isDistance) {
 			int randomIndex = Random.Range (0, gridPosition.Count);
 			pos = gridPosition [randomIndex];
-			if (type != "player") {
-				Transform playerPos = GameObject.FindGameObjectWithTag ("Player").transform;
-				if ((Vector3.Distance (playerPos.position, pos) > 7 && type == "enemy") || (Vector3.Distance (playerPos.position, pos) > 1.5f && type == "wall")) {
-					isDistance = true;
-				}
-			} else {
-				isDistance = true;
-			}
+
+			isDistance = CheckDistance (type, pos);
+
 			if (isDistance)
 				gridPosition.RemoveAt (randomIndex);
 		}
 		return pos;
+	}
+
+	private bool CheckDistance (string type, Vector3 pos) {
+		if (type != "player") {
+			//Transform playerPos = GameObject.FindGameObjectWithTag ("Player").transform;
+			if (type == "enemy") { //Enemy check
+				if (Vector3.Distance (playerPos.position, pos) > 7) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			if (type == "wall") { //Wall check
+				foreach (Vector3 enemyPos in enemyPosition) {
+					Debug.Log ("Enemy distance: " + Vector3.Distance (enemyPos, pos));
+					Debug.Log ("Player distance: " + Vector3.Distance (playerPos.position, pos));
+					if (Vector3.Distance (enemyPos, pos) < 1.5f || Vector3.Distance (playerPos.position, pos) < 1.5f) {
+						return false;
+					}
+				}
+				return true;
+			}
+		} else { //For Player
+			return true;
+		}
+		return false;
 	}
 
 	private void RandomLayout (GameObject obj, string type, int min, int max) {
@@ -135,6 +159,9 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 				child.transform.SetParent (walls);
 			} else if (type == "enemy") {
 				child.transform.SetParent (enemies);
+				enemyPosition.Add (child.transform.position);
+			} else if (type == "player") {
+				playerPos = child.transform;
 			}
 		}
 	}
