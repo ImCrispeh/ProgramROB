@@ -589,6 +589,16 @@ Prefab:
       propertyPath: enemyID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: isTank
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: tankAmt
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
   m_IsPrefabParent: 0
@@ -1034,6 +1044,26 @@ Prefab:
     - target: {fileID: 4960360702688678, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: isSpider
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: isTank
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: spiderAmt
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: tankAmt
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}

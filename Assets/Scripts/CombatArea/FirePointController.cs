@@ -44,6 +44,11 @@ public class FirePointController : MonoBehaviour {
                 {
                     other.GetComponent<Turrets>().damaged(player.damage * 2);
                     ShowParticle(other);
+                } 
+                else if (other.GetComponent<TankEnemy>() != null) 
+                {
+                    other.GetComponent<TankEnemy>().damaged(player.damage * 2);
+                    ShowParticle(other);
                 }
             }
 	}
