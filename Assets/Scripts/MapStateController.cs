@@ -96,6 +96,17 @@ public class MapStateController : MonoBehaviour {
         }
 
         if (scene.name == "Hub") {
+            combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
+            mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
+
+            if (File.Exists(combatFileName)) {
+                File.Delete(combatFileName);
+            }
+
+            if (File.Exists(mapFileName)) {
+                File.Delete(mapFileName);
+            }
+
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
         }

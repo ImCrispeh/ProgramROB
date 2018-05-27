@@ -22,7 +22,7 @@ public class PlayerProgramController : MonoBehaviour {
     public int maxNumOfActions = 5;
     public int estCost;
     public int actionPoints;
-    public int maxActionPoints = 30;
+    public int maxActionPoints;
     public List<String> actions;
     public Rigidbody2D rigid;
 
@@ -35,6 +35,7 @@ public class PlayerProgramController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        actionPoints = maxActionPoints;
         actions = new List<String>();
         if (isConversionActive) {
             estCost = 1;
