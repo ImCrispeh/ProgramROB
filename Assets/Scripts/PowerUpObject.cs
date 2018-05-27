@@ -34,7 +34,7 @@ public class PowerUpObject : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D col){
-        if (col.gameObject.tag == "Player"){
+        if (col.gameObject.tag == "Player") {
 
             if (IsHealth())
                 IncHealth();
@@ -42,12 +42,13 @@ public class PowerUpObject : MonoBehaviour {
             if (IsActionPoint())
                 IncActionPoints();
 
-            if (IsDamageBuff()){
+            if (IsDamageBuff()) {
                 IncDamageBuff();
             }
 
-            if (IsVision())
+            if (IsVision()) { 
                 IncVision();
+            }
 
             Debug.Log("Collision: PowerUp");
             gameObject.GetComponent<SpriteRenderer>().enabled = false;

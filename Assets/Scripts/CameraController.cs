@@ -40,6 +40,18 @@ public class CameraController : MonoBehaviour {
 
     }
     
+    public void LightMap() {
+        isMapRevealed = true;
+        mapLight.enabled = true;
+        playerLight.enabled = false;
+    }
+
+    public void DimMap() {
+        mapLight.enabled = false;
+        playerLight.enabled = true;
+        isMapRevealed = false;
+    }
+
     public void RevealMapWrapper() {
         StartCoroutine(RevealMap());
     }
