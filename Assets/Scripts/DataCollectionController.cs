@@ -34,7 +34,7 @@ public class DataCollectionController : MonoBehaviour {
             }
             filePath = directory + @"\session" + i + ".txt";
             StreamWriter writer = new StreamWriter(filePath);
-            writer.WriteLine("playtime_(s),level,ranged_attacks,melee_attacks,melee_damage,ranged_damage,turret_damage,tankspawn_damage,movement_used,repel_used,reveal_used,convert_usedhealth_upgrades,damage_upgrade,visibility_upgrade,ap_upgrade,did_win");
+            writer.WriteLine("playtime_(s),level,ranged_attacks,melee_attacks,melee_damage,ranged_damage,turret_damage,tankspawn_damage,movement_used,repel_used,reveal_used,convert_used,health_upgrades,damage_upgrade,visibility_upgrade,ap_upgrade,did_win");
             writer.Close();
         //}
         data = new DataCollector();
