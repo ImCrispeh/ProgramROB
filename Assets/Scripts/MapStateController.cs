@@ -301,18 +301,22 @@ public class MapStateController : MonoBehaviour {
     }
 
     public void LoadCombatData() {
-		if (File.Exists(combatFileName) && File.Exists(mapFileName)) {
+        if (File.Exists(combatFileName)) {
             string jsonSave = File.ReadAllText(combatFileName);
             CombatData loadedCombatData = JsonUtility.FromJson<CombatData>(jsonSave);
             //if (player != null) {
-                PlayerCombatController playerCont = player.GetComponent<PlayerCombatController>();
+            PlayerCombatController playerCont = player.GetComponent<PlayerCombatController>();
 
-                playerCont.health = loadedCombatData.health;
-                playerCont.damage = loadedCombatData.damage;
+            playerCont.health = loadedCombatData.health;
+            playerCont.damage = loadedCombatData.damage;
             //}
+        }
 
-            jsonSave = File.ReadAllText(mapFileName);
+        if (File.Exists(mapFileName)) {
+
+            string jsonSave = File.ReadAllText(mapFileName);
 			MapData loadedMapData = JsonUtility.FromJson<MapData> (jsonSave);
+            PlayerCombatController playerCont = player.GetComponent<PlayerCombatController>();
             playerCont.transform.GetChild(2).GetComponent<Light>().spotAngle = 50 * (loadedMapData.playerVisibility - 0.05f);
             generator.GetComponent<CombatAreaGeneratorv3> ().isEnemy = loadedMapData.isEnemy;
 			generator.GetComponent<CombatAreaGeneratorv3> ().isSpider = loadedMapData.isSpider;

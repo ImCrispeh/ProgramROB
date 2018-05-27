@@ -31,7 +31,7 @@ public class TurnController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!player.GetComponent<PlayerProgramController>().isPerformingActions) {
+        if (!player.GetComponent<PlayerProgramController>().isPerformingActions && isPlayerTurn) {
             if (Input.GetKeyDown(KeyCode.F)) {
                 speedChangeTgl.isOn = !speedChangeTgl.isOn;
                 ChangeSpeed(speedChangeTgl.isOn);
