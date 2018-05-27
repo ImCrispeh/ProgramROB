@@ -49,7 +49,7 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.buildIndex >= 1 && scene.buildIndex <= 4) {
+        if (scene.buildIndex >= 0 && scene.buildIndex <= 4) {
             endImg = GameObject.FindGameObjectWithTag("EndImg");
             endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
