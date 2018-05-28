@@ -76,6 +76,18 @@ public class DataCollectionController : MonoBehaviour {
         data.movementUsed++;
     }
 
+    public void UpdateRepelUsed() {
+        data.repelUsed++;
+    }
+
+    public void UpdateRevealUsed() {
+        data.revealUsed++;
+    }
+
+    public void UpdateConvertUsed() {
+        data.convertUsed++;
+    }
+
     public void UpdateHealthUpgrade(int amount) {
         data.healthUpgrade += amount;
     }

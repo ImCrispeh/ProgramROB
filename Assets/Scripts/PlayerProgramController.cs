@@ -224,6 +224,7 @@ public class PlayerProgramController : MonoBehaviour {
     IEnumerator RepelEnemies() {
         if (!isMoving) {
             TurnController._instance.repelTurns = 3;
+            DataCollectionController._instance.UpdateRepelUsed();
         }
         yield return new WaitForSeconds(0.05f);
     }
@@ -231,6 +232,7 @@ public class PlayerProgramController : MonoBehaviour {
     IEnumerator RevealMap() {
         if (!isMoving) {
             CameraController._instance.RevealMapWrapper();
+            DataCollectionController._instance.UpdateRevealUsed();
         }
         yield return new WaitForSeconds(5f);
     }
@@ -238,6 +240,7 @@ public class PlayerProgramController : MonoBehaviour {
     IEnumerator ToggleConversion() {
         if (!isMoving) {
             DarkRoomController._instance.ToggleConversionAbility(isConversionActive);
+            DataCollectionController._instance.UpdateConvertUsed();
         }
         yield return new WaitForSeconds(0.05f);
     }
@@ -247,7 +250,6 @@ public class PlayerProgramController : MonoBehaviour {
             isPerformingActions = true;
             actions.Reverse();
             for (int i = actions.Count - 1; i >= 0; i--) {
-                DataCollectionController._instance.UpdateMovementUsed();
                 int cost = CheckCost(actions[i]);
                 currNumOfActions--;
                 actionPoints -= cost;
@@ -271,6 +273,7 @@ public class PlayerProgramController : MonoBehaviour {
     }
 
     IEnumerator Move(Vector2 source, Vector2 target) {
+        DataCollectionController._instance.UpdateMovementUsed();
         lastPos = transform.position;
         isMoving = true;
         DarkRoomController._instance.SetPlayerMoving(isMoving);
