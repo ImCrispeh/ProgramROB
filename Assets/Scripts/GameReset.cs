@@ -137,6 +137,7 @@ public class GameReset : MonoBehaviour {
                 if (File.Exists(mapFileName)) {
                     File.Delete(mapFileName);
                 }
+                Time.timeScale = 1;
                 SceneManager.LoadScene("Hub");
             }
         }
