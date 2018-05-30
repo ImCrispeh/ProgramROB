@@ -144,29 +144,42 @@ public class PlayerProgramController : MonoBehaviour {
     public void AddAction(String action) {
         if (TurnController._instance.GetIsPlayerTurn()) {
             if (!isPerformingActions) {
-                bool isMovement = CheckIfMovement(action);
-                if (action == "ToggleConversion") {
-                    isConversionActive = !isConversionActive;
-                    if (isConversionActive) {
-                        estCost++;
-                    } else {
-                        estCost--;
-                    }
-                    OverlayController._instance.convertBtn.interactable = false;
-                }
-                int cost = CheckCost(action);
-
-                if (action == "RevealMap") {
-                    isRevealUsed = !isRevealUsed;
-                    OverlayController._instance.revealBtn.interactable = false;
-                }
-                if (actionPoints > estCost) {
+                if (actionPoints > estCost || (action == "ToggleConversion" && isConversionActive)) {
                     if (currNumOfActions < maxNumOfActions) {
-                        actions.Add(action);
-                        currNumOfActions++;
-                        estCost += cost;
-                        OverlayController._instance.UpdateActionsList(actions, false, isMovement);
-                        OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
+                        bool isMovement = CheckIfMovement(action);
+                        bool actionAdded = false;
+                        if (action == "ToggleConversion" && isConvertAvailable) {
+                            isConversionActive = !isConversionActive;
+                            if (isConversionActive) {
+                                estCost++;
+                            } else {
+                                estCost--;
+                            }
+                            actions.Add(action);
+                            actionAdded = true;
+                            OverlayController._instance.convertBtn.interactable = false;
+                        }
+                        int cost = CheckCost(action);
+
+                        if (action == "RevealMap" && isRevealAvailable) {
+                            isRevealUsed = !isRevealUsed;
+                            actions.Add(action);
+                            actionAdded = true;
+                            OverlayController._instance.revealBtn.interactable = false;
+                        } else if (action == "RepelEnemies" && isRepelAvailable) {
+                            actions.Add(action);
+                            actionAdded = true;
+                        } else if (isMovement) {
+                            actions.Add(action);
+                            actionAdded = true;
+                        }
+
+                        if (actionAdded) {
+                            currNumOfActions++;
+                            estCost += cost;
+                            OverlayController._instance.UpdateActionsList(actions, false, isMovement);
+                            OverlayController._instance.UpdateActionPoints(actionPoints, estCost);
+                        }
                     } else {
                         OverlayController._instance.DisplayMax();
                     }

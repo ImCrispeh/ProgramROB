@@ -240,7 +240,14 @@ MonoBehaviour:
   player: {fileID: 0}
   generator: {fileID: 0}
   enemies: []
-  keys: []
+  key: {fileID: 0}
+  endOfGame: 0
+  currLevelNo: 0
+  key1Collected: 0
+  key2Collected: 0
+  key3Collected: 0
+  key4Collected: 0
+  numKeys: 0
 --- !u!4 &508332416
 Transform:
   m_ObjectHideFlags: 0

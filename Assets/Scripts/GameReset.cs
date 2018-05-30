@@ -82,6 +82,15 @@ public class GameReset : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.R)) {
             if (MapStateController._instance.endOfGame) {
+
+                MapStateController._instance.endOfGame = false;
+                MapStateController._instance.key1Collected = false;
+                MapStateController._instance.key2Collected = false;
+                MapStateController._instance.key3Collected = false;
+                MapStateController._instance.key4Collected = false;
+                MapStateController._instance.numKeys = 0;
+
+
                 if (File.Exists(combatFileName)) {
                     File.Delete(combatFileName);
                 }

@@ -273,6 +273,7 @@ public class MapStateController : MonoBehaviour {
         CombatData data = new CombatData();
         PlayerCombatController playerCont = player.GetComponent<PlayerCombatController>();
         data.health = playerCont.health;
+        data.damage = playerCont.damage;
         data.apToAdd = 5;
         data.upgradesToAdd = 5;
 
@@ -427,11 +428,11 @@ public class MapStateController : MonoBehaviour {
 
     public void EndGame(bool isWin, String reason) {
         if (isWin) {
+            endOfGame = true;
             endText.text = "You Win!" + "\n" + "Press R to reset to beginning or Esc to quit";
         } else {
-            endText.text = "You Lose" + "\n" + reason + "\n" + "Press R to undo upgrades and go to level select or Esc to quit";
+            endText.text = "You Lose" + "\n" + reason + "\n" + "Press R to undo upgrades and go" + "\n" + "to level select or Esc to quit";
         }
-        endOfGame = true;
 
         endImg.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (DarkRoomController._instance != null) {
