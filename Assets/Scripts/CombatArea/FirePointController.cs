@@ -25,35 +25,4 @@ public class FirePointController : MonoBehaviour {
 		playerPos.rotation = Quaternion.Slerp (playerPos.rotation, rotation, 1f);
 	}
 
-	private void OnTriggerStay2D (Collider2D other) {
-       
-            if (Input.GetButtonDown("Fire1") && other.transform.tag == "Enemy")
-            {
-               
-                if (other.GetComponent<Enemy>() != null)
-                {
-                    other.GetComponent<Enemy>().damaged(player.damage * 2);
-                    ShowParticle(other);
-                }
-                else if (other.GetComponent<FireEnemy>() != null)
-                {
-                    other.GetComponent<FireEnemy>().damaged(player.damage * 2);
-                    ShowParticle(other);
-                }
-                else if (other.GetComponent<Turrets>() != null)
-                {
-                    other.GetComponent<Turrets>().damaged(player.damage * 2);
-                    ShowParticle(other);
-                } 
-                else if (other.GetComponent<TankEnemy>() != null) 
-                {
-                    other.GetComponent<TankEnemy>().damaged(player.damage * 2);
-                    ShowParticle(other);
-                }
-            }
-	}
-    void ShowParticle(Collider2D other)
-    {
-        Instantiate(particle, other.transform.position, Quaternion.identity);
-    }
 }

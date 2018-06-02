@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class FireEnemy : MonoBehaviour
 {
-    public int health;
+    public float health;
+    private float currentHealth;
     protected Transform target;
     public float Speed;
     bool isDetect;
@@ -15,12 +16,15 @@ public class FireEnemy : MonoBehaviour
     public GameObject projectTile;
     public float bulletForce;
     public Transform shootPoint;
+    public Image healthBar;
     protected void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
+        currentHealth = health;
     }
     void Update()
     {
+        healthBar.fillAmount = currentHealth / health;
         if (target != null) {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
             if (distanceToTarget < chaseRange)
@@ -53,10 +57,11 @@ public class FireEnemy : MonoBehaviour
     }
 
 
-    public void damaged(int amount)
+    public void damaged(float amount)
     {
-        health -= amount;
-        if (health <= 0)
+        currentHealth -= amount;
+        healthBar.fillAmount = currentHealth / 100;
+        if (currentHealth <= 0)
         {
             MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);

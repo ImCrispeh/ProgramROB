@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Enemy : MonoBehaviour {
 	
     public float speed;
@@ -11,14 +11,16 @@ public class Enemy : MonoBehaviour {
     public float attackRange;
     private float lastAttackTime;
     public float attackDelay;
-    public int health;
+    public float health;
+    private float currentHealth;
     public bool isTankSpawed;
-
+    public Image healthBar;
     void Start() {
         target = GameObject.FindWithTag("Player").transform;
-       
+        currentHealth = health;
     }
     void Update() {
+        healthBar.fillAmount = currentHealth / health;
         if (target != null) {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
 			if (distanceToTarget < chaseRange) {
@@ -51,9 +53,10 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public void damaged(int amount) {
-        health -= amount;
-        if (health <= 0) {
+    public void damaged(float amount) {
+        currentHealth -= amount;
+        healthBar.fillAmount = currentHealth/100;
+        if ( currentHealth <= 0) {
             MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
         }

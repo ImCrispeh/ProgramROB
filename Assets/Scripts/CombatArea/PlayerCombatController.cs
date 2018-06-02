@@ -16,7 +16,7 @@ public class PlayerCombatController : MonoBehaviour {
     public Text healthText;
     public LayerMask allowHit;
     public Material lineMat;
-    public GameObject particle;
+    public GameObject particle, sword;
     // Use this for initialization
     void Start () {
         healthText = GameObject.Find("HealthText").GetComponent<Text>();
