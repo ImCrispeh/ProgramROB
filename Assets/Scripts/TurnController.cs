@@ -31,7 +31,7 @@ public class TurnController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!player.GetComponent<PlayerProgramController>().isPerformingActions && isPlayerTurn) {
+        if (speedChangeTgl.interactable) {
             if (Input.GetKeyDown(KeyCode.F)) {
                 speedChangeTgl.isOn = !speedChangeTgl.isOn;
                 ChangeSpeed(speedChangeTgl.isOn);
@@ -75,7 +75,7 @@ public class TurnController : MonoBehaviour {
 
     public void PlayerTurn() {
         if (player.GetComponent<PlayerProgramController>().actionPoints == 0) {
-            MapStateController._instance.EndGame(false, "No action points remaining");
+            GameReset._instance.EndGame(false, "No action points remaining");
         } else {
             if (!speedChangeTgl.interactable) {
                 speedChangeTgl.interactable = true;

@@ -69,7 +69,7 @@ public class HubPlayer : MonoBehaviour {
             } else {
                 interactText.text = "Press E to end";
                 if (Input.GetKeyDown(KeyCode.E)) {
-                    MapStateController._instance.EndGame(true, "");
+                    GameReset._instance.EndGame(true, "");
                 }
             }
         }

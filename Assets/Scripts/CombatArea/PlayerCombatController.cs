@@ -104,7 +104,7 @@ public class PlayerCombatController : MonoBehaviour {
         health -= amount;
         healthText.text = "Health: " + health;
         if (health <= 0) {
-            MapStateController._instance.EndGame(false, "You were destroyed");
+            GameReset._instance.EndGame(false, "You were destroyed");
             
         }
     }

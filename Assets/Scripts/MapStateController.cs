@@ -9,14 +9,10 @@ using UnityEngine.SceneManagement;
 public class MapStateController : MonoBehaviour {
     public static MapStateController _instance;
 
-    public GameObject endImg;
-    public Text endText;
-
     public GameObject player;
 	public GameObject generator;
     public GameObject[] enemies;
     public GameObject key;
-    public bool endOfGame;
     public int currLevelNo;
 
     public bool key1Collected;
@@ -50,8 +46,6 @@ public class MapStateController : MonoBehaviour {
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
         if (scene.buildIndex >= 0 && scene.buildIndex <= 4) {
-            endImg = GameObject.FindGameObjectWithTag("EndImg");
-            endText = endImg.GetComponentInChildren<Text>();
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
             key = GameObject.FindGameObjectWithTag("Key" + scene.buildIndex);
@@ -86,13 +80,9 @@ public class MapStateController : MonoBehaviour {
         }
 
 		if (scene.name == "Combat") {
-            endImg = GameObject.FindGameObjectWithTag("EndImg");
-            endText = endImg.GetComponentInChildren<Text>();
-            //player = GameObject.FindGameObjectWithTag("Player");
 			generator = GameObject.FindGameObjectWithTag ("Generator");
 			combatFileName = Path.Combine(Application.persistentDataPath, "CombatSaveData.json");
 			mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
-            //LoadCombatData();
         }
 
         if (scene.name == "Hub") {
@@ -107,15 +97,11 @@ public class MapStateController : MonoBehaviour {
                 File.Delete(mapFileName);
             }
 
-            endImg = GameObject.FindGameObjectWithTag("EndImg");
-            endText = endImg.GetComponentInChildren<Text>();
         }
     }
 
     // Use this for initialization
     void Start () {
-        endImg = GameObject.FindGameObjectWithTag("EndImg");
-        endText = endImg.GetComponentInChildren<Text>();
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         key = GameObject.FindGameObjectWithTag("Key" + SceneManager.GetActiveScene().buildIndex);
@@ -424,40 +410,6 @@ public class MapStateController : MonoBehaviour {
         if (check.Length == 0) {
             LoadMapScene();
         }
-    }
-
-    public void EndGame(bool isWin, String reason) {
-        if (isWin) {
-            endOfGame = true;
-            endText.text = "You Win!" + "\n" + "Press R to reset to beginning or Esc to quit";
-        } else {
-            endText.text = "You Lose" + "\n" + reason + "\n" + "Press R to undo upgrades and go" + "\n" + "to level select or Esc to quit";
-        }
-
-        endImg.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
-        if (DarkRoomController._instance != null) {
-            DarkRoomController._instance.ToggleEffect(true);
-        }
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player.GetComponent<PlayerCombatController>() != null) {
-            player.GetComponent<PlayerCombatController>().enabled = false;
-        }
-
-        if (player.GetComponent<PlayerProgramController>() != null) {
-            player.GetComponent<PlayerProgramController>().enabled = false;
-        }
-
-        foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
-            btn.interactable = false;
-        }
-
-        foreach (Toggle tgl in GameObject.FindObjectsOfType<Toggle>()) {
-            tgl.interactable = false;
-        }
-
-        Time.timeScale = 0;
     }
 }
 

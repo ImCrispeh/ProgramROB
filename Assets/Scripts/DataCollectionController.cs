@@ -44,7 +44,7 @@ public class DataCollectionController : MonoBehaviour {
 	void Update () {
         data.playtime += Time.deltaTime;
 		if (Input.GetKeyDown(KeyCode.U)) {
-            MapStateController._instance.EndGame(true, "");
+            GameReset._instance.EndGame(true, "");
         }
 	}
 

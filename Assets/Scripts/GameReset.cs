@@ -2,10 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameReset : MonoBehaviour {
     public static GameReset _instance;
+
+    public GameObject pauseEndScreen;
+    public Button continueBtn;
+    public Button resetBtn;
+    public Text resetText;
+    public Button exitBtn;
+    public Text pauseEndText;
+    public bool isPaused;
+    public bool endOfGame;
 
     private string mapFileName;
     private string combatFileName;
@@ -23,7 +33,25 @@ public class GameReset : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnLevelLoaded;
+    }
+
+    void OnDisable() {
+        SceneManager.sceneLoaded -= OnLevelLoaded;
+    }
+
+    void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
+        pauseEndScreen = GameObject.FindGameObjectWithTag("PauseScreen");
+        continueBtn = GameObject.FindGameObjectWithTag("ContBtn").GetComponent<Button>();
+        //resetBtn = GameObject.FindGameObjectWithTag("ResetBtn").GetComponent<Button>();
+        exitBtn = GameObject.FindGameObjectWithTag("ExitBtn").GetComponent<Button>();
+        resetText = GameObject.FindGameObjectWithTag("ResetText").GetComponent<Text>();
+        pauseEndText = GameObject.FindGameObjectWithTag("PauseText").GetComponent<Text>();
+        pauseEndScreen.SetActive(false);
+    }
+
+        // Use this for initialization
     void Start () {
         upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
         mapFileName = Path.Combine(Application.persistentDataPath, "MapSaveData.json");
@@ -60,7 +88,6 @@ public class GameReset : MonoBehaviour {
     }
 
     private void Update() {
-
         if (Input.GetKeyDown(KeyCode.P)) {
             MapStateController._instance.SaveEndOfLevelData();
 
@@ -80,63 +107,6 @@ public class GameReset : MonoBehaviour {
             SceneManager.LoadScene(5);
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) {
-            if (MapStateController._instance.endOfGame) {
-
-                MapStateController._instance.endOfGame = false;
-                MapStateController._instance.key1Collected = false;
-                MapStateController._instance.key2Collected = false;
-                MapStateController._instance.key3Collected = false;
-                MapStateController._instance.key4Collected = false;
-                MapStateController._instance.numKeys = 0;
-
-
-                if (File.Exists(combatFileName)) {
-                    File.Delete(combatFileName);
-                }
-
-                if (File.Exists(mapFileName)) {
-                    File.Delete(mapFileName);
-                }
-
-                if (File.Exists(upgradeFileName)) {
-                    File.Delete(upgradeFileName);
-                }
-
-                if (File.Exists(levelEndFileName)) {
-                    File.Delete(levelEndFileName);
-                }
-
-                if (File.Exists(upgradeCostFileName)) {
-                    File.Delete(upgradeCostFileName);
-                }
-
-                if (File.Exists(totalUpgradeFileName)) {
-                    File.Delete(totalUpgradeFileName);
-                }
-
-                Time.timeScale = 1;
-                DataCollectionController._instance.WriteToFile();
-                SceneManager.LoadScene(0);
-            } else {
-                if (File.Exists(combatFileName)) {
-                    File.Delete(combatFileName);
-                }
-
-                if (File.Exists(mapFileName)) {
-                    File.Delete(mapFileName);
-                }
-
-                if (File.Exists(upgradeFileName)) {
-                    File.Delete(upgradeFileName);
-                }
-
-                Time.timeScale = 1;
-                DataCollectionController._instance.WriteToFile();
-                SceneManager.LoadScene("Hub");
-            }
-        }
-
         if (SceneManager.GetActiveScene().buildIndex == 0) {
             if (Input.GetKeyDown(KeyCode.X)) {
                 if (File.Exists(combatFileName)) {
@@ -152,8 +122,168 @@ public class GameReset : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            Time.timeScale = 1;
-            Application.Quit();
+            if (!isPaused) {
+                PauseGame();
+            } else {
+                UnpauseGame();
+            }
         }
+    }
+
+    public void PauseGame() {
+        isPaused = true;
+        pauseEndScreen.SetActive(true);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player.GetComponent<PlayerCombatController>() != null) {
+            player.GetComponent<PlayerCombatController>().enabled = false;
+        }
+
+        if (player.GetComponent<PlayerProgramController>() != null) {
+            player.GetComponent<PlayerProgramController>().enabled = false;
+        }
+
+        foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
+            btn.interactable = false;
+        }
+
+        continueBtn.interactable = true;
+        resetBtn.interactable = true;
+        exitBtn.interactable = true;
+
+        foreach (Toggle tgl in GameObject.FindObjectsOfType<Toggle>()) {
+            tgl.interactable = false;
+        }
+
+        Time.timeScale = 0;
+    }
+
+    public void UnpauseGame() {
+        isPaused = false;
+        pauseEndScreen.SetActive(false);
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player.GetComponent<PlayerCombatController>() != null) {
+            player.GetComponent<PlayerCombatController>().enabled = true;
+        }
+
+        if (player.GetComponent<PlayerProgramController>() != null) {
+            player.GetComponent<PlayerProgramController>().enabled = true;
+        }
+
+        foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
+            btn.interactable = true;
+        }
+
+        foreach (Toggle tgl in GameObject.FindObjectsOfType<Toggle>()) {
+            tgl.interactable = true;
+        }
+
+        if (GameObject.FindObjectOfType<OverlayController>() != null) {
+            OverlayController._instance.EnableExtraActions();
+        }
+
+        Time.timeScale = 0;
+    }
+
+    public void ResetGame() {
+        if (endOfGame) {
+
+            endOfGame = false;
+            MapStateController._instance.key1Collected = false;
+            MapStateController._instance.key2Collected = false;
+            MapStateController._instance.key3Collected = false;
+            MapStateController._instance.key4Collected = false;
+            MapStateController._instance.numKeys = 0;
+
+
+            if (File.Exists(combatFileName)) {
+                File.Delete(combatFileName);
+            }
+
+            if (File.Exists(mapFileName)) {
+                File.Delete(mapFileName);
+            }
+
+            if (File.Exists(upgradeFileName)) {
+                File.Delete(upgradeFileName);
+            }
+
+            if (File.Exists(levelEndFileName)) {
+                File.Delete(levelEndFileName);
+            }
+
+            if (File.Exists(upgradeCostFileName)) {
+                File.Delete(upgradeCostFileName);
+            }
+
+            if (File.Exists(totalUpgradeFileName)) {
+                File.Delete(totalUpgradeFileName);
+            }
+
+            Time.timeScale = 1;
+            DataCollectionController._instance.WriteToFile();
+            SceneManager.LoadScene(0);
+        } else {
+            if (File.Exists(combatFileName)) {
+                File.Delete(combatFileName);
+            }
+
+            if (File.Exists(mapFileName)) {
+                File.Delete(mapFileName);
+            }
+
+            if (File.Exists(upgradeFileName)) {
+                File.Delete(upgradeFileName);
+            }
+
+            Time.timeScale = 1;
+            DataCollectionController._instance.WriteToFile();
+            SceneManager.LoadScene("Hub");
+        }
+    }
+
+    public void ExitGame() {
+        Application.Quit();
+    }
+
+    public void EndGame(bool isWin, string reason) {
+        if (isWin) {
+            endOfGame = true;
+            pauseEndText.text = "You Win!";
+        } else {
+            pauseEndText.text = "You Lose" + "\n" + reason;
+            resetText.text = "Return to hub";
+        }
+
+        pauseEndScreen.SetActive(true);
+        continueBtn.gameObject.SetActive(false);
+        if (DarkRoomController._instance != null) {
+            DarkRoomController._instance.ToggleEffect(true);
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player.GetComponent<PlayerCombatController>() != null) {
+            player.GetComponent<PlayerCombatController>().enabled = false;
+        }
+
+        if (player.GetComponent<PlayerProgramController>() != null) {
+            player.GetComponent<PlayerProgramController>().enabled = false;
+        }
+
+        foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
+            btn.interactable = false;
+        }
+
+        resetBtn.interactable = true;
+        exitBtn.interactable = true;
+
+        foreach (Toggle tgl in GameObject.FindObjectsOfType<Toggle>()) {
+            tgl.interactable = false;
+        }
+
+        Time.timeScale = 0;
     }
 }

@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - DeadBody
   - Door
   - Exit
   - Key
@@ -37,6 +36,12 @@ TagManager:
   - Key3
   - Key4
   - Key0
+  - PauseText
+  - PauseScreen
+  - ContBtn
+  - ResetBtn
+  - ExitBtn
+  - ResetText
   layers:
   - Default
   - TransparentFX
