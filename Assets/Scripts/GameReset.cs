@@ -44,7 +44,7 @@ public class GameReset : MonoBehaviour {
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
         pauseEndScreen = GameObject.FindGameObjectWithTag("PauseScreen");
         continueBtn = GameObject.FindGameObjectWithTag("ContBtn").GetComponent<Button>();
-        //resetBtn = GameObject.FindGameObjectWithTag("ResetBtn").GetComponent<Button>();
+        resetBtn = GameObject.FindGameObjectWithTag("ResetBtn").GetComponent<Button>();
         exitBtn = GameObject.FindGameObjectWithTag("ExitBtn").GetComponent<Button>();
         resetText = GameObject.FindGameObjectWithTag("ResetText").GetComponent<Text>();
         pauseEndText = GameObject.FindGameObjectWithTag("PauseText").GetComponent<Text>();
