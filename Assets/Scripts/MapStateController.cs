@@ -52,22 +52,22 @@ public class MapStateController : MonoBehaviour {
         if (scene.buildIndex >= 1 && scene.buildIndex <= 5) {
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            key = GameObject.FindGameObjectWithTag("Key" + scene.buildIndex);
+            key = GameObject.FindGameObjectWithTag("Key" + (scene.buildIndex - 1));
 
             if (key != null) {
-                if (scene.buildIndex == 2 && key1Collected) {
+                if (scene.name == "Stage1" && key1Collected) {
                     Destroy(key);
                 }
 
-                if (scene.buildIndex == 3 && key2Collected) {
+                if (scene.name == "Stage2" && key2Collected) {
                     Destroy(key);
                 }
 
-                if (scene.buildIndex == 4 && key3Collected) {
+                if (scene.name == "Stage3" && key3Collected) {
                     Destroy(key);
                 }
 
-                if (scene.buildIndex == 5 && key4Collected) {
+                if (scene.name == "Stage4" && key4Collected) {
                     Destroy(key);
                 }
             }
@@ -111,19 +111,19 @@ public class MapStateController : MonoBehaviour {
         key = GameObject.FindGameObjectWithTag("Key" + SceneManager.GetActiveScene().buildIndex);
 
         if (key != null) {
-            if (SceneManager.GetActiveScene().buildIndex == 2 && key1Collected) {
+            if (SceneManager.GetActiveScene().name == "Stage1" && key1Collected) {
                 Destroy(key);
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 3 && key2Collected) {
+            if (SceneManager.GetActiveScene().name == "Stage2" && key2Collected) {
                 Destroy(key);
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 4 && key3Collected) {
+            if (SceneManager.GetActiveScene().name == "Stage3" && key3Collected) {
                 Destroy(key);
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 5 && key4Collected) {
+            if (SceneManager.GetActiveScene().name == "Stage4" && key4Collected) {
                 Destroy(key);
             }
         }

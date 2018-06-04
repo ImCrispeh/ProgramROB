@@ -37,28 +37,28 @@ public class HubPlayer : MonoBehaviour {
         if (collision.gameObject.tag == "S1Entry") {
             interactText.text = "Press E to enter level";
             if (Input.GetKeyDown(KeyCode.E)) {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene("Stage1");
             }
         }
 
         if (collision.gameObject.tag == "S2Entry") {
             interactText.text = "Press E to enter level";
             if (Input.GetKeyDown(KeyCode.E)) {
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene("Stage2");
             }
         }
 
         if (collision.gameObject.tag == "S3Entry") {
             interactText.text = "Press E to enter level";
             if (Input.GetKeyDown(KeyCode.E)) {
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene("Stage3");
             }
         }
 
         if (collision.gameObject.tag == "S4Entry") {
             interactText.text = "Press E to enter level";
             if (Input.GetKeyDown(KeyCode.E)) {
-                SceneManager.LoadScene(4);
+                SceneManager.LoadScene("Stage4");
             }
         }
 
