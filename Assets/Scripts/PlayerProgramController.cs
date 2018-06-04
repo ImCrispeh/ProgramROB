@@ -336,19 +336,19 @@ public class PlayerProgramController : MonoBehaviour {
         }
 
         if (collision.gameObject.tag == "Key1") {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<KeyController>().ShowLore();
         }
 
         if (collision.gameObject.tag == "Key2") {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<KeyController>().ShowLore();
         }
 
         if (collision.gameObject.tag == "Key3") {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<KeyController>().ShowLore();
         }
 
         if (collision.gameObject.tag == "Key4") {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<KeyController>().ShowLore();
         }
     }
 }
