@@ -13,7 +13,8 @@ public class TankEnemy : MonoBehaviour
     public float attackRange;
     private float lastAttackTime;
     public float attackDelay;
-    public int health, numberOfEnemies;
+    public float health;
+    private int numberOfEnemies;
     int count = 0;
     bool isEnd = false;
     void Start()
@@ -73,7 +74,7 @@ public class TankEnemy : MonoBehaviour
         }
     }
 
-    public void damaged(int amount)
+    public void damaged(float amount)
     {
         health -= amount;
         if (health <= 0)

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Turrets : MonoBehaviour
 {
-
-    public int health;
+    public Image healthBar;
+    public float health;
+    private float currentHealth;
     Transform target;
     public float attackRange;
     private float lastAttackTime = 0;
@@ -16,9 +17,11 @@ public class Turrets : MonoBehaviour
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
+        currentHealth = health;
     }
     void Update()
     {
+        healthBar.fillAmount = currentHealth / health;
         if (target != null) {
             //float distanceToTarget = Vector3.Distance(transform.position, target.position);
             //if (distanceToTarget < attackRange)
@@ -38,10 +41,11 @@ public class Turrets : MonoBehaviour
         }
     }
 
-    public void damaged(int amount)
+    public void damaged(float amount)
     {
-        health -= amount;
-        if (health <= 0)
+        currentHealth -= amount;
+        healthBar.fillAmount = currentHealth / 100;
+        if (currentHealth <= 0)
         {
             MapStateController._instance.CheckEnemiesAlive();
             Destroy(gameObject);
