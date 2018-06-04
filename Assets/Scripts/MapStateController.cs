@@ -45,25 +45,29 @@ public class MapStateController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        if (scene.buildIndex >= 0 && scene.buildIndex <= 4) {
+        if (scene.name == "Title") {
+            Destroy(this.gameObject);
+        }
+
+        if (scene.buildIndex >= 1 && scene.buildIndex <= 5) {
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
             key = GameObject.FindGameObjectWithTag("Key" + scene.buildIndex);
 
             if (key != null) {
-                if (scene.buildIndex == 1 && key1Collected) {
+                if (scene.buildIndex == 2 && key1Collected) {
                     Destroy(key);
                 }
 
-                if (scene.buildIndex == 2 && key2Collected) {
+                if (scene.buildIndex == 3 && key2Collected) {
                     Destroy(key);
                 }
 
-                if (scene.buildIndex == 3 && key3Collected) {
+                if (scene.buildIndex == 4 && key3Collected) {
                     Destroy(key);
                 }
 
-                if (scene.buildIndex == 4 && key4Collected) {
+                if (scene.buildIndex == 5 && key4Collected) {
                     Destroy(key);
                 }
             }
@@ -107,19 +111,19 @@ public class MapStateController : MonoBehaviour {
         key = GameObject.FindGameObjectWithTag("Key" + SceneManager.GetActiveScene().buildIndex);
 
         if (key != null) {
-            if (SceneManager.GetActiveScene().buildIndex == 1 && key1Collected) {
+            if (SceneManager.GetActiveScene().buildIndex == 2 && key1Collected) {
                 Destroy(key);
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 2 && key2Collected) {
+            if (SceneManager.GetActiveScene().buildIndex == 3 && key2Collected) {
                 Destroy(key);
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 3 && key3Collected) {
+            if (SceneManager.GetActiveScene().buildIndex == 4 && key3Collected) {
                 Destroy(key);
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 4 && key4Collected) {
+            if (SceneManager.GetActiveScene().buildIndex == 5 && key4Collected) {
                 Destroy(key);
             }
         }
@@ -338,28 +342,28 @@ public class MapStateController : MonoBehaviour {
 
         //save if key has been collected in level
         if (key == null) {
-            if (SceneManager.GetActiveScene().buildIndex == 1) {
+            if (SceneManager.GetActiveScene().buildIndex == 2) {
                 if (!key1Collected) {
                     key1Collected = true;
                     numKeys++;
                 }
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 2) {
+            if (SceneManager.GetActiveScene().buildIndex == 3) {
                 if (!key2Collected) {
                     key2Collected = true;
                     numKeys++;
                 }
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 3) {
+            if (SceneManager.GetActiveScene().buildIndex == 4) {
                 if (!key3Collected) {
                     key3Collected = true;
                     numKeys++;
                 }
             }
 
-            if (SceneManager.GetActiveScene().buildIndex == 4) {
+            if (SceneManager.GetActiveScene().buildIndex == 5) {
                 if (!key4Collected) {
                     key4Collected = true;
                     numKeys++;

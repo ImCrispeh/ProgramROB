@@ -42,13 +42,20 @@ public class GameReset : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        pauseEndScreen = GameObject.FindGameObjectWithTag("PauseScreen");
-        continueBtn = GameObject.FindGameObjectWithTag("ContBtn").GetComponent<Button>();
-        resetBtn = GameObject.FindGameObjectWithTag("ResetBtn").GetComponent<Button>();
-        exitBtn = GameObject.FindGameObjectWithTag("ExitBtn").GetComponent<Button>();
-        resetText = GameObject.FindGameObjectWithTag("ResetText").GetComponent<Text>();
-        pauseEndText = GameObject.FindGameObjectWithTag("PauseText").GetComponent<Text>();
-        pauseEndScreen.SetActive(false);
+        if (SceneManager.GetActiveScene().name != "Title") {
+            pauseEndScreen = GameObject.FindGameObjectWithTag("PauseScreen");
+            continueBtn = GameObject.FindGameObjectWithTag("ContBtn").GetComponent<Button>();
+            resetBtn = GameObject.FindGameObjectWithTag("ResetBtn").GetComponent<Button>();
+            exitBtn = GameObject.FindGameObjectWithTag("ExitBtn").GetComponent<Button>();
+            resetText = GameObject.FindGameObjectWithTag("ResetText").GetComponent<Text>();
+            pauseEndText = GameObject.FindGameObjectWithTag("PauseText").GetComponent<Text>();
+            continueBtn.onClick.AddListener(UnpauseGame);
+            resetBtn.onClick.AddListener(ResetGame);
+            exitBtn.onClick.AddListener(ExitGame);
+            pauseEndScreen.SetActive(false);
+        } else {
+            Destroy(this.gameObject);
+        }
     }
 
         // Use this for initialization
@@ -107,7 +114,7 @@ public class GameReset : MonoBehaviour {
             SceneManager.LoadScene(5);
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 0) {
+        if (SceneManager.GetActiveScene().name == "Tutorial") {
             if (Input.GetKeyDown(KeyCode.X)) {
                 if (File.Exists(combatFileName)) {
                     File.Delete(combatFileName);
@@ -191,12 +198,6 @@ public class GameReset : MonoBehaviour {
         if (endOfGame) {
 
             endOfGame = false;
-            MapStateController._instance.key1Collected = false;
-            MapStateController._instance.key2Collected = false;
-            MapStateController._instance.key3Collected = false;
-            MapStateController._instance.key4Collected = false;
-            MapStateController._instance.numKeys = 0;
-
 
             if (File.Exists(combatFileName)) {
                 File.Delete(combatFileName);
@@ -223,8 +224,10 @@ public class GameReset : MonoBehaviour {
             }
 
             Time.timeScale = 1;
+            Destroy(MapStateController._instance.gameObject);
             DataCollectionController._instance.WriteToFile();
-            SceneManager.LoadScene(0);
+            Destroy(DataCollectionController._instance.gameObject);
+            SceneManager.LoadScene("Title");
         } else {
             if (File.Exists(combatFileName)) {
                 File.Delete(combatFileName);
@@ -249,8 +252,8 @@ public class GameReset : MonoBehaviour {
     }
 
     public void EndGame(bool isWin, string reason) {
+        endOfGame = isWin;
         if (isWin) {
-            endOfGame = true;
             pauseEndText.text = "You Win!";
         } else {
             pauseEndText.text = "You Lose" + "\n" + reason;

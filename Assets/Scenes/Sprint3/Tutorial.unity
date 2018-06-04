@@ -3768,7 +3768,7 @@ MonoBehaviour:
   exitBtn: {fileID: 0}
   pauseEndText: {fileID: 0}
   isPaused: 0
-  endOfGame: 0
+  endOfGame: 1
 --- !u!4 &673691086
 Transform:
   m_ObjectHideFlags: 0
@@ -4307,7 +4307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.5, y: 53.7}
+  m_AnchoredPosition: {x: 2.5, y: 53.699997}
   m_SizeDelta: {x: -5, y: 94.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888760455

@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class OpenGame : MonoBehaviour {
     public int sceneIndex;
-    public void LoadScene(int sceneIndex)
-    {
-        SceneManager.LoadScene(sceneIndex);
+
+    public void StartGame() {
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    public void ExitGame() {
+        Application.Quit();
     }
 }

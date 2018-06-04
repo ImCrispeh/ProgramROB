@@ -11,15 +11,13 @@ public class MeeleAttackController : MonoBehaviour {
         anim = GetComponent<Animator>();
         player = transform.parent.parent.parent.GetComponent<PlayerCombatController>();
     }
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            anim.SetBool("isMelee", true);
-        }
-        else
-        {
-            anim.SetBool("isMelee", false);
+    void Update() {
+        if (player.enabled) {
+            if (Input.GetButtonDown("Fire1")) {
+                anim.SetBool("isMelee", true);
+            } else {
+                anim.SetBool("isMelee", false);
+            }
         }
     }
 

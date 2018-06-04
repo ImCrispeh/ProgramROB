@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Sprint3/Title.unity
+    guid: 57d39902a39db444b9bbffc8c22e222a
+  - enabled: 1
     path: Assets/Scenes/Sprint3/Tutorial.unity
     guid: fbbec8c1fb8a347489f4eb5d0d1e1205
   - enabled: 1
@@ -32,7 +35,3 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sprint3/Combat.unity
     guid: 587feab2e84ece44e95575896b006dd4
-  - enabled: 1
-    path: Assets/Scenes/Sprint3/Title.unity
-    guid: 57d39902a39db444b9bbffc8c22e222a
-  m_configObjects: {}
