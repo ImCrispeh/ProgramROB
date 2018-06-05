@@ -16,6 +16,7 @@ public class GameReset : MonoBehaviour {
     public Text pauseEndText;
     public bool isPaused;
     public bool endOfGame;
+    public bool gameOver;
 
     private string mapFileName;
     private string combatFileName;
@@ -129,10 +130,12 @@ public class GameReset : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (!isPaused) {
-                PauseGame();
-            } else {
-                UnpauseGame();
+            if (!gameOver) {
+                if (!isPaused) {
+                    PauseGame();
+                } else {
+                    UnpauseGame();
+                }
             }
         }
     }

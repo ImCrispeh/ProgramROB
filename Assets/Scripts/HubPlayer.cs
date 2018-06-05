@@ -8,6 +8,7 @@ public class HubPlayer : MonoBehaviour {
     public float speed;
     public Rigidbody2D rigid;
     public Text interactText;
+    public GameObject loreScreen;
 
     // Use this for initialization
     void Start () {
@@ -69,7 +70,7 @@ public class HubPlayer : MonoBehaviour {
             } else {
                 interactText.text = "Press E to end";
                 if (Input.GetKeyDown(KeyCode.E)) {
-                    GameReset._instance.EndGame(true, "");
+                    ShowEndLore();
                 }
             }
         }
@@ -87,6 +88,20 @@ public class HubPlayer : MonoBehaviour {
                 SceneManager.LoadScene("Hub");
             }
         }
+    }
+
+    public void ShowEndLore() {
+        loreScreen.SetActive(true);
+        GameReset._instance.gameOver = true;
+        this.enabled = false;
+    }
+
+    public void ReturnToTitle() {
+        GameReset._instance.ResetGame();
+    }
+
+    public void QuitGame() {
+        Application.Quit();
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
