@@ -54,8 +54,8 @@ public class BGMController : MonoBehaviour {
     public void MuteVol() {
         isMuted = true;
         volumeBtn.image.sprite = volumeImgs[1];
-        foreach  {
-
+        foreach (AudioSource src in GameObject.FindObjectsOfType<AudioSource>()) {
+            src.volume = 0;
         }
         volumeBtn.onClick.RemoveAllListeners();
         volumeBtn.onClick.AddListener(UnmuteVol);
@@ -64,7 +64,9 @@ public class BGMController : MonoBehaviour {
     public void UnmuteVol() {
         isMuted = false;
         volumeBtn.image.sprite = volumeImgs[0];
-        audioSrc.volume = 0.1f;
+        foreach (AudioSource src in GameObject.FindObjectsOfType<AudioSource>()) {
+            src.volume = 0.1f;
+        }
         volumeBtn.onClick.RemoveAllListeners();
         volumeBtn.onClick.AddListener(MuteVol);
     }
