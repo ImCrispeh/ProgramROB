@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BGMController : MonoBehaviour {
     public static BGMController _instance;
     public AudioClip[] bgm;
     public AudioSource audioSrc;
+    public AudioSource allAudioSrc;
+    public Button volumeBtn;
+    public Sprite[] volumeImgs;
+    public bool isMuted;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -26,6 +31,13 @@ public class BGMController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
+        volumeBtn = GameObject.FindGameObjectWithTag("Volume").GetComponent<Button>();
+        if (!isMuted) {
+            UnmuteVol();
+        } else {
+            MuteVol();
+        }
+
         if (scene.name == "Title" || scene.name == "Hub") {
             audioSrc.clip = bgm[0];
         } else if (scene.buildIndex >= 1 && scene.buildIndex <= 5 && scene.buildIndex % 2 == 0) {
@@ -37,5 +49,23 @@ public class BGMController : MonoBehaviour {
         }
 
         audioSrc.Play();
+    }
+
+    public void MuteVol() {
+        isMuted = true;
+        volumeBtn.image.sprite = volumeImgs[1];
+        foreach  {
+
+        }
+        volumeBtn.onClick.RemoveAllListeners();
+        volumeBtn.onClick.AddListener(UnmuteVol);
+    }
+
+    public void UnmuteVol() {
+        isMuted = false;
+        volumeBtn.image.sprite = volumeImgs[0];
+        audioSrc.volume = 0.1f;
+        volumeBtn.onClick.RemoveAllListeners();
+        volumeBtn.onClick.AddListener(MuteVol);
     }
 }
