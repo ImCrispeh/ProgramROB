@@ -28,7 +28,8 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 
 	//Usuable Prefabs
 	public GameObject floorTile;
-	public GameObject wallTile;
+	public GameObject[] wallTile;
+	public GameObject obstacleTile;
 	public GameObject[] enemy;
 	public GameObject player;
 
@@ -61,7 +62,7 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 		if (isTurret) RandomLayout (enemy[2], "enemy", turretAmt, turretAmt);	//Random places turrets
         if (isTank) RandomLayout(enemy[3], "enemy", tankAmt, tankAmt);
 		map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, GameObject.FindGameObjectWithTag("Player").transform.position.z + 1f);
-		RandomLayout (wallTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
+		RandomLayout (obstacleTile, "wall", wallAmt.minimum, wallAmt.maximum);	//Random places wall tiles
 	}
 	
 	// Update is called once per frame
@@ -92,19 +93,55 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 
 	private void GridGen () {
 		for (int x = -1; x < columns + 1; x++) {
-			for (int y = -1; y < rows + 1; y++) {
+			for (int y = -2; y < rows + 2; y++) {
 				GameObject toGenerate = floorTile;
-				if (x == -1 || x == columns || y == -1 || y == rows)
-					toGenerate = wallTile;
+				if (x == -1 || x == columns || y <= -1 || y >= rows)
+					toGenerate = WallGen (x, y);
 				GameObject child = Instantiate (toGenerate, new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
-				child.transform.localScale = new Vector3 (6.25f, 6.25f, 1f);
 
-				if (x == -1 || x == columns || y == -1 || y == rows)
+				if (x == -1 || x == columns || y <= -1 || y >= rows)
 					child.transform.SetParent (walls);
 				else
 					child.transform.SetParent (floor);
+				if ((y == -1 || y == rows) && !(x == -1 || x == columns)) {
+					child = Instantiate (floorTile, new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+					child.transform.SetParent (floor);
+				}
 			}
 		}
+	}
+
+	private GameObject WallGen (int x, int y) {
+		if (x == -1 && y == rows + 1)
+			return wallTile [0];
+		if (x == columns && y == rows + 1)
+			return wallTile [1];
+
+		if (x == -1 && y == rows)
+			return wallTile [2];
+		if (x == columns && y == rows)
+			return wallTile [3];
+
+		if (x == -1 && y == -1)
+			return wallTile [5];
+		if (x == columns && y == -1)
+			return wallTile [6];
+
+		if (x == -1 && y == -2)
+			return wallTile [7];
+		if (x == columns && y == -2)
+			return wallTile [9];
+
+		if (y == -1 || y == rows + 1)
+			return wallTile [10];
+		if (y == rows)
+			return wallTile [11];
+		if (y == -2)
+			return wallTile [8];
+		if (x == -1 || x == columns)
+			return wallTile [4];
+
+		return null;
 	}
 
 	private Vector3 RandomPosition (string type) {
@@ -155,7 +192,6 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 			Vector3 randomPos = RandomPosition (type);
 			GameObject child = Instantiate (obj, randomPos, Quaternion.identity);
 			if (type == "wall") {
-				child.transform.localScale = new Vector3 (6.25f, 6.25f, 1f);
 				child.transform.SetParent (walls);
 			} else if (type == "enemy") {
 				child.transform.SetParent (enemies);
