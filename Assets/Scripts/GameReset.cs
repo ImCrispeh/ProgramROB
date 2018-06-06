@@ -194,7 +194,7 @@ public class GameReset : MonoBehaviour {
             OverlayController._instance.EnableExtraActions();
         }
 
-        Time.timeScale = 0;
+        Time.timeScale = 1;
     }
 
     public void ResetGame() {

@@ -35,7 +35,6 @@ public class PlayerProgramController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        actionPoints = maxActionPoints;
         actions = new List<String>();
         if (isConversionActive) {
             estCost = 1;
@@ -332,6 +331,7 @@ public class PlayerProgramController : MonoBehaviour {
                 DataCollectionController._instance.UpdateIsWin(true);
             }
             MapStateController._instance.SaveEndOfLevelData();
+            DataCollectionController._instance.WriteToFile();
             SceneManager.LoadScene("Hub");
         }
 

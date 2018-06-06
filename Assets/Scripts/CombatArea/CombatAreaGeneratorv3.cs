@@ -171,8 +171,8 @@ public class CombatAreaGeneratorv3 : MonoBehaviour {
 			}
 			if (type == "wall") { //Wall check
 				foreach (Vector3 enemyPos in enemyPosition) {
-					Debug.Log ("Enemy distance: " + Vector3.Distance (enemyPos, pos));
-					Debug.Log ("Player distance: " + Vector3.Distance (playerPos.position, pos));
+					//Debug.Log ("Enemy distance: " + Vector3.Distance (enemyPos, pos));
+					//Debug.Log ("Player distance: " + Vector3.Distance (playerPos.position, pos));
 					if (Vector3.Distance (enemyPos, pos) < 1.5f || Vector3.Distance (playerPos.position, pos) < 1.5f) {
 						return false;
 					}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TankEnemy : MonoBehaviour
 {
@@ -14,15 +15,19 @@ public class TankEnemy : MonoBehaviour
     private float lastAttackTime;
     public float attackDelay;
     public float health;
-    private int numberOfEnemies;
+    private float currentHealth;
+    public int numberOfEnemies;
     int count = 0;
     bool isEnd = false;
+    public Image healthBar;
     void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
+        currentHealth = health;
     }
     void Update()
     {
+        healthBar.fillAmount = currentHealth / health;
         if (target != null)
         {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
@@ -77,6 +82,7 @@ public class TankEnemy : MonoBehaviour
     public void damaged(float amount)
     {
         health -= amount;
+        healthBar.fillAmount = currentHealth / 100;
         if (health <= 0)
         {
             MapStateController._instance.CheckEnemiesAlive();
