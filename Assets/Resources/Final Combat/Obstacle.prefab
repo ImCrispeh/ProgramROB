@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4694796497588582}
   - component: {fileID: 212369589838763572}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_523
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4382649458269864}
   - component: {fileID: 212646618704700194}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_513
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,9 +52,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4318463087690260}
   - component: {fileID: 61844132068736282}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

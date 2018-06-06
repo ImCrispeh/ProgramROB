@@ -2055,6 +2055,11 @@ Prefab:
       propertyPath: tankAmt
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 212674033158869678, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
   m_IsPrefabParent: 0
@@ -3001,6 +3006,11 @@ Prefab:
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
       propertyPath: tankAmt
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212674033158869678, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4549,7 +4559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 640, y: 500}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &372052371
@@ -8962,7 +8972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &642311652
 RectTransform:
   m_ObjectHideFlags: 0

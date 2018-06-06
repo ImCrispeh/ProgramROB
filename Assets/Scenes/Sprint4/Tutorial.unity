@@ -118,9 +118,9 @@ GameObject:
   - component: {fileID: 1159448}
   - component: {fileID: 1159450}
   - component: {fileID: 1159449}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_603
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1534,9 +1534,9 @@ GameObject:
   - component: {fileID: 113640330}
   - component: {fileID: 113640332}
   - component: {fileID: 113640331}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_602
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2536,6 +2536,7 @@ RectTransform:
   - {fileID: 561866434}
   - {fileID: 750625646}
   - {fileID: 1384406365}
+  - {fileID: 1142286308}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2989,9 +2990,9 @@ GameObject:
   - component: {fileID: 280429737}
   - component: {fileID: 280429739}
   - component: {fileID: 280429738}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_521 2 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3084,9 +3085,9 @@ GameObject:
   - component: {fileID: 285687427}
   - component: {fileID: 285687429}
   - component: {fileID: 285687428}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_600
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3412,9 +3413,9 @@ GameObject:
   - component: {fileID: 312913776}
   - component: {fileID: 312913778}
   - component: {fileID: 312913777}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_614
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5062,9 +5063,9 @@ GameObject:
   - component: {fileID: 490470758}
   - component: {fileID: 490470760}
   - component: {fileID: 490470759}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_511 (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5556,9 +5557,9 @@ GameObject:
   - component: {fileID: 526343014}
   - component: {fileID: 526343016}
   - component: {fileID: 526343015}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_510
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7456,9 +7457,9 @@ GameObject:
   - component: {fileID: 732917433}
   - component: {fileID: 732917435}
   - component: {fileID: 732917434}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_512
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8483,7 +8484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.5, y: 53.699997}
+  m_AnchoredPosition: {x: 2.5, y: 53.7}
   m_SizeDelta: {x: -5, y: 94.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888760455
@@ -8552,9 +8553,9 @@ GameObject:
   - component: {fileID: 893661585}
   - component: {fileID: 893661587}
   - component: {fileID: 893661586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_522 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8723,7 +8724,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4960360702688678, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4960360702688678, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8775,6 +8776,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1830519559274654, guid: b0dffdd6c45b6b54692f7aad07454f8c, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212674033158869678, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8885,9 +8891,9 @@ GameObject:
   - component: {fileID: 903882358}
   - component: {fileID: 903882360}
   - component: {fileID: 903882359}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_510 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8980,9 +8986,9 @@ GameObject:
   - component: {fileID: 914175515}
   - component: {fileID: 914175517}
   - component: {fileID: 914175516}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_613
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9155,9 +9161,9 @@ GameObject:
   - component: {fileID: 961024931}
   - component: {fileID: 961024933}
   - component: {fileID: 961024932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_521 1 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9705,9 +9711,9 @@ GameObject:
   - component: {fileID: 999151111}
   - component: {fileID: 999151113}
   - component: {fileID: 999151112}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_522
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11431,9 +11437,9 @@ GameObject:
   - component: {fileID: 1109460951}
   - component: {fileID: 1109460953}
   - component: {fileID: 1109460952}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_521 2
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11595,9 +11601,9 @@ GameObject:
   - component: {fileID: 1118426431}
   - component: {fileID: 1118426433}
   - component: {fileID: 1118426432}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_512 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11844,6 +11850,127 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!1 &1142286307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1142286308}
+  - component: {fileID: 1142286311}
+  - component: {fileID: 1142286310}
+  - component: {fileID: 1142286309}
+  m_Layer: 5
+  m_Name: Volume
+  m_TagString: Volume
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1142286308
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1142286307}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.075001046, y: 0.075001046, z: 1}
+  m_Children: []
+  m_Father: {fileID: 196248357}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 640, y: 500}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1142286309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1142286307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1142286310}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1142286310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1142286307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: e55b4f2567bfd5c478842c42343d8101, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1142286311
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1142286307}
 --- !u!1 &1144366738
 GameObject:
   m_ObjectHideFlags: 0
@@ -14055,9 +14182,9 @@ GameObject:
   - component: {fileID: 1337806198}
   - component: {fileID: 1337806200}
   - component: {fileID: 1337806199}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_511 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14461,9 +14588,9 @@ GameObject:
   - component: {fileID: 1352883837}
   - component: {fileID: 1352883839}
   - component: {fileID: 1352883838}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_615
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15503,9 +15630,9 @@ GameObject:
   - component: {fileID: 1459451572}
   - component: {fileID: 1459451574}
   - component: {fileID: 1459451573}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_521 1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15898,9 +16025,9 @@ GameObject:
   - component: {fileID: 1537067828}
   - component: {fileID: 1537067830}
   - component: {fileID: 1537067829}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_601
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16135,9 +16262,9 @@ GameObject:
   - component: {fileID: 1544513999}
   - component: {fileID: 1544514001}
   - component: {fileID: 1544514000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_511
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16984,9 +17111,9 @@ GameObject:
   - component: {fileID: 1643828141}
   - component: {fileID: 1643828143}
   - component: {fileID: 1643828142}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_511 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21324,9 +21451,9 @@ GameObject:
   - component: {fileID: 2069498234}
   - component: {fileID: 2069498236}
   - component: {fileID: 2069498235}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_520 (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21929,9 +22056,9 @@ GameObject:
   - component: {fileID: 2127014529}
   - component: {fileID: 2127014531}
   - component: {fileID: 2127014530}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_520
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,8 +7,14 @@ public class KeyController : MonoBehaviour {
     public bool isCollected;
     public GameObject loreScreen;
     public Button closeBtn;
+    PlayerProgramController player;
+
+    private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerProgramController>();
+    }
 
     public void ShowLore() {
+        player.enabled = false;
         loreScreen.SetActive(true);
         foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
             btn.interactable = false;
@@ -22,6 +28,7 @@ public class KeyController : MonoBehaviour {
     }
 
     public void CloseLore() {
+        player.enabled = true;
         loreScreen.SetActive(false);
         foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
             btn.interactable = true;

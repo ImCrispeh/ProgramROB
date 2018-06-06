@@ -26,6 +26,7 @@ public class TurnController : MonoBehaviour {
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        speedChangeTgl = GameObject.FindGameObjectWithTag("FFToggle").GetComponent<Toggle>();
         PlayerTurn();
 	}
 	

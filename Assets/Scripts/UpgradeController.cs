@@ -168,7 +168,7 @@ public class UpgradeController : MonoBehaviour {
         json = JsonUtility.ToJson(upgradeCostData);
         File.WriteAllText(upgradeCostFileName, json);
 
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene("UpgradeArea");
     }
 
     public void SetCosts() {
