@@ -16871,7 +16871,19 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Lore
+  m_Text: 'Accessing building footage...
+
+    Video corrupted. Playing audio.
+
+    ["What are those things? We got
+
+    orders that if they breach here we
+
+    are to destroy the entire food supply.
+
+    Hey are you okay?"]
+
+    End of playback.'
 --- !u!222 &1269971394
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -10154,7 +10154,19 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Lore
+  m_Text: 'Accessing building footage...
+
+    Video corrupted. Playing audio.
+
+    ["Why hasn''t HQ pulled us out of here?
+
+    After those things started appearing
+
+    and their numbers keep growing, we
+
+    should just packed up and cut our losses"]
+
+    End of playback.'
 --- !u!222 &696315782
 CanvasRenderer:
   m_ObjectHideFlags: 0

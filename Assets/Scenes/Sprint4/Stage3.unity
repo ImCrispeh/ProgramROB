@@ -7571,7 +7571,17 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Lore
+  m_Text: 'Accessing building footage...
+
+    Video corrupted. Playing audio.
+
+    ["I''m getting out of here, no way I''m
+
+    ending up like that. Just got to get to
+
+    one of the... no stay back! ACK!"]
+
+    End of playback.'
 --- !u!222 &658772940
 CanvasRenderer:
   m_ObjectHideFlags: 0

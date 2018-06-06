@@ -18162,7 +18162,19 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Lore
+  m_Text: 'Accessing building footage...
+
+    Video corrupted. Playing audio.
+
+    ["Those freaks are just as skilled as we
+
+    are. There is no way that it''s a coincidence.
+
+    Get your weapons, we are going to fight
+
+    to command centre and get some answers."]
+
+    End of playback.'
 --- !u!222 &1411154367
 CanvasRenderer:
   m_ObjectHideFlags: 0
