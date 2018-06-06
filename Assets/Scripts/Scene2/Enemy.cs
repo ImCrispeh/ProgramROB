@@ -15,11 +15,18 @@ public class Enemy : MonoBehaviour {
     private float currentHealth;
     public bool isTankSpawed;
     public Image healthBar;
+    public Sprite[] frames;
+    public SpriteRenderer rend;
+    public int fps = 6;
     void Start() {
         target = GameObject.FindWithTag("Player").transform;
         currentHealth = health;
+        rend = GetComponent<SpriteRenderer>();
     }
     void Update() {
+        int i = (int)((Time.time * fps) % frames.Length);
+        rend.sprite = frames[i];
+        
         healthBar.fillAmount = currentHealth / health;
         if (target != null) {
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
