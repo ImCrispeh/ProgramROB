@@ -3754,6 +3754,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114882233868876200, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 292373}
+    - target: {fileID: 114882233868876200, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 114882233868876200, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5, type: 2}
   m_IsPrefabParent: 0
@@ -5057,6 +5072,11 @@ Prefab:
     - target: {fileID: 212674033158869678, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
       propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
+        type: 2}
+      propertyPath: enemyID
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -13684,7 +13704,7 @@ Prefab:
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}
       propertyPath: enemyID
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114527935899817240, guid: b0dffdd6c45b6b54692f7aad07454f8c,
         type: 2}

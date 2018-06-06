@@ -78,6 +78,7 @@ public class MapStateController : MonoBehaviour {
             upgradeFileName = Path.Combine(Application.persistentDataPath, "UpgradeSaveData.json");
             levelEndFileName = Path.Combine(Application.persistentDataPath, "LevelEndSaveData.json");
             LoadMapData();
+            LoadPreviousLevelData();
             if (File.Exists(upgradeFileName)) {
                 IntegrateUpgrades();
             }
@@ -140,7 +141,6 @@ public class MapStateController : MonoBehaviour {
         UpgradeData loadedUpgradeData = JsonUtility.FromJson<UpgradeData>(jsonSave);
 
         //make initial stats consistent with last level
-        LoadPreviousLevelData();
 
         playerCont.maxActionPoints += loadedUpgradeData.apIncrease;
         playerCont.maxHealth += loadedUpgradeData.healthIncrease;
@@ -339,6 +339,9 @@ public class MapStateController : MonoBehaviour {
         LevelEndData.playerAP = playerCont.maxActionPoints;
         LevelEndData.playerDamage = playerCont.damage;
         LevelEndData.playerVisibility = playerCont.visibilityMultiplier;
+        LevelEndData.isRepelAvailable = playerCont.isRepelAvailable;
+        LevelEndData.isRevealAvailable = playerCont.isRevealAvailable;
+        LevelEndData.isConvertAvailable = playerCont.isConvertAvailable;
 
         //save if key has been collected in level
         if (key == null) {
@@ -388,6 +391,9 @@ public class MapStateController : MonoBehaviour {
             playerCont.maxHealth = loadedLevelEndData.playerMaxHealth;
             playerCont.visibilityMultiplier = loadedLevelEndData.playerVisibility;
             playerCont.damage = loadedLevelEndData.playerDamage;
+            playerCont.isRepelAvailable = loadedLevelEndData.isRepelAvailable;
+            playerCont.isRevealAvailable = loadedLevelEndData.isRevealAvailable;
+            playerCont.isConvertAvailable = loadedLevelEndData.isConvertAvailable;
         }
     }
 
@@ -460,4 +466,7 @@ class LevelEndData {
     public int playerMaxHealth;
     public float playerVisibility;
     public int playerDamage;
+    public bool isRepelAvailable;
+    public bool isRevealAvailable;
+    public bool isConvertAvailable;
 }

@@ -38,7 +38,7 @@ public class EnemyMap : MovingObject
         //These values allow us to choose between the cardinal directions: up, down, left and right.
         float xDir = 0;
         float yDir = 0;
-        if (Mathf.Abs(target.position.x - transform.position.x) >= 0 && Mathf.Abs(target.position.x - transform.position.x) < moveDist/2)
+        if (Mathf.Abs(target.position.x - transform.position.x) >= 0 && Mathf.Abs(target.position.x - transform.position.x) <= moveDist/2)
         {
             yDir = target.position.y > transform.position.y ? moveDist : moveDist * -1;
         }
@@ -61,10 +61,16 @@ public class EnemyMap : MovingObject
 
     //OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject 
     protected override void OnCantMove<T>(T component, bool posX, bool negX, bool posY, bool negY) {
-        if ((posY || negY) && !posX) {
+        if ((posY || negY) && !posX && !negX) {
+            float xDir = target.position.x > transform.position.x ? moveDist : moveDist * -1;
+            AttemptMove<Player>(xDir, 0);
+        } else if ((posY || negY) && !posX) {
             AttemptMove<Player>(moveDist, 0);
         } else if ((posY || negY) && !negX) {
             AttemptMove<Player>(moveDist * -1, 0);
+        } else if ((posX || negX) && !posY && !negY) {
+            float yDir = target.position.y > transform.position.y ? moveDist : moveDist * -1;
+            AttemptMove<Player>(0, yDir);
         } else if ((posX || negX) && !posY) {
             AttemptMove<Player>(0, moveDist);
         } else if ((posX || negX) && !negY) {
