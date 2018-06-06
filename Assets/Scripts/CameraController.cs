@@ -19,13 +19,13 @@ public class CameraController : MonoBehaviour {
             _instance = this;
         }
         float currentAspect = (float)Screen.width / (float)Screen.height;
-        Camera.main.orthographicSize = horizontalResolution / currentAspect / 160;
+        Camera.main.orthographicSize = horizontalResolution / currentAspect / 120;
     }
 
     void OnGUI() {
         if (!isMapRevealed) {
             float currentAspect = (float)Screen.width / (float)Screen.height;
-            Camera.main.orthographicSize = horizontalResolution / currentAspect / 160;
+            Camera.main.orthographicSize = horizontalResolution / currentAspect / 120;
         }
     }
 

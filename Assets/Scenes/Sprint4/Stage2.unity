@@ -7480,7 +7480,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.41
+  orthographic size: 9.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7503,7 +7503,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 556922894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0.82, z: -10}
+  m_LocalPosition: {x: 6.68, y: -0.12, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8177,9 +8177,25 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114387227812403826, guid: 4642150bbb11a6f4581cf77d53ce8cdd,
+        type: 2}
+      propertyPath: loreScreen
+      value: 
+      objectReference: {fileID: 2134429942}
+    - target: {fileID: 114387227812403826, guid: 4642150bbb11a6f4581cf77d53ce8cdd,
+        type: 2}
+      propertyPath: closeBtn
+      value: 
+      objectReference: {fileID: 1009798747}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4642150bbb11a6f4581cf77d53ce8cdd, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &594205082 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114387227812403826, guid: 4642150bbb11a6f4581cf77d53ce8cdd,
+    type: 2}
+  m_PrefabInternal: {fileID: 594205081}
+  m_Script: {fileID: 11500000, guid: b59806c4ab8441f4ab3d5c08b7e46ae6, type: 3}
 --- !u!1 &597031046
 GameObject:
   m_ObjectHideFlags: 0
@@ -8532,6 +8548,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224775217665001534, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
     type: 2}
   m_PrefabInternal: {fileID: 604916737}
+--- !u!114 &604916739 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114592446240276424, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 604916737}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &604916740 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114882233868876200, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 604916737}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &607125559
 Prefab:
   m_ObjectHideFlags: 0
@@ -10144,7 +10172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12403,10 +12431,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1657ab8452be09d4eaccb591e98d8888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnText: {fileID: 0}
+  turnText: {fileID: 604916739}
   player: {fileID: 0}
   enemies: []
-  speedChangeTgl: {fileID: 0}
+  speedChangeTgl: {fileID: 604916740}
   repelTurns: 0
   isPlayerRepelling: 0
 --- !u!224 &884256178
@@ -13857,7 +13885,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -13871,7 +13899,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 2, y: 2.1}
   m_EdgeRadius: 0
 --- !u!4 &1000178309
 Transform:
@@ -14036,7 +14064,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 594205082}
         m_MethodName: CloseLore
         m_Mode: 1
         m_Arguments:
@@ -23449,7 +23477,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 947884f0ce2813146abf669c9d8d042c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23501,7 +23529,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -23515,7 +23543,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 2, y: 2.1}
   m_EdgeRadius: 0
 --- !u!4 &1707311795
 Transform:
@@ -25254,7 +25282,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 947884f0ce2813146abf669c9d8d042c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -31224,7 +31252,7 @@ GameObject:
   - component: {fileID: 2134429944}
   m_Layer: 5
   m_Name: LoreScreen
-  m_TagString: PauseScreen
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31261,7 +31289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.391}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

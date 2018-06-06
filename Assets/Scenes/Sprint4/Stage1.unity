@@ -2172,6 +2172,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4642150bbb11a6f4581cf77d53ce8cdd, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &134133502 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114387227812403826, guid: 4642150bbb11a6f4581cf77d53ce8cdd,
+    type: 2}
+  m_PrefabInternal: {fileID: 134133501}
+  m_Script: {fileID: 11500000, guid: b59806c4ab8441f4ab3d5c08b7e46ae6, type: 3}
 --- !u!1001 &143793573
 Prefab:
   m_ObjectHideFlags: 0
@@ -5850,6 +5856,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224775217665001534, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
     type: 2}
   m_PrefabInternal: {fileID: 415674652}
+--- !u!114 &415674654 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114592446240276424, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 415674652}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &415674655 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114882233868876200, guid: 3ad035f2b5475e74fbe6fb1ab300e7c5,
+    type: 2}
+  m_PrefabInternal: {fileID: 415674652}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &416532318
 GameObject:
   m_ObjectHideFlags: 0
@@ -12598,7 +12616,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.1, y: 1}
   m_EdgeRadius: 0
 --- !u!1001 &982098457
 Prefab:
@@ -14335,10 +14353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1657ab8452be09d4eaccb591e98d8888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnText: {fileID: 0}
+  turnText: {fileID: 415674654}
   player: {fileID: 0}
   enemies: []
-  speedChangeTgl: {fileID: 0}
+  speedChangeTgl: {fileID: 415674655}
   repelTurns: 0
   isPlayerRepelling: 0
 --- !u!224 &1121765023
@@ -16851,7 +16869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -23965,7 +23983,7 @@ GameObject:
   - component: {fileID: 1716596614}
   m_Layer: 5
   m_Name: LoreScreen
-  m_TagString: PauseScreen
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24002,7 +24020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.391}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -26088,7 +26106,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.1, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &1860733448
 GameObject:
@@ -27551,7 +27569,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 134133502}
         m_MethodName: CloseLore
         m_Mode: 1
         m_Arguments:
@@ -28717,7 +28735,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 9.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -28740,7 +28758,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2104919014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1, y: -2, z: -10}
+  m_LocalPosition: {x: 4.1, y: -3.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

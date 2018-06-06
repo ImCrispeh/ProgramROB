@@ -14,6 +14,7 @@ public class KeyController : MonoBehaviour {
     }
 
     public void ShowLore() {
+        Time.timeScale = 0;
         player.enabled = false;
         loreScreen.SetActive(true);
         foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
@@ -28,6 +29,7 @@ public class KeyController : MonoBehaviour {
     }
 
     public void CloseLore() {
+        Time.timeScale = 1;
         player.enabled = true;
         loreScreen.SetActive(false);
         foreach (Button btn in GameObject.FindObjectsOfType<Button>()) {
