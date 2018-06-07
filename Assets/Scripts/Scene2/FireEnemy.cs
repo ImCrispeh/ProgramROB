@@ -20,6 +20,7 @@ public class FireEnemy : MonoBehaviour
     public Sprite[] frames;
     public SpriteRenderer rend;
     public int fps = 6;
+    public AudioClip ranged, hit;
     public AudioSource audioSrc;
 
     void Start() {
@@ -52,7 +53,7 @@ public class FireEnemy : MonoBehaviour
                         GameObject Bullet = Instantiate(projectTile, shootPoint.transform.position, Quaternion.identity);
                         Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
                         lastAttackTime = Time.time;
-                        audioSrc.Play();
+                        audioSrc.PlayOneShot(ranged);
                     }
                 }
             }
@@ -77,6 +78,7 @@ public class FireEnemy : MonoBehaviour
 
     public void damaged(float amount)
     {
+        audioSrc.PlayOneShot(hit);
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / 100;
         if (currentHealth <= 0)

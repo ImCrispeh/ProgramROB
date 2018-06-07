@@ -17,6 +17,7 @@ public class PlayerCombatController : MonoBehaviour {
     public LayerMask allowHit;
     public Material lineMat;
     public GameObject particle, sword;
+    public AudioClip ranged, hit;
     public AudioSource audioSrc;
     // Use this for initialization
     void Start () {
@@ -84,7 +85,7 @@ public class PlayerCombatController : MonoBehaviour {
 
         //have this for every attempted attack? or every successful attack?
         //DataCollectionController._instance.UpdateRangedAttacks();
-        audioSrc.Play();
+        audioSrc.PlayOneShot(ranged);
     }
 
     private void DrawFiringLine(Vector2 end, Vector2 firePoint, bool hitEnemy) {
@@ -103,6 +104,7 @@ public class PlayerCombatController : MonoBehaviour {
     }
 
     public void damaged(int amount) {
+        audioSrc.PlayOneShot(hit);
         Instantiate(particle, gameObject.transform.position, Quaternion.identity);
         health -= amount;
         healthText.text = "Health: " + health;

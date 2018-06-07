@@ -268,7 +268,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -406,6 +406,9 @@ MonoBehaviour:
   shootPoint: {fileID: 4448892191506384}
   projectTile: {fileID: 1673271027749316, guid: bf04c5c4d1995384b8a32bb8bf007c26,
     type: 2}
+  ranged: {fileID: 8300000, guid: 9ebc30fa09bfab94797b5518b6a05f5d, type: 3}
+  hit: {fileID: 8300000, guid: aeadf90b682d87d45994b1febfc3ab3c, type: 3}
+  audioSrc: {fileID: 0}
 --- !u!114 &114890263357224872
 MonoBehaviour:
   m_ObjectHideFlags: 1

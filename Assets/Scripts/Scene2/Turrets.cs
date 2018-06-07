@@ -14,6 +14,7 @@ public class Turrets : MonoBehaviour
     public float bulletForce;
     public Transform shootPoint;
     public GameObject projectTile;
+    public AudioClip ranged, hit;
     public AudioSource audioSrc;
     private void Start()
     {
@@ -37,7 +38,7 @@ public class Turrets : MonoBehaviour
                     Bullet.GetComponent<Bullet>().isTurretSpawned = true;
                     Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
                     lastAttackTime = Time.time;
-                    audioSrc.Play();
+                    audioSrc.PlayOneShot(ranged);
 
                     //   }
                 }
@@ -56,6 +57,7 @@ public class Turrets : MonoBehaviour
 
     public void damaged(float amount)
     {
+        audioSrc.PlayOneShot(hit);
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / 100;
         if (currentHealth <= 0)

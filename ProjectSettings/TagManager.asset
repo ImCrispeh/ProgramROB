@@ -43,6 +43,8 @@ TagManager:
   - ExitBtn
   - ResetText
   - Volume
+  - Ending1
+  - Ending2
   layers:
   - Default
   - TransparentFX

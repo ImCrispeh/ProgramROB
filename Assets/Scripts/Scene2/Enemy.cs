@@ -17,11 +17,13 @@ public class Enemy : MonoBehaviour {
     public Image healthBar;
     public Sprite[] frames;
     public SpriteRenderer rend;
+    public AudioSource audioSrc;
     public int fps = 6;
     void Start() {
         target = GameObject.FindWithTag("Player").transform;
         currentHealth = health;
         rend = GetComponent<SpriteRenderer>();
+        audioSrc = GetComponent<AudioSource>();
     }
     void Update() {
         if (frames.Length > 0) {
@@ -63,6 +65,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public void damaged(float amount) {
+        audioSrc.Play();
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth/100;
         if ( currentHealth <= 0) {

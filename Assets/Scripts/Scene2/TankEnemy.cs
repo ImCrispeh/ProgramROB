@@ -20,10 +20,12 @@ public class TankEnemy : MonoBehaviour
     int count = 0;
     bool isEnd = false;
     public Image healthBar;
+    public AudioSource audioSrc;
     void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
         currentHealth = health;
+        audioSrc = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -81,6 +83,7 @@ public class TankEnemy : MonoBehaviour
 
     public void damaged(float amount)
     {
+        audioSrc.Play();
         health -= amount;
         healthBar.fillAmount = currentHealth / 100;
         if (health <= 0)

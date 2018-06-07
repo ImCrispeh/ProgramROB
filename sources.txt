@@ -1,5 +1,0 @@
-Player Robot - https://www.spriters-resource.com/pc_computer/spelunky/sheet/56429/
-Enemy1 (blue monster) - https://opengameart.org/content/bevouliin-free-enemy-villain-monster-game-asset-for-game-developers
-Enemy2 (turret) - https://opengameart.org/content/turn-based-strategy-ground-units-set-sand
-Enemy3 (spider) - https://opengameart.org/content/game-enemy-sketchy-spider
-Key - http://pixelartmaker.com/art/701d599ee087f38

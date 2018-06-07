@@ -33,6 +33,8 @@ public class PlayerProgramController : MonoBehaviour {
     public bool isConversionActive;
     public bool isRevealUsed;
 
+    public AudioSource audioSrc;
+
     // Use this for initialization
     void Start() {
         actions = new List<String>();
@@ -46,6 +48,7 @@ public class PlayerProgramController : MonoBehaviour {
         OverlayController._instance.UpdateActionsList(actions, false, false);
         OverlayController._instance.EnableExtraActions();
         rigid = GetComponent<Rigidbody2D>();
+        audioSrc = GetComponent<AudioSource>();
         lastPos = transform.position;
         ChangeSpeed(TurnController._instance.speedChangeTgl.isOn);
     }
@@ -289,6 +292,7 @@ public class PlayerProgramController : MonoBehaviour {
         lastPos = transform.position;
         isMoving = true;
         DarkRoomController._instance.SetPlayerMoving(isMoving);
+        audioSrc.Play();
         while (moveTimer < moveDuration) {
             moveTimer += Time.deltaTime;
             rigid.MovePosition(Vector2.Lerp(source, target, moveTimer / moveDuration));

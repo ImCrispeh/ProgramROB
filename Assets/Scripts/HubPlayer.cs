@@ -9,10 +9,15 @@ public class HubPlayer : MonoBehaviour {
     public Rigidbody2D rigid;
     public Text interactText;
     public GameObject loreScreen;
+    public GameObject Ending1;
+    public GameObject Ending2;
 
     // Use this for initialization
     void Start () {
         rigid = GetComponent<Rigidbody2D>();
+        if (SceneManager.GetActiveScene().name == "Stage5") {
+            ShowEndLore();
+        }
     }
 	
 	// Update is called once per frame
@@ -68,10 +73,24 @@ public class HubPlayer : MonoBehaviour {
             if (!map.key1Collected || !map.key2Collected || !map.key3Collected || !map.key4Collected) {
                 interactText.text = "Must collect all keys: " + MapStateController._instance.numKeys + "/4";
             } else {
-                interactText.text = "Press E to end";
+                interactText.text = "Press E to enter command center";
                 if (Input.GetKeyDown(KeyCode.E)) {
-                    ShowEndLore();
+                    SceneManager.LoadScene("Stage5");
                 }
+            }
+        }
+
+        if (collision.gameObject.tag == "Ending1") {
+            interactText.text = "Press E launch spacecraft back to Earth";
+            if (Input.GetKeyDown(KeyCode.E)) {
+                ShowEnding1();
+            }
+        }
+
+        if (collision.gameObject.tag == "Ending2") {
+            interactText.text = "Press E to self-destruct the colony";
+            if (Input.GetKeyDown(KeyCode.E)) {
+                ShowEnding2();
             }
         }
 
@@ -92,8 +111,22 @@ public class HubPlayer : MonoBehaviour {
 
     public void ShowEndLore() {
         loreScreen.SetActive(true);
-        GameReset._instance.gameOver = true;
-        this.enabled = false;
+        Time.timeScale = 0;
+    }
+
+    public void HideEndLore() {
+        loreScreen.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void ShowEnding1() {
+        Ending1.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void ShowEnding2() {
+        Ending2.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void ReturnToTitle() {
