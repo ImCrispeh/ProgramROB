@@ -24,8 +24,10 @@ public class Enemy : MonoBehaviour {
         rend = GetComponent<SpriteRenderer>();
     }
     void Update() {
-        int i = (int)((Time.time * fps) % frames.Length);
-        rend.sprite = frames[i];
+        if (frames.Length > 0) {
+            int i = (int)Mathf.Clamp(((Time.time * fps) % frames.Length), 0, frames.Length - 1);
+            rend.sprite = frames[i];
+        }
         
         healthBar.fillAmount = currentHealth / health;
         if (target != null) {
@@ -52,11 +54,11 @@ public class Enemy : MonoBehaviour {
     }
 
     private void checkPosition() {
-		if (target.position.x > transform.position.x && !gameObject.GetComponent<SpriteRenderer> ().flipX) { //face right
-			gameObject.GetComponent<SpriteRenderer> ().flipX = true;
-        }
-		else if (target.position.x < transform.position.x && gameObject.GetComponent<SpriteRenderer> ().flipX) { //face left
+		if (target.position.x > transform.position.x && gameObject.GetComponent<SpriteRenderer> ().flipX) { //face right
 			gameObject.GetComponent<SpriteRenderer> ().flipX = false;
+        }
+		else if (target.position.x < transform.position.x && !gameObject.GetComponent<SpriteRenderer> ().flipX) { //face left
+			gameObject.GetComponent<SpriteRenderer> ().flipX = true;
         }
     }
 

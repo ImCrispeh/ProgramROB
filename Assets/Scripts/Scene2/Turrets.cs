@@ -23,21 +23,31 @@ public class Turrets : MonoBehaviour
     {
         healthBar.fillAmount = currentHealth / health;
         if (target != null) {
-            //float distanceToTarget = Vector3.Distance(transform.position, target.position);
-            //if (distanceToTarget < attackRange)
-            //{
-            Vector3 targetDir = target.position - transform.position;
-            float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg + 180f;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 90 * Time.deltaTime);
-            if (Time.time > lastAttackTime + attackDelay) {
-                GameObject Bullet = Instantiate(projectTile, shootPoint.transform.position, Quaternion.identity);
-                Bullet.GetComponent<Bullet>().isTurretSpawned = true;
-                Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
-                lastAttackTime = Time.time;
+            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            if (distanceToTarget < attackRange) {
+                checkPosition();
+                Vector3 targetDir = target.position - transform.position;
+                float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg + 180f;
+                Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 90 * Time.deltaTime);
+                if (Time.time > lastAttackTime + attackDelay) {
+                    GameObject Bullet = Instantiate(projectTile, shootPoint.transform.position, Quaternion.identity);
+                    Bullet.GetComponent<Bullet>().isTurretSpawned = true;
+                    Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
+                    lastAttackTime = Time.time;
 
-                //   }
+                    //   }
+                }
             }
+        }
+    }
+
+    private void checkPosition() {
+        if (target.position.x > transform.position.x && !gameObject.GetComponent<SpriteRenderer>().flipY) { //face right
+            gameObject.GetComponent<SpriteRenderer>().flipY = true;
+
+        } else if (target.position.x < transform.position.x && gameObject.GetComponent<SpriteRenderer>().flipY) { //face left
+            gameObject.GetComponent<SpriteRenderer>().flipY = false;
         }
     }
 

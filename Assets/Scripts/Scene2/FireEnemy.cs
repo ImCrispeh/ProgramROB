@@ -17,15 +17,22 @@ public class FireEnemy : MonoBehaviour
     public float bulletForce;
     public Transform shootPoint;
     public Image healthBar;
-    protected void Start()
-    {
+    public Sprite[] frames;
+    public SpriteRenderer rend;
+    public int fps = 6;
+
+    void Start() {
         target = GameObject.FindWithTag("Player").transform;
         currentHealth = health;
+        rend = GetComponent<SpriteRenderer>();
     }
-    void Update()
-    {
+
+    void Update() {
+        int i = (int)Mathf.Clamp(((Time.time * fps) % frames.Length), 0, frames.Length - 1);
+        rend.sprite = frames[i];
         healthBar.fillAmount = currentHealth / health;
         if (target != null) {
+            checkPosition();
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
             if (distanceToTarget < chaseRange)
             {
@@ -40,8 +47,8 @@ public class FireEnemy : MonoBehaviour
                     Rotate();
                     if (Time.time > lastAttackTime + attackDelay)
                     {
-                        GameObject Bullet = Instantiate(projectTile, shootPoint.position, transform.rotation);
-                        Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0f, -bulletForce));
+                        GameObject Bullet = Instantiate(projectTile, shootPoint.transform.position, Quaternion.identity);
+                        Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
                         lastAttackTime = Time.time;
                     }
                 }
@@ -51,11 +58,19 @@ public class FireEnemy : MonoBehaviour
     private void Rotate()
     {
         Vector3 targetDir = target.position - transform.position;
-        float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg + 90f;
+        float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg + 180f;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 90 * Time.deltaTime);
     }
 
+    private void checkPosition() {
+        if (target.position.x > transform.position.x && !gameObject.GetComponent<SpriteRenderer>().flipY) { //face right
+            gameObject.GetComponent<SpriteRenderer>().flipY = true;
+
+        } else if (target.position.x < transform.position.x && gameObject.GetComponent<SpriteRenderer>().flipY) { //face left
+            gameObject.GetComponent<SpriteRenderer>().flipY = false;
+        }
+    }
 
     public void damaged(float amount)
     {
