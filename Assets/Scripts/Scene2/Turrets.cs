@@ -14,10 +14,12 @@ public class Turrets : MonoBehaviour
     public float bulletForce;
     public Transform shootPoint;
     public GameObject projectTile;
+    public AudioSource audioSrc;
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
         currentHealth = health;
+        audioSrc = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -35,6 +37,7 @@ public class Turrets : MonoBehaviour
                     Bullet.GetComponent<Bullet>().isTurretSpawned = true;
                     Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
                     lastAttackTime = Time.time;
+                    audioSrc.Play();
 
                     //   }
                 }

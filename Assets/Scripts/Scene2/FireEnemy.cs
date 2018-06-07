@@ -20,11 +20,13 @@ public class FireEnemy : MonoBehaviour
     public Sprite[] frames;
     public SpriteRenderer rend;
     public int fps = 6;
+    public AudioSource audioSrc;
 
     void Start() {
         target = GameObject.FindWithTag("Player").transform;
         currentHealth = health;
         rend = GetComponent<SpriteRenderer>();
+        audioSrc = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -50,6 +52,7 @@ public class FireEnemy : MonoBehaviour
                         GameObject Bullet = Instantiate(projectTile, shootPoint.transform.position, Quaternion.identity);
                         Bullet.GetComponent<Rigidbody2D>().AddRelativeForce(-transform.right * bulletForce);
                         lastAttackTime = Time.time;
+                        audioSrc.Play();
                     }
                 }
             }

@@ -17,6 +17,7 @@ public class PlayerCombatController : MonoBehaviour {
     public LayerMask allowHit;
     public Material lineMat;
     public GameObject particle, sword;
+    public AudioSource audioSrc;
     // Use this for initialization
     void Start () {
         healthText = GameObject.Find("HealthText").GetComponent<Text>();
@@ -26,6 +27,7 @@ public class PlayerCombatController : MonoBehaviour {
             Debug.Log("Fire Point not Found");
         }
         rigid = GetComponent<Rigidbody2D>();
+        audioSrc = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -81,7 +83,8 @@ public class PlayerCombatController : MonoBehaviour {
         }
 
         //have this for every attempted attack? or every successful attack?
-        DataCollectionController._instance.UpdateRangedAttacks();
+        //DataCollectionController._instance.UpdateRangedAttacks();
+        audioSrc.Play();
     }
 
     private void DrawFiringLine(Vector2 end, Vector2 firePoint, bool hitEnemy) {
