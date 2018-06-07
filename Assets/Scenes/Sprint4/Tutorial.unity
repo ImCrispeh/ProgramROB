@@ -7231,6 +7231,11 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114695878763495704, guid: c617350496f1f654ab1dbdee203574a1,
+        type: 2}
+      propertyPath: actionPoints
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c617350496f1f654ab1dbdee203574a1, type: 2}
   m_IsPrefabParent: 0
@@ -11029,7 +11034,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1079183592}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -16731,6 +16736,7 @@ MonoBehaviour:
   player: {fileID: 0}
   generator: {fileID: 0}
   enemies: []
+  powerUps: []
   key: {fileID: 0}
   currLevelNo: 0
   key1Collected: 0

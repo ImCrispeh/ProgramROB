@@ -24,6 +24,8 @@ public class GameReset : MonoBehaviour {
     private string levelEndFileName;
     private string upgradeCostFileName;
     private string totalUpgradeFileName;
+    private string upgradeCostRevertFileName;
+    private string totalUpgradeRevertFileName;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -67,6 +69,8 @@ public class GameReset : MonoBehaviour {
         levelEndFileName = Path.Combine(Application.persistentDataPath, "LevelEndSaveData.json");
         upgradeCostFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostSaveData.json");
         totalUpgradeFileName = Path.Combine(Application.persistentDataPath, "TotalUpgradeSaveData.json");
+        upgradeCostRevertFileName = Path.Combine(Application.persistentDataPath, "UpgradeCostRevertData.json");
+        totalUpgradeRevertFileName = Path.Combine(Application.persistentDataPath, "TotalUpgradeRevertData.json");
     }
 
     private void OnApplicationQuit() {
@@ -92,6 +96,14 @@ public class GameReset : MonoBehaviour {
 
         if (File.Exists(totalUpgradeFileName)) {
             File.Delete(totalUpgradeFileName);
+        }
+
+        if (File.Exists(totalUpgradeRevertFileName)) {
+            File.Delete(totalUpgradeRevertFileName);
+        }
+
+        if (File.Exists(upgradeCostRevertFileName)) {
+            File.Delete(upgradeCostRevertFileName);
         }
     }
 
@@ -224,6 +236,14 @@ public class GameReset : MonoBehaviour {
 
             if (File.Exists(totalUpgradeFileName)) {
                 File.Delete(totalUpgradeFileName);
+            }
+
+            if (File.Exists(totalUpgradeRevertFileName)) {
+                File.Delete(totalUpgradeRevertFileName);
+            }
+
+            if (File.Exists(upgradeCostRevertFileName)) {
+                File.Delete(upgradeCostRevertFileName);
             }
 
             Time.timeScale = 1;

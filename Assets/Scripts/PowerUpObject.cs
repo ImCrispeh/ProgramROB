@@ -14,8 +14,13 @@ public class PowerUpObject : MonoBehaviour {
     public int visionIncrease;
     public float visionNorm;
 
+    public AudioSource audioSrc;
+    public int id;
+    public bool isCollected;
+
     void Start()
     {
+        audioSrc = GetComponent<AudioSource>();
         //dmgNormal = FindObjectOfType<PlayerCombatController>().damage; //temp value for original damage
     }
 
@@ -35,7 +40,8 @@ public class PowerUpObject : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject.tag == "Player") {
-
+            isCollected = true;
+            audioSrc.Play();
             if (IsHealth())
                 IncHealth();
 
@@ -51,9 +57,8 @@ public class PowerUpObject : MonoBehaviour {
             }
 
             Debug.Log("Collision: PowerUp");
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            Destroy(gameObject, 6f);
+            GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<Collider2D>().enabled = false;
         }
     }
 

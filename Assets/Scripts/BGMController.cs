@@ -12,6 +12,7 @@ public class BGMController : MonoBehaviour {
     public Button volumeBtn;
     public Sprite[] volumeImgs;
     public bool isMuted;
+    public bool newScene;
 
     private void Awake() {
         if (_instance != null && _instance != this) {
@@ -31,12 +32,8 @@ public class BGMController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
+        newScene = true;
         volumeBtn = GameObject.FindGameObjectWithTag("Volume").GetComponent<Button>();
-        if (!isMuted) {
-            UnmuteVol();
-        } else {
-            MuteVol();
-        }
 
         if (scene.name == "Title" || scene.name == "Hub") {
             audioSrc.clip = bgm[0];
@@ -49,6 +46,17 @@ public class BGMController : MonoBehaviour {
         }
 
         audioSrc.Play();
+    }
+
+    private void Update() {
+        if (newScene) {
+            newScene = false;
+            if (!isMuted) {
+                UnmuteVol();
+            } else {
+                MuteVol();
+            }
+        }
     }
 
     public void MuteVol() {

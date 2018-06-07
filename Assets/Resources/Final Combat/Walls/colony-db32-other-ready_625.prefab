@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4376316813293696}
   - component: {fileID: 212694846044763508}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: colony-db32-other-ready_625
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -12,6 +12,7 @@ public class MapStateController : MonoBehaviour {
     public GameObject player;
 	public GameObject generator;
     public GameObject[] enemies;
+    public PowerUpObject[] powerUps;
     public GameObject key;
     public int currLevelNo;
 
@@ -52,6 +53,7 @@ public class MapStateController : MonoBehaviour {
         if (scene.buildIndex >= 1 && scene.buildIndex <= 5) {
             player = GameObject.FindGameObjectWithTag("Player");
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            powerUps = GameObject.FindObjectsOfType<PowerUpObject>();
             key = GameObject.FindGameObjectWithTag("Key" + (scene.buildIndex - 1));
 
             if (key != null) {
@@ -107,6 +109,7 @@ public class MapStateController : MonoBehaviour {
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        powerUps = GameObject.FindObjectsOfType<PowerUpObject>();
         key = GameObject.FindGameObjectWithTag("Key" + SceneManager.GetActiveScene().buildIndex);
 
         if (key != null) {
@@ -183,6 +186,7 @@ public class MapStateController : MonoBehaviour {
 
         data.enemyPos = new Vector3[enemiesCount];
         data.enemyState = new bool[enemiesCount];
+        data.powerUpState = new bool[powerUps.Length];
         data.keyState = (key == null);
         data.isFastForward = TurnController._instance.speedChangeTgl.isOn;
         data.areHotkeysDisplayed = OverlayController._instance.areHotkeysDisplayed;
@@ -192,6 +196,12 @@ public class MapStateController : MonoBehaviour {
                 EnemyMap enemyData = enemy.GetComponent<EnemyMap>();
                 data.enemyPos[enemyData.enemyID] = enemy.transform.position;
                 data.enemyState[enemyData.enemyID] = enemyData.isAlive;
+            }
+        }
+
+        foreach (PowerUpObject power in powerUps) {
+            if (power.gameObject != null) {
+                data.powerUpState[power.id] = power.isCollected;
             }
         }
 
@@ -253,6 +263,16 @@ public class MapStateController : MonoBehaviour {
                     Destroy(enemy);
                 }
             }
+
+            foreach (PowerUpObject power in powerUps) {
+                if (power.gameObject != null) {
+                    power.isCollected = loadedMapData.powerUpState[power.id];
+                    if (power.isCollected) {
+                        power.gameObject.SetActive(false);
+                    }
+                }
+            }
+
             if (key != null) {
                 KeyController keyData = key.GetComponent<KeyController>();
                 keyData.isCollected = loadedMapData.keyState;
@@ -292,6 +312,15 @@ public class MapStateController : MonoBehaviour {
             string jsonSave = File.ReadAllText(upgradeCostFileName);
             UpgradeCostData upgradeCostData = JsonUtility.FromJson<UpgradeCostData>(jsonSave);
             upgradeCostData.upgradePoints += 5;
+            string jsonCosts = JsonUtility.ToJson(upgradeCostData);
+            File.WriteAllText(upgradeCostFileName, jsonCosts);
+        } else {
+            UpgradeCostData upgradeCostData = new UpgradeCostData();
+            upgradeCostData.upgradePoints = 5;
+            upgradeCostData.healthCost = 1;
+            upgradeCostData.damageCost = 1;
+            upgradeCostData.visibilityCost = 1;
+            upgradeCostData.apCost = 1;
             string jsonCosts = JsonUtility.ToJson(upgradeCostData);
             File.WriteAllText(upgradeCostFileName, jsonCosts);
         }
@@ -450,6 +479,8 @@ class MapData {
 
     public Vector3[] enemyPos;
     public bool[] enemyState;
+
+    public bool[] powerUpState;
 
 	public bool keyState;
     public bool isFastForward;

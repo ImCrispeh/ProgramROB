@@ -358,6 +358,7 @@ MonoBehaviour:
   player: {fileID: 0}
   generator: {fileID: 0}
   enemies: []
+  powerUps: []
   key: {fileID: 0}
   currLevelNo: 0
   key1Collected: 0
@@ -626,6 +627,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385416773235316, guid: 8234971f9cbfab14db8ec3b100058ec2, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8234971f9cbfab14db8ec3b100058ec2, type: 2}
@@ -1201,7 +1206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1514612428
 RectTransform:
   m_ObjectHideFlags: 0
