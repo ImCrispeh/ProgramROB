@@ -45,7 +45,7 @@ public class TutorialPopup : MonoBehaviour {
             instructions.interactable = false;
         }
 
-        if (SceneManager.GetActiveScene().name != "Tutorial") {
+        if (SceneManager.GetActiveScene().name == "Title" || SceneManager.GetActiveScene().name == "Hub") {
             Destroy(gameObject);
         }
 	}
