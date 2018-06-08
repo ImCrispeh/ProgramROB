@@ -158,7 +158,7 @@ public class MapStateController : MonoBehaviour {
                 playerCont.isRevealAvailable = loadedUpgradeData.isRevealPurchased;
             }
 
-            if (playerCont.isConvertAvailable) {
+            if (!playerCont.isConvertAvailable) {
                 playerCont.isConvertAvailable = loadedUpgradeData.isConvertPurchased;
             }
 

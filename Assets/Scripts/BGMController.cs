@@ -32,7 +32,6 @@ public class BGMController : MonoBehaviour {
     }
 
     void OnLevelLoaded(Scene scene, LoadSceneMode mode) {
-        newScene = true;
         volumeBtn = GameObject.FindGameObjectWithTag("Volume").GetComponent<Button>();
 
         if (scene.name == "Title" || scene.name == "Hub") {
@@ -46,16 +45,17 @@ public class BGMController : MonoBehaviour {
         }
 
         audioSrc.Play();
+        newScene = true;
     }
 
     private void Update() {
         if (newScene) {
-            newScene = false;
             if (!isMuted) {
                 UnmuteVol();
             } else {
                 MuteVol();
             }
+            newScene = false;
         }
     }
 

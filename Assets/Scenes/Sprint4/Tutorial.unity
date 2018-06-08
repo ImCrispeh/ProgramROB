@@ -6849,7 +6849,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.5, y: 53.7}
+  m_AnchoredPosition: {x: 2.5, y: 53.699997}
   m_SizeDelta: {x: -5, y: 94.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888760455
@@ -10243,12 +10243,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Collect all keys and open the door to the command centre in the level select
-    hub\n\nStage exploration\nUse buttons on overlay or hotkeys\nto queue and perform
-    actions.\n\nCombat (and movement in level select)\nMovement\t\t\t\t\tWASD or arrow
-    keys\nRanged attack\t\t\tRight click\nMelee attack\t\t\t\tLeft click\nInteract
+  m_Text: "\nCollect all keys and open the door to the command centre in the level
+    select hub\n\nStage exploration\nUse buttons on overlay or hotkeys\nto queue and
+    perform actions.\n\nCombat (and movement in level select)\nMovement\t\t\t\t\tWASD
+    or arrow keys\nRanged attack\t\t\tRight click\nMelee attack\t\t\t\tLeft click\nInteract
     (only in\t\t\tE\nlevel select)\t\t\t\t\t\n\nMisc\nDisplay hotkeys\t\t\tH\nPause
-    game\t\t\t\tEsc"
+    game\t\t\t\tEsc\nDefeating enemy groups earns you\nupgrade points"
 --- !u!222 &1177271543
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18146,7 +18146,7 @@ MonoBehaviour:
 
     able to move freely with WASD or the arrow keys, and attack
 
-    with the mouse buttons.'
+    with the mouse buttons. Defeat them to earn upgrade points.'
 --- !u!222 &2139658544
 CanvasRenderer:
   m_ObjectHideFlags: 0
