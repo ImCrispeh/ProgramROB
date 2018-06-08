@@ -344,7 +344,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -139.99988, y: -78.7872}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &29625768
 MonoBehaviour:
@@ -4128,7 +4128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d24db56cfd20484892bfcadbbc3db4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instructionsPanel: {fileID: 0}
+  instructionsPanel: {fileID: 1044119829}
   instructionBtnText: {fileID: 1407731019}
   areHotkeysDisplayed: 0
   player: {fileID: 0}
@@ -6763,6 +6763,11 @@ Prefab:
 --- !u!224 &1044119828 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224986262518978236, guid: 8234971f9cbfab14db8ec3b100058ec2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1044119827}
+--- !u!1 &1044119829 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1385416773235316, guid: 8234971f9cbfab14db8ec3b100058ec2,
     type: 2}
   m_PrefabInternal: {fileID: 1044119827}
 --- !u!1 &1052774786

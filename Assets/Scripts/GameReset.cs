@@ -108,25 +108,6 @@ public class GameReset : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            MapStateController._instance.SaveEndOfLevelData();
-
-            if (File.Exists(combatFileName)) {
-                File.Delete(combatFileName);
-            }
-
-            if (File.Exists(mapFileName)) {
-                File.Delete(mapFileName);
-            }
-
-            if (File.Exists(upgradeFileName)) {
-                File.Delete(upgradeFileName);
-            }
-
-            Time.timeScale = 1;
-            SceneManager.LoadScene(5);
-        }
-
         if (SceneManager.GetActiveScene().name == "Tutorial") {
             if (Input.GetKeyDown(KeyCode.X)) {
                 if (File.Exists(combatFileName)) {
@@ -211,9 +192,6 @@ public class GameReset : MonoBehaviour {
 
     public void ResetGame() {
         if (endOfGame) {
-
-            endOfGame = false;
-
             if (File.Exists(combatFileName)) {
                 File.Delete(combatFileName);
             }
@@ -252,6 +230,7 @@ public class GameReset : MonoBehaviour {
             Destroy(DataCollectionController._instance.gameObject);
             SceneManager.LoadScene("Title");
         } else {
+            endOfGame = true;
             if (File.Exists(combatFileName)) {
                 File.Delete(combatFileName);
             }
